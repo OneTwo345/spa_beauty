@@ -40,4 +40,15 @@ public class Product {
     @OneToMany(mappedBy = "product")
     private List<BillProduct> billProducts;
 
+   @ManyToOne
+    private Customer customer;
+
+    public Product(Long id) {
+        this.id = id;
+    }
+
+
+
+
+
 }
