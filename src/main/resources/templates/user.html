@@ -57,15 +57,11 @@
         <table class="table table-bordered table-striped">
             <tr>
                 <th>No</th>
-                <th style="width: 250px">Title</th>
-                <th style="width: 250px">Description</th>
-                <th style="width: 250px">Publish Date</th>
-                <th id="price-check" class="arrow arrow-up" style="width: 100px">
-                    <span >Price &#9660;</span>
-                </th>
-                <th>Authors</th>
-                <th>Category</th>
-                <th>Type</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Password</th>
+                <th>Publish Date</th>
                 <th>Action</th>
             </tr>
             <tbody id="tBody">
@@ -82,7 +78,7 @@
 </div>
 
 <th:block th:replace="~{layout.html :: footer}"></th:block>
-<script src="/assets/myjs/room.js"></script>
+<script src="/myjs/user.js"></script>
 <script>
     var eMenubar = document.getElementsByClassName("menu-item");
     for (var i = 0; i < eMenubar.length; i++) {

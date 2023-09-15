@@ -185,7 +185,7 @@ const onShowEdit = async (id) => {
     roomSelected = await findById(id);
     $('#staticBackdropLabel').text('Edit Book');
     $('#staticBackdrop').modal('show');
-    $('#title').val(roomSelected.title);
+    $('#name').val(roomSelected.name);
     $('#publicDate').val(roomSelected.publicDate);
     $('#price').val(roomSelected.price);
     checkAuthorsCheckBox();
@@ -224,32 +224,22 @@ function getDataFromForm(form) {
 function formatCurrency(number) {
     return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(number);
 }
-function renderItemStr(item) {
+function renderItemStr(item, index) {
     return `<tr>
                     <td>
-                        ${item.id}
+                        ${index +1}
                     </td>
                     <td>
-                        ${item.title}
+                        ${item.name}
                     </td>
                     <td>
                         ${item.description}
                     </td>
                     <td>
-                        ${item.publishDate}
-                    </td>
-                    <td>
                         ${formatCurrency(item.price)}
                     </td>
                     <td>
-                        ${item.authors}
-                    </td>
-                    
-                    <td>
-                        ${item.categories}
-                    </td>
-                    <td>
-                        ${item.status}
+                        ${item.poster}
                     </td>
                      <td>
             <a class="btn edit" data-id="${item.id}" onclick="onShowEdit(${item.id})">

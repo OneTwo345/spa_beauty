@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Entity
 @AllArgsConstructor
@@ -25,5 +25,6 @@ public class User {
 
     private String phone;
 
-    private LocalDateTime dob;
+    @Column(name = "dob")
+    private LocalDate dob;
 }

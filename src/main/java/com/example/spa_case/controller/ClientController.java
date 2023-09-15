@@ -50,7 +50,7 @@ public class ClientController {
     }
     @GetMapping("service.html")
     public ModelAndView service() {
-        ModelAndView view = new ModelAndView("service");
+        ModelAndView view = new ModelAndView("product");
 
         return view;
     }
