@@ -54,6 +54,18 @@ public class BillService {
         });
     }
 
+    // Hàm getAll không cần phân trang
+    public List<BillListResponse> getBills(){
+        return billRepository.findAll().stream().map(e -> {
+            var result = AppUtil.mapper.map(e, BillListResponse.class);
+//            result.setType(e.getType().getName());
+            result.setProducts(e.getBillProducts()
+                    .stream().map(c -> c.getProduct().getName())
+                    .collect(Collectors.joining(", ")));
+            return result;
+        }).collect(Collectors.toList());
+    }
+
     public void update(BillSaveRequest request, Long id){
         var billDb = billRepository.findById(id).orElse(new Bill());
 //        billDb.setType(new Type());
