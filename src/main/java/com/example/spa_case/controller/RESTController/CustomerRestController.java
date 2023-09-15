@@ -1,4 +1,4 @@
-package com.example.spa_case.RESTController;
+package com.example.spa_case.controller.RESTController;
 
 import com.example.spa_case.model.Customer;
 import com.example.spa_case.service.CustomerService;

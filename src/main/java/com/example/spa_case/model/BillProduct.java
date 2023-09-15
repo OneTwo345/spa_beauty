@@ -27,4 +27,8 @@ public class BillProduct {
     @ManyToOne
     private Product product;
 
+    public BillProduct(Bill bill, Product product) {
+        this.bill = bill;
+        this.product = product;
+    }
 }

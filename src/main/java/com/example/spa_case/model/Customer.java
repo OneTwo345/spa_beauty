@@ -12,7 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "customers")
-public class Customer {
+public class    Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -21,12 +21,18 @@ public class Customer {
 
     private String phone;
 
+    private String email;
+
     private EStatusCustomer type;
 
-    @OneToMany(mappedBy = "customer")
-    private List<Bill> bills;
+//    @OneToMany(mappedBy = "customer")
+//    private List<Bill> bills;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    private User user;
+//    @OneToOne(fetch = FetchType.LAZY)
+//    private User user;
+
+
+
+
 
 }
