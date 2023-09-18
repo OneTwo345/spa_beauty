@@ -14,7 +14,7 @@ let userSelected = {};
 let pageable = {
     page: 1,
     sort: 'id,desc',
-  
+
 }
 
 
@@ -98,7 +98,7 @@ async function createRoom(data) {
             icon: 'success',
             confirmButtonText: 'OK'
         }).then(() => {
-getList();
+            getList();
         });
     } else {
         Swal.fire({
