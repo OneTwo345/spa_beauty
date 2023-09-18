@@ -8,7 +8,6 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 public class UserSaveRequest {
-
     private String name;
 
     private String email;
@@ -17,7 +16,6 @@ public class UserSaveRequest {
 
     private String phone;
 
-    private String dob;
+    private LocalDateTime dob;
 
-    private String user;
 }

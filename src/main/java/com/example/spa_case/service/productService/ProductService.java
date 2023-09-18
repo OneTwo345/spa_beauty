@@ -32,7 +32,7 @@ public class ProductService {
     }
     public void create(ProductSaveRequest request) {
         var product = AppUtil.mapper.map(request, Product.class);
-       productRepository.save(product); // Sử dụng serviceRepository.save(service) thay vì bookRepository.save(book)
+        productRepository.save(product); // Sử dụng serviceRepository.save(service) thay vì bookRepository.save(book)
 
     }
 
