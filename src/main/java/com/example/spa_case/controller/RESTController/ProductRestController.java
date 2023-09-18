@@ -1,53 +1,34 @@
 package com.example.spa_case.controller.RESTController;
 
-import com.example.spa_case.model.Customer;
-import com.example.spa_case.service.CustomerService;
+import com.example.spa_case.service.productService.ProductService;
+import com.example.spa_case.service.productService.request.ProductSaveRequest;
+import com.example.spa_case.service.productService.response.ProductListResponse;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Optional;
+import java.math.BigDecimal;
 
 @RestController
-@RequestMapping("/api/products")
+@RequestMapping("api/products")
 @AllArgsConstructor
-
 public class ProductRestController {
-    private final CustomerService customerService;
-
+    private final ProductService serviceService;
     @GetMapping
-    public ResponseEntity<List<Customer>> getCustomerList() {
-        List<Customer> customerList = customerService.getCustomerList();
-        return ResponseEntity.ok(customerList);
+    public ResponseEntity<Page<ProductListResponse>> list(@PageableDefault(size = 5) Pageable pageable,
+                                                          @RequestParam(defaultValue = "") String search,
+                                                          @RequestParam(defaultValue = "1") BigDecimal min,
+                                                          @RequestParam(defaultValue = "500000000000000000") BigDecimal max
+    ) {
+        return new ResponseEntity<>(serviceService.getAll(search,pageable, min,max), HttpStatus.OK);
     }
-
-
     @PostMapping
-    public ResponseEntity<String> addCustomer(@RequestBody Customer customer) {
-        customerService.addCustomer(customer);
-        return ResponseEntity.ok("Customer added successfully");
-    }
+    public void create(@RequestBody ProductSaveRequest request) {
+        serviceService.create(request);
 
-    @PutMapping("/{customerId}")
-    public ResponseEntity<String> updateCustomer(@PathVariable("customerId") Long customerId, @RequestBody Customer customer) {
-        customerService.updateCustomer(customer);
-        return ResponseEntity.ok("Customer updated successfully");
-    }
-
-
-    @GetMapping("/{customerId}")
-    public ResponseEntity<Optional<Customer>> getCustomerById(@PathVariable("customerId") Long customerId) {
-        Optional<Customer> customer = customerService.findById(customerId);
-        if (customer == null) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(customer);
-    }
-
-    @DeleteMapping("/{customerId}")
-    public ResponseEntity<String> deleteCustomer(@PathVariable Long customerId) {
-        customerService.deleteCustomer(customerId);
-        return ResponseEntity.ok("Khách hàng đã được xóa thành công.");
     }
 }

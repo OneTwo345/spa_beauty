@@ -21,3 +21,15 @@ th#price-check:hover {
 .select-selection {
     border-radius: 0 !important;
 }
+/* CSS cho hình ảnh trước khi tải lên */
+#poster-preview {
+    max-width: 200px; /* Điều chỉnh kích thước tối đa của hình ảnh */
+    height: auto;
+    margin-top: 10px;
+}
+
+.slide-image-preview {
+    max-width: 100px; /* Điều chỉnh kích thước tối đa của hình ảnh slide */
+    height: auto;
+    margin-right: 10px;
+}

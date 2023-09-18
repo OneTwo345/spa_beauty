@@ -1,4 +1,4 @@
-package com.example.spa_case.service.serviceService.response;
+package com.example.spa_case.service.productService.response;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 @Builder
-public class ServiceListResponse {
+public class ProductListResponse {
     private Long id;
 
     private String name;
