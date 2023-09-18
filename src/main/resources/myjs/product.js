@@ -1,4 +1,4 @@
-const roomForm = document.getElementById('roomForm');
+const productForm = document.getElementById('productForm');
 const eCheckBoxAuthors = document.getElementsByName('authors');
 const tBody = document.getElementById('tBody');
 const ePagination = document.getElementById('pagination')
@@ -7,12 +7,11 @@ const eSearchButton = document.getElementById('searchButton');
 const ePriceRange = document.getElementById('priceRange');
 const formBody = document.getElementById('formBody');
 const ePrice = document.getElementById('price-check')
-let authors;
-let categories;
-let status;
+
+
 let rooms = [];
 
-let roomSelected = {};
+let productSelected = {};
 let pageable = {
     page: 1,
     sort: 'id,desc',
@@ -33,14 +32,7 @@ priceSpan.addEventListener('click', function() {
         priceSpan.classList.add(arrowUpClass);
     }
 });
-$(document).ready(function () {
-    $('.js-example-basic-single').select2({
-        dropdownParent: $('#staticBackdrop')
-    });
-    $('.js-example-basic-multiple').select2({
-        dropdownParent: $('#staticBackdrop')
-    })
-});
+
 ePriceRange.onchange= () => {
     const priceRange = ePriceRange.value;
     const [min, max] = priceRange.split('-').map(Number);
@@ -67,23 +59,13 @@ $(document).ready(function () {
     // select.background ='black'
 
 });
-roomForm.onsubmit = async (e) => {
-    const idAuthors = $("#authors").select2('data').map(e => e.id);
-
+productForm.onsubmit = async (e) => {
     e.preventDefault();
-    let data = getDataFromForm(roomForm);
+    let data = getDataFromForm(productForm);
     data = {
         ...data,
-        categories: {
-            id: data.categories
-        },
-        idAuthors,
     }
-    if(data.authors.length === 0){
-        alertify.error('Please select an author!');
-        return;
-    }
-    if (roomSelected.id) {
+    if (productSelected.id) {
         await editRoom(data);
     } else {
         await createRoom(data)
@@ -99,7 +81,7 @@ async function renderTable() {
     addEventEditAndDelete();
 }
 async function getRooms() {
-    const res = await fetch('/api/books');
+    const res = await fetch('/api/products');
     return await res.json();
 }
 const addEventEditAndDelete = () => {
@@ -114,7 +96,7 @@ const addEventEditAndDelete = () => {
 }
 
 async function  editRoom (data){
-    const response = await fetch('/api/books/'+data.id, {
+    const response = await fetch('/api/products/'+data.id, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
@@ -141,7 +123,7 @@ async function  editRoom (data){
 }
 async function createRoom(data) {
 
-    const response = await fetch('/api/books', {
+    const response = await fetch('/api/products', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -167,9 +149,8 @@ getList();
     }
 }
 const onShowCreate = () => {
-
     clearForm();
-    $('#staticBackdropLabel').text('Create Book');
+    $('#staticBackdropLabel').text('Create Product');
     renderForm(formBody, getDataInput());
 
 }
@@ -177,36 +158,28 @@ document.getElementById('create').onclick = () => {
     onShowCreate();
 }
 const findById = async (id) => {
-    const response = await fetch('/api/books/' + id);
+    const response = await fetch('/api/products/' + id);
     return await response.json();
 }
 const onShowEdit = async (id) => {
     clearForm();
-    roomSelected = await findById(id);
-    $('#staticBackdropLabel').text('Edit Book');
+    productSelected = await findById(id);
+    $('#staticBackdropLabel').text('Edit Product');
     $('#staticBackdrop').modal('show');
-    $('#title').val(roomSelected.title);
-    $('#publicDate').val(roomSelected.publicDate);
-    $('#price').val(roomSelected.price);
-    checkAuthorsCheckBox();
+    $('#title').val(productSelected.title);
+    $('#description').val(productSelected.description);
+    $('#price').val(productSelected.price);
 
-    $('#status').val(roomSelected.status);
-    onChangeCheck('#categories', roomSelected.categoriesId);
+    // $('#poster').val(productSelected.poster);
+    // $('#image').val(productSelected.poster);
     renderForm(formBody, getDataInput());
 
 }
-function checkAuthorsCheckBox() {
-    roomSelected.authorsId.forEach(authorId => {
-        const checkbox = document.querySelector(`input[name="authors"][value="${authorId}"]`);
-        if (checkbox) {
-            checkbox.checked = true;
-        }
-    });
-}
+
 
 function clearForm() {
-    roomForm.reset();
-    roomSelected = {};
+    productForm.reset();
+    productSelected = {};
 }
 function onChangeCheck(selector, value){
     const element = $(selector);
@@ -230,26 +203,17 @@ function renderItemStr(item) {
                         ${item.id}
                     </td>
                     <td>
-                        ${item.title}
+                        ${item.name}
                     </td>
                     <td>
                         ${item.description}
                     </td>
-                    <td>
-                        ${item.publishDate}
-                    </td>
+                    
                     <td>
                         ${formatCurrency(item.price)}
                     </td>
                     <td>
-                        ${item.authors}
-                    </td>
-                    
-                    <td>
-                        ${item.categories}
-                    </td>
-                    <td>
-                        ${item.status}
+                        ${item.poster}
                     </td>
                      <td>
             <a class="btn edit" data-id="${item.id}" onclick="onShowEdit(${item.id})">
@@ -261,24 +225,24 @@ function renderItemStr(item) {
         </td>
                 </tr>`
 }
-$(document).ready(function() {
-    $('.item-name').mouseover(function() {
-        const description = $(this).data('description'); // Lấy dữ liệu description từ thuộc tính data-description
-        $('#tooltip-description').text(description); // Đặt nội dung tooltip
-        $('#custom-tooltip').tooltipster({
-            content: $('#tooltip-description'), // Sử dụng tooltipster
-            position: 'right',
-            interactive: true,
-        });
-        $('#custom-tooltip').tooltipster('open'); // Hiển thị tooltip
-    });
-});
+// $(document).ready(function() {
+//     $('.item-name').mouseover(function() {
+//         const description = $(this).data('description'); // Lấy dữ liệu description từ thuộc tính data-description
+//         $('#tooltip-description').text(description); // Đặt nội dung tooltip
+//         $('#custom-tooltip').tooltipster({
+//             content: $('#tooltip-description'), // Sử dụng tooltipster
+//             position: 'right',
+//             interactive: true,
+//         });
+//         $('#custom-tooltip').tooltipster('open'); // Hiển thị tooltip
+//     });
+// });
 function getDataInput() {
     return [
         {
-            label: 'Title',
-            name: 'title',
-            value: roomSelected.title,
+            label: 'Name',
+            name: 'name',
+            value: productSelected.name,
             required: true,
             pattern: "^[A-Za-z ]{6,20}",
             message: "Username must have minimum is 6 characters and maximum is 20 characters",
@@ -286,54 +250,34 @@ function getDataInput() {
         {
             label: 'Description',
             name: 'description',
-            value: roomSelected.description,
+            value: productSelected.description,
             pattern: "^[A-Za-z ]{6,120}",
             message: "Description must have minimum is 6 characters and maximum is 20 characters",
             required: true
         },
-        {
-            label: 'Publish Date',
-            name: 'publishDate',
-            value: roomSelected.publishDate,
-            type: 'date',
-            // pattern: "^[A-Za-z ]{6,120}",
-            // message: "Description must have minimum is 6 characters and maximum is 20 characters",
-            required: true
-        },
-        {
-            label: "Type",
-            name: "status",
-            value: roomSelected.status,
-            type: "select",
-            require: true,
-            message: "Type invalid",
-            options: [{value: "MULTIPLE", name:"Multiple"},{value: "SINGLE", name:"Single"}],
-        },
+
+
         {
             label: 'Price',
             name: 'price',
-            value: roomSelected.price,
+            value: productSelected.price,
             pattern: "[1-9][0-9]{1,10}",
             message: 'Price errors',
             required: true
         },
-        {
-            label: 'Categories',
-            name: 'categories',
-            value: roomSelected.categoriesId,
-            type: 'select',
-            required: true,
-            options: categories,
-            message: 'Please choose Type'
-        },
-
-
-
+        // {
+        //     label: 'Poster',
+        //     name: 'poster',
+        //     value: productSelected.poster,
+        //     pattern: "[1-9][0-9]{1,10}",
+        //     message: 'Price errors',
+        //     required: true
+        // },
     ];
 }
 
 async function getList() {
-    const response = await fetch(`/api/books?page=${pageable.page - 1 || 0}&sort=${pageable.sortCustom || 'id,desc'}&search=${pageable.search || ''}&min=${pageable.min || ''}&max=${pageable.max || ''}`);
+    const response = await fetch(`/api/products?page=${pageable.page - 1 || 0}&sort=${pageable.sortCustom || 'id,desc'}&search=${pageable.search || ''}&min=${pageable.min || ''}&max=${pageable.max || ''}`);
     const result = await response.json();
     pageable = {
         ...pageable,
@@ -344,19 +288,19 @@ async function getList() {
     console.log(result)
     renderTBody(result.content);
 }
-async function getCategoriesSelectOption() {
-    const res = await fetch('api/categories');
-    return await res.json();
-}
-
-async function getAuthorsSelectOption() {
-    const res = await fetch('api/authors');
-    return await res.json();
-}
+// async function getCategoriesSelectOption() {
+//     const res = await fetch('api/categories');
+//     return await res.json();
+// }
+//
+// async function getAuthorsSelectOption() {
+//     const res = await fetch('api/authors');
+//     return await res.json();
+// }
 
 window.onload = async () => {
-    categories = await getCategoriesSelectOption();
-    authors = await getAuthorsSelectOption();
+    // categories = await getCategoriesSelectOption();
+    // authors = await getAuthorsSelectOption();
     await getList();
     onLoadSort();
     renderForm(formBody, getDataInput());
@@ -386,7 +330,7 @@ async function deleteItem(itemId) {
         return; // Người dùng đã hủy xóa
     }
 
-    const response = await fetch(`/api/books/${itemId}`, {
+    const response = await fetch(`/api/products/${itemId}`, {
         method: 'DELETE',
     });
 

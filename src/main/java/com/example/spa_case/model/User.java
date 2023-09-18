@@ -1,10 +1,14 @@
 package com.example.spa_case.model;
 
+import com.example.spa_case.model.enums.EStatusCustomer;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -12,6 +16,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Data
 @Table(name = "users")
+@Where(clause = "deleted = 0")
+@SQLDelete(sql= "UPDATE users SET `deleted` = 1 WHERE (`id` = ?); ")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,5 +31,10 @@ public class User {
 
     private String phone;
 
-    private LocalDateTime dob;
+    private LocalDate dob;
+
+    private boolean deleted = false;
+
+    @Enumerated(EnumType.STRING)
+    private EStatusCustomer statusCustomer;
 }
