@@ -1,4 +1,4 @@
-package com.example.spa_case.service.serviceService.request;
+package com.example.spa_case.service.productService.request;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,7 +7,7 @@ import java.util.List;
 
 @Data
 @NoArgsConstructor
-public class ServiceSaveRequest {
+public class ProductSaveRequest {
     private String name;
 
     private String price;
