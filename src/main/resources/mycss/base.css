@@ -33,3 +33,30 @@ th#price-check:hover {
     height: auto;
     margin-right: 10px;
 }
+.input-custom:invalid[focused="true"]~span {
+    display: block;
+}
+.input-custom:invalid[focused="true"] {
+    border-color: red !important;
+}
+
+
+.LOCK {
+    background: aquamarine;
+    border: aquamarine;
+    font-weight: bold;
+}
+
+.UNLOCK {
+    background: darkslateblue;
+    border: darkslateblue;
+    color: whitesmoke;
+    font-weight: bold;
+}
+
+.avatar-preview{
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    margin-right: 1em;
+}

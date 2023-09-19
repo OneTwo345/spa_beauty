@@ -1,5 +1,6 @@
 package com.example.spa_case.model;
 
+import com.example.spa_case.model.enums.ELock;
 import com.example.spa_case.model.enums.EStatusCustomer;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -10,6 +11,7 @@ import org.hibernate.annotations.Where;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @AllArgsConstructor
@@ -37,4 +39,9 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     private EStatusCustomer statusCustomer;
+
+    @Enumerated(EnumType.STRING)
+    private ELock eLock;
+    @ManyToOne
+    private File avatar;
 }

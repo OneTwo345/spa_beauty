@@ -18,9 +18,9 @@ public class HomeController {
     @GetMapping("/user")
     public ModelAndView user() {
         ModelAndView view = new ModelAndView("/user");
-
-        view.addObject("status", EStatusCustomer.values());
-        return view;    }
+        view.addObject("statusCustomer", EStatusCustomer.values());
+        return view;
+    }
 
     @GetMapping("/product")
     public ModelAndView product() {

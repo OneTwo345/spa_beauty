@@ -2,12 +2,12 @@ const userForm = document.getElementById('userForm');
 const tBody = document.getElementById('tBody');
 const ePagination = document.getElementById('pagination')
 const eSearch = document.getElementById('search')
-const eSearchButton = document.getElementById('searchButton');
+const eHeaderPublishDate = document.getElementById('header-publish-date')
 const ePriceRange = document.getElementById('priceRange');
 const formBody = document.getElementById('formBody');
 const ePrice = document.getElementById('price-check')
 let statusCustomer;
-
+let oldPasswordFromDatabase;
 
 let rooms = [];
 let userSelected = {};
@@ -23,8 +23,11 @@ let pageable = {
 userForm.onsubmit = async (e) => {
     e.preventDefault();
     let data = getDataFromForm(userForm);
+
     data = {
         ...data,
+        avatar: {id: idImages[0]}
+
     }
     if (userSelected.id) {
         await editRoom(data);
@@ -56,32 +59,61 @@ const addEventEditAndDelete = () => {
     }
 }
 
-async function  editRoom (data){
-    const response = await fetch('/api/users/'+data.id, {
+const password1 = document.getElementById('password');
+const confirmPassword = document.getElementById('confirmPassword');
+const oldPassword = document.getElementById('oldPassword');
+
+async function editRoom(data) {
+    if (password1.value !== confirmPassword.value) {
+        Swal.fire({
+            title: 'Error',
+            text: 'Mật khẩu xác nhận không khớp.',
+            icon: 'error',
+            confirmButtonText: 'OK'
+        });
+        return;
+    }
+    if (oldPassword.value !== userSelected.passWord) {
+        console.log(oldPassword.value)
+        console.log(data.passWord)
+
+        Swal.fire({
+            title: 'Error',
+            text: 'Mật khẩu cũ không khớp.',
+            icon: 'error',
+            confirmButtonText: 'OK'
+        });
+        return;
+    }
+
+
+    const response = await fetch('/api/users/' + data.id, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(data)
     });
+
     if (response.ok) {
         Swal.fire({
             title: 'Edited',
-            text: 'Phòng đã được tạo thành công.',
+            text: 'Phòng đã được chỉnh sửa thành công.',
             icon: 'success',
             confirmButtonText: 'OK'
         }).then(() => {
-            location.reload(); // Tải lại trang sau khi tạo phòng
+            location.reload(); // Tải lại trang sau khi chỉnh sửa phòng
         });
     } else {
         Swal.fire({
             title: 'Error',
-            text: 'Có lỗi xảy ra khi tạo phòng.',
+            text: 'Có lỗi xảy ra khi chỉnh sửa phòng.',
             icon: 'error',
             confirmButtonText: 'OK'
         });
     }
 }
+
 async function createRoom(data) {
 
     const response = await fetch('/api/users', {
@@ -108,23 +140,41 @@ getList();
             confirmButtonText: 'OK'
         });
     }
+
 }
+let isEditing = false;
+
 const onShowCreate = () => {
+
     clearForm();
+    if (!isEditing) {
+        $('#oldPassword').hide();
+        $('#confirmPassword').hide();
+        $('#oldPasswordLabel').hide();
+        $('#confirmPasswordLabel').hide();
+    }
     $('#staticBackdropLabel').text('Create User');
     renderForm(formBody, getDataInput());
-
 }
 document.getElementById('create').onclick = () => {
     onShowCreate();
 }
+
 const findById = async (id) => {
     const response = await fetch('/api/users/' + id);
-    return await response.json();
+    const user = await response.json();
+    console.log('Data from API:', user);
+
+    if (user.passWord) {
+        userSelected.passWord = user.passWord;
+    }
+
+    return user;
 }
 const onShowEdit = async (id) => {
     clearForm();
     userSelected = await findById(id);
+
     $('#staticBackdropLabel').text('Edit User');
     $('#staticBackdrop').modal('show');
     $('#name').val(userSelected.name);
@@ -132,10 +182,17 @@ const onShowEdit = async (id) => {
     $('#phone').val(userSelected.phone);
     $('#dob').val(userSelected.dob);
     $('#statusCustomer').val(userSelected.statusCustomer);
-    // $('#poster').val(userSelected.poster);
-    // $('#image').val(userSelected.poster);
-    renderForm(formBody, getDataInput());
+    $('#passWord').val(userSelected.passWord);
 
+    console.log('isEditing', isEditing)
+    if (!isEditing) {
+        $('#oldPassword').show();
+        $('#confirmPassword').show();
+        $('#oldPasswordLabel').show();
+        $('#confirmPasswordLabel').show();
+    }
+
+    renderForm(formBody, getDataInput());
 }
 
 
@@ -143,62 +200,89 @@ function clearForm() {
     userForm.reset();
     userSelected = {};
 }
-function onChangeCheck(selector, value){
-    const element = $(selector);
-    element.val(value);
-    element.change();
-}
-
-
 
 function getDataFromForm(form) {
-    // event.preventDefault()
     const data = new FormData(form);
-    return Object.fromEntries(data.entries())
+    const password = document.getElementById('password').value;
+
+    // Thêm giá trị mật khẩu vào dữ liệu
+    data.append('passWord', password);
+
+    // Kiểm tra nếu userSelected có id, thì thêm id vào dữ liệu
+    if (userSelected.id) {
+        data.append('id', userSelected.id);
+    }
+
+
+
+    return Object.fromEntries(data.entries());
 }
 
+
 function renderItemStr(item) {
+    let lockSelected = item.lock === 'LOCK' ? 'selected' : '';
+    let unlockSelected = item.lock === 'UNLOCK' ? 'selected' : '';
+
     return `<tr>
-                    <td>
-                        ${item.id}
-                    </td>
-                    <td>
-                        ${item.name}
-                    </td>
-                    <td>
-                        ${item.email}
-                    </td>
-                    <td>
-                        ${item.phone}
-                    </td>
-                    <td>
-                        ${item.dob}
-                    </td>
-                    <td>
-                        ${item.statusCustomer}
-                    </td>
-                     <td>
+        <td>
+            ${item.id}
+        </td>
+        <td>
+            ${item.name}
+        </td>
+        <td>
+            ${item.email}
+        </td>
+        <td>
+            ${item.phone}
+        </td>
+        <td>
+            ${item.dob}
+        </td>
+        <td>
+            ${item.statusCustomer}
+        </td>
+        <td>
+            <select id="lock-${item.id}" class="satus btn btn-danger" onchange="onChangeSelect(${item.id}, this.value)">
+                <option value="LOCK" ${lockSelected} class="LOCK">Lock</option>
+                <option value="UNLOCK" ${unlockSelected} class="UNLOCK">Unlock</option>
+            </select>
+        </td>
+        <td>
             <a class="btn edit" data-id="${item.id}" onclick="onShowEdit(${item.id})">
-               <i class="fa-regular fa-pen-to-square text-primary"></i>
+                <i class="fa-regular fa-pen-to-square text-primary"></i>
             </a>
             <a class="btn delete" data-id="${item.id}" onclick="deleteItem(${item.id})">
                 <i class="fa-regular fa-trash-can text-danger"></i>
             </a> 
         </td>
-                </tr>`
+    </tr>`;
 }
-// $(document).ready(function() {
-//     $('.item-name').mouseover(function() {
-//         const description = $(this).data('description'); // Lấy dữ liệu description từ thuộc tính data-description
-//         $('#tooltip-description').text(description); // Đặt nội dung tooltip
-//         $('#custom-tooltip').tooltipster({
-//             content: $('#tooltip-description'), // Sử dụng tooltipster
-//             position: 'right',
-//             interactive: true,
-//         });
-//         $('#custom-tooltip').tooltipster('open'); // Hiển thị tooltip
-//     });
-// });
+function onChangeSelect(id, selectedValue) {
+    const confirmation = window.confirm(`Bạn có chắc chắn muốn thay đổi trạng thái thành '${selectedValue}' không?`);
+
+    if (confirmation) {
+        fetch(`/api/users/${id}/${selectedValue}`, {
+            method: 'GET',
+        })
+            .then(response => {
+                if (response.ok) {
+                    console.log('Lock status changed successfully');
+                } else {
+                    console.error('Error changing lock status');
+                }
+            })
+            .catch(error => {
+                console.error('An error occurred:', error);
+            });
+    } else {
+        console.log('Cancelled');
+    }
+}
+
+
+
+
 function getDataInput() {
     return [
         {
@@ -213,28 +297,45 @@ function getDataInput() {
             label: 'Email',
             name: 'email',
             value: userSelected.email,
-            pattern: "^[A-Za-z ]{6,120}",
+            // pattern: "^[A-Za-z ]{6,120}",
             message: "Description must have minimum is 6 characters and maximum is 20 characters",
             required: true
         },
-
+        // {
+        //     label: 'PassWord',
+        //     name: 'password',
+        //     value: userSelected.password,
+        //     required: true,
+        //     pattern: "^[A-Za-z ]{6,20}",
+        //     message: "Username must have minimum is 6 characters and maximum is 20 characters",
+        // },
 
         {
             label: 'Phone',
             name: 'phone',
             value: userSelected.phone,
-            pattern: "[1-9][0-9]{1,10}",
+            // pattern: "[1-9][0-9]{1,10}",
             message: 'Price errors',
             required: true
         },
-        // {
-        //     label: 'Poster',
-        //     name: 'poster',
-        //     value: userSelected.poster,
-        //     pattern: "[1-9][0-9]{1,10}",
-        //     message: 'Price errors',
-        //     required: true
-        // },
+        {
+            label: 'Date of birth',
+            name: 'dob',
+            value: userSelected.dob,
+            type: 'date',
+            // pattern: "^[A-Za-z ]{6,120}",
+            // message: "Description must have minimum is 6 characters and maximum is 20 characters",
+            required: true
+        },
+        {
+            label: "Type",
+            name: "statusCustomer",
+            value: userSelected.statusCustomer,
+            type: "select",
+            require: true,
+            message: "Type invalid",
+            options: [{value: "SILVER", name:"Silver"},{value: "GOLD", name:"Gold"},{value: "PREMIUM", name:"Premium"}],
+        },
     ];
 }
 
@@ -357,13 +458,99 @@ const searchInput = document.querySelector('#search');
 searchInput.addEventListener('search', () => {
     onSearch(event)
 });
-// const onLoadSort = () => {
-//     ePrice.onclick = () => {
-//         let sort = 'price,desc'
-//         if(pageable.sortCustom?.includes('price') &&  pageable.sortCustom?.includes('desc')){
-//             sort = 'price,asc';
-//         }
-//         pageable.sortCustom = sort;
-//         getList();
-//     }
-// }
+const onLoadSort = () => {
+    eHeaderPublishDate.onclick = () => {
+        let sort = 'dob,desc'
+        if(pageable.sortCustom?.includes('dob') &&  pageable.sortCustom?.includes('desc')){
+            sort = 'dob,asc';
+        }
+        pageable.sortCustom = sort;
+        getList();
+    }
+}
+function clearForm() {
+    idImages = [];
+
+    const imgEle = document.getElementById("images");
+    const imageOld = imgEle.querySelectorAll('img');
+    for (let i = 0; i < imageOld.length; i++) {
+        imgEle.removeChild(imageOld[i])
+    }
+    const avatarDefault = document.createElement('img');
+    avatarDefault.src = '../assets/img/avatars/1.png';
+    avatarDefault.classList.add('avatar-preview');
+    imgEle.append(avatarDefault)
+    userForm.reset();
+    userSelected = {};
+}
+
+
+
+let idImages = [];
+
+async function previewImage(evt) {
+    if(evt.target.files.length === 0){
+        return;
+    }
+    idImages = [];
+
+    const imgEle = document.getElementById("images");
+    const imageOld = imgEle.querySelectorAll('img');
+    for (let i = 0; i < imageOld.length; i++) {
+        imgEle.removeChild(imageOld[i])
+    }
+
+    // When the image is loaded, update the img element's src
+    const files = evt.target.files
+    for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        await previewImageFile(file, i);
+
+        if (file) {
+            // Create a new FormData object and append the selected file
+            const formData = new FormData();
+            formData.append("avatar", file);
+            formData.append("fileType", "image");
+            try {
+                // Make a POST request to upload the image
+                const response = await fetch("/api/files", {
+                    method: "POST",
+                    body: formData,
+                });
+                if (response.ok) {
+                    const result = await response.json();
+                    if (result) {
+                        const id = result.id;
+                        idImages.push(id);
+
+                    } else {
+                        console.error('Image ID not found in the response.');
+                    }
+                } else {
+                    // Handle non-OK response (e.g., show an error message)
+                    console.error('Failed to upload image:', response.statusText);
+                }
+            } catch (error) {
+                // Handle network or other errors
+                console.error('An error occurred:', error);
+            }
+        }
+    }
+}
+
+async function previewImageFile(file) {
+    const reader = new FileReader();
+    reader.onload = function () {
+        const imgEle = document.getElementById("images");
+        const img = document.createElement('img');
+        img.src =reader.result;
+        img.classList.add('avatar-preview');
+        imgEle.append(img);
+
+
+    };
+    reader.readAsDataURL(file);
+
+}
+
+f
