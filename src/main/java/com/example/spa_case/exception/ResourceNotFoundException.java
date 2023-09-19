@@ -1,4 +1,4 @@
-package com.example.spa_case.controller.exception;
+package com.example.spa_case.exception;
 
 public class ResourceNotFoundException extends RuntimeException{
     public ResourceNotFoundException(String message) {

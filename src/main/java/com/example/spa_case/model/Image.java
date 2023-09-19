@@ -22,4 +22,5 @@ public class Image {
 
     @ManyToOne
     private Combo combo;
+
 }
