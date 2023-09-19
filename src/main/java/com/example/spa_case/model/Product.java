@@ -28,11 +28,13 @@ public class Product {
     //new Image set Poster
     // new List Image set images;
 
+
     @OneToOne
     private File poster;
 
     @OneToMany(mappedBy = "product")
     private List<File> images;
+
 
     @OneToMany(mappedBy = "product")
     private List<ComboProduct> comboProducts;
@@ -41,13 +43,9 @@ public class Product {
     private List<BillProduct> billProducts;
 
 
-
     public Product(Long id) {
         this.id = id;
     }
-
-
-
 
 
 }

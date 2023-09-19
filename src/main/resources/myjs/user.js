@@ -5,7 +5,6 @@ const eSearch = document.getElementById('search')
 const eHeaderPublishDate = document.getElementById('header-publish-date')
 const formBody = document.getElementById('formBody');
 
-
 let rooms = [];
 let userSelected = {};
 let pageable = {
@@ -312,7 +311,9 @@ function getDataInput() {
             name: 'phone',
             value: userSelected.phone,
             // pattern: "[1-9][0-9]{1,10}",
-            message: 'Price errors',
+            // message: 'Price errors',
+            pattern: "[0-9]{10}",
+            message: 'Phone errors',
             required: true
         },
         {

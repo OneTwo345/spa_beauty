@@ -23,13 +23,14 @@ public class    Customer {
 
     private String email;
 
+    @Enumerated(value = EnumType.STRING)
     private EStatusCustomer type;
 
-//    @OneToMany(mappedBy = "customer")
-//    private List<Bill> bills;
+    @OneToMany(mappedBy = "customer")
+    private List<Bill> bills;
 
-//    @OneToOne(fetch = FetchType.LAZY)
-//    private User user;
+    @OneToOne(fetch = FetchType.LAZY)
+    private User user;
 
 
 
