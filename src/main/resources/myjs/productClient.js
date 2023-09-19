@@ -79,11 +79,11 @@ function renderServiceCarousel(items) {
 
 function renderItemStr(item, index) {
     return `<div class="service-item position-relative">
-                <img class="img-fluid" src="../static/assets/user/img/service-2.jpg" alt="">
+                <img class="img-fluid" src="${item.poster}" alt="">
                 <div class="service-text text-center">
                     <h4 class="text-white font-weight-medium px-3">${item.name}</h4>
                     <p class="text-white px-3 mb-3">${item.description}</p>
-                    <p class="text-white px-3 mb-3">${item.price}</p>
+                    <p class="text-white px-3 mb-3"> Chỉ với ${item.price} VND</p>
                     <div class="w-100 bg-white text-center p-4">
                         <a class="btn btn-primary" href="">Make Order</a>
                     </div>
