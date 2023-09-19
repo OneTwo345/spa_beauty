@@ -11,7 +11,6 @@ import java.util.List;
 @NoArgsConstructor
 public class UserSaveRequest {
 
-
     private String name;
 
     private String email;
@@ -20,11 +19,12 @@ public class UserSaveRequest {
 
     private String phone;
 
-    private String dob;
+    private String   dob;
 
     private String statusCustomer;
     private SelectOptionRequest avatar;
 
 //    private String eLock;
+
 
 }

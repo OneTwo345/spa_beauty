@@ -3,18 +3,15 @@ const tBody = document.getElementById('tBody');
 const ePagination = document.getElementById('pagination')
 const eSearch = document.getElementById('search')
 const eHeaderPublishDate = document.getElementById('header-publish-date')
-const ePriceRange = document.getElementById('priceRange');
 const formBody = document.getElementById('formBody');
-const ePrice = document.getElementById('price-check')
-let statusCustomer;
-let oldPasswordFromDatabase;
+
 
 let rooms = [];
 let userSelected = {};
 let pageable = {
     page: 1,
     sort: 'id,desc',
-  
+
 }
 
 
@@ -130,7 +127,7 @@ async function createRoom(data) {
             icon: 'success',
             confirmButtonText: 'OK'
         }).then(() => {
-getList();
+            getList();
         });
     } else {
         Swal.fire({
@@ -477,7 +474,7 @@ function clearForm() {
         imgEle.removeChild(imageOld[i])
     }
     const avatarDefault = document.createElement('img');
-    avatarDefault.src = '../assets/img/avatars/1.png';
+    avatarDefault.src = '../assets/img/avatars/default_avatar.png';
     avatarDefault.classList.add('avatar-preview');
     imgEle.append(avatarDefault)
     userForm.reset();
@@ -552,5 +549,3 @@ async function previewImageFile(file) {
     reader.readAsDataURL(file);
 
 }
-
-f

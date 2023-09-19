@@ -1,9 +1,8 @@
 package com.example.spa_case.controller.RESTController;
 
+
+
 import com.example.spa_case.model.enums.ELock;
-import com.example.spa_case.model.enums.EStatusCustomer;
-import com.example.spa_case.service.productService.ProductService;
-import com.example.spa_case.service.productService.response.ProductListResponse;
 import com.example.spa_case.service.userService.UserService;
 import com.example.spa_case.service.userService.request.UserEditRequest;
 import com.example.spa_case.service.userService.request.UserSaveRequest;
@@ -21,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import java.math.BigDecimal;
 
 @RestController
-@RequestMapping("api/users")
+@RequestMapping("/api/users")
 @AllArgsConstructor
 public class UserRestController {
     private final UserService userService;

@@ -1,6 +1,7 @@
 package com.example.spa_case.model;
 
 import com.example.spa_case.model.enums.ELock;
+import com.example.spa_case.model.enums.ERole;
 import com.example.spa_case.model.enums.EStatusCustomer;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -34,6 +35,7 @@ public class User {
     private String phone;
 
     private LocalDate dob;
+    private ERole role;
 
     private boolean deleted = false;
 
@@ -44,4 +46,5 @@ public class User {
     private ELock eLock;
     @ManyToOne
     private File avatar;
+
 }

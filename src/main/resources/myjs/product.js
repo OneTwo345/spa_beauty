@@ -46,7 +46,7 @@ function searchByPrice(min, max) {
     const maxPrice = parseFloat(max);
     pageable.min = minPrice;
     pageable.max = maxPrice;
- getList();
+    getList();
 
 }
 $(document).ready(function () {
@@ -137,7 +137,7 @@ async function createRoom(data) {
             icon: 'success',
             confirmButtonText: 'OK'
         }).then(() => {
-getList();
+            getList();
         });
     } else {
         Swal.fire({

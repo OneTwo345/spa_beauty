@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.math.BigDecimal;
 
 @RestController
-@RequestMapping("api/products")
+@RequestMapping("/api/products")
 @AllArgsConstructor
 public class ProductRestController {
     private final ProductService serviceService;

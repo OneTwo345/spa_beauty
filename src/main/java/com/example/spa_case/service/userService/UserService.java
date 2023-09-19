@@ -3,6 +3,7 @@ package com.example.spa_case.service.userService;
 import com.example.spa_case.exception.ResourceNotFoundException;
 import com.example.spa_case.model.User;
 import com.example.spa_case.model.enums.ELock;
+import com.example.spa_case.model.enums.ERole;
 import com.example.spa_case.model.enums.EStatusCustomer;
 import com.example.spa_case.repository.FileRepository;
 import com.example.spa_case.repository.UserRepository;
@@ -54,7 +55,7 @@ public class UserService {
     }
     public void create(UserSaveRequest request){
         var user = AppUtil.mapper.map(request, User.class);
-
+        user.setRole(ERole.ROLE_USER);
 //        user.setStatusCustomer(EStatusCustomer.SILVER);
         user.setELock(ELock.UNLOCK);
 //        user.setAvatar(file);
@@ -66,6 +67,7 @@ public class UserService {
                         (String.format(AppMessage.ID_NOT_FOUND, "User", id)));
         var result = AppUtil.mapper.map(user, UserEditResponse.class);
         result.setStatusCustomer(user.getStatusCustomer());
+        result.setERole(user.getRole());
         result.setELock(user.getELock());
         return result;
     }
@@ -97,3 +99,4 @@ public class UserService {
 //        bookAuthorRepository.saveAll(bookAuthors);
 //    }
 }
+
