@@ -34,6 +34,7 @@ public class ProductRestController {
 
     }
 
+
     @GetMapping("/list")
     public ResponseEntity<List<ProductListResponse>> getAllProduct() {
         List<ProductListResponse> productListResponses = productService.getAllNoPage();
@@ -41,3 +42,4 @@ public class ProductRestController {
     }
 
 }
+

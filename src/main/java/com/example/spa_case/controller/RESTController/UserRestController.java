@@ -1,7 +1,6 @@
 package com.example.spa_case.controller.RESTController;
 
-import com.example.spa_case.service.productService.ProductService;
-import com.example.spa_case.service.productService.response.ProductListResponse;
+
 import com.example.spa_case.service.userService.UserService;
 import com.example.spa_case.service.userService.response.UserListResponse;
 import lombok.AllArgsConstructor;
