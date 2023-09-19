@@ -39,6 +39,7 @@ public class User {
     @Enumerated(EnumType.STRING)
     private EStatusCustomer statusCustomer;
 
+
     @Enumerated(value = EnumType.STRING)
     private ERole role;
 }

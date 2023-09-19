@@ -1,3 +1,4 @@
+
 const productForm = document.getElementById('productForm');
 const eCheckBoxAuthors = document.getElementsByName('authors');
 const tBody = document.getElementById('tBody');
