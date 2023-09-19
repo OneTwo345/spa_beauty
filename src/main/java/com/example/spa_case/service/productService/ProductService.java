@@ -1,6 +1,7 @@
 package com.example.spa_case.service.productService;
 //import com.example.spa_case.domain.Service;
 
+import com.example.spa_case.model.Customer;
 import com.example.spa_case.model.Product;
 import com.example.spa_case.repository.ProductRepository;
 import com.example.spa_case.service.productService.request.ProductSaveRequest;
@@ -12,6 +13,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Service
@@ -30,10 +34,26 @@ public class ProductService {
                         // Chuyển thành chuỗi
                         .build());
     }
+
+
     public void create(ProductSaveRequest request) {
         var product = AppUtil.mapper.map(request, Product.class);
        productRepository.save(product); // Sử dụng serviceRepository.save(service) thay vì bookRepository.save(book)
 
+    }
+
+    public List<ProductListResponse> getAllNoPage() {
+        return productRepository.findAll()
+                .stream()
+                .map(service -> ProductListResponse.builder()
+                        .id(service.getId())
+                        .name(service.getName())
+                        .description(service.getDescription())
+                        .price(service.getPrice())
+                        .poster(String.valueOf(service.getPoster()))
+                        // Chuyển thành chuỗi
+                        .build())
+                .collect(Collectors.toList());
     }
 
 }

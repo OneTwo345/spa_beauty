@@ -14,36 +14,36 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@Table(name = "products")
-public class Product {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Table(name = "products")
+    public class Product {
+        @Id
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
+        private Long id;
 
-    private String name;
+        private String name;
 
-    private BigDecimal price;
+        private BigDecimal price;
 
-    private String description;
-    //new Image set Poster
-    // new List Image set images;
+        private String description;
+        //new Image set Poster
+        // new List Image set images;
 
-    @ManyToOne
-    private Image poster;
+        @ManyToOne
+        private Image poster;
 
-    @OneToMany(mappedBy = "product")
-    private List<Image> images;
+        @OneToMany(mappedBy = "product")
+        private List<Image> images;
 
-    @OneToMany(mappedBy = "product")
-    private List<ComboProduct> comboProducts;
+        @OneToMany(mappedBy = "product")
+        private List<ComboProduct> comboProducts;
 
-    @OneToMany(mappedBy = "product")
-    private List<BillProduct> billProducts;
+        @OneToMany(mappedBy = "product")
+        private List<BillProduct> billProducts;
 
 
-    public Product(Long id) {
-        this.id = id;
-    }
+        public Product(Long id) {
+            this.id = id;
+        }
 
 
 
