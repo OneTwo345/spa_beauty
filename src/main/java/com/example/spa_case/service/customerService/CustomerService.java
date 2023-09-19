@@ -1,21 +1,16 @@
 package com.example.spa_case.service.customerService;
 
-import com.example.spa_case.controller.exception.ResourceNotFoundException;
+import com.example.spa_case.exception.ResourceNotFoundException;
 import com.example.spa_case.model.Customer;
-import com.example.spa_case.model.User;
 import com.example.spa_case.repository.CustomerRepository;
 import com.example.spa_case.service.customerService.response.CustomerListResponse;
-import com.example.spa_case.service.userService.response.UserListResponse;
 import com.example.spa_case.util.AppMessage;
-import com.example.spa_case.util.AppUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Service
