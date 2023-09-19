@@ -160,6 +160,7 @@ const onShowCreate = () => {
     $('#staticBackdropLabel').text('Create User');
     renderForm(formBody, getDataInput());
 }
+
 document.getElementById('create').onclick = () => {
     onShowCreate();
 }

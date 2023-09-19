@@ -19,6 +19,7 @@ public class ProductListResponse {
     private BigDecimal price;
 
     private String poster;
+
     private String image;
 
 }
