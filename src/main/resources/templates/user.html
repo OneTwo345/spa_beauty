@@ -39,13 +39,12 @@
                         <div>
                             <div>Avatar</div>
                             <label id="images" for="file">
-                                <img class="avatar-preview" src="../assets/img/avatars/1.png" >
                                 <input id="file" class="d-none" type="file"  onchange="previewImage(event)">
                             </label>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary">Save changes</button>
+                            <button type="submit" class="btn btn-primary" id="saveChange" disabled>Save changes</button>
                         </div>
 
 
@@ -59,10 +58,11 @@
         <table class="table table-bordered table-striped">
             <tr>
                 <th>No</th>
-                <th style="width: 150px">Name</th>
-                <th style="width: 150px">Email</th>
-                <th style="width: 150px">Phone</th>
-                <th style="width: 250px" id="header-publish-date">Date of birth</th>
+                <th >Name</th>
+                <th >Email</th>
+                <th >Phone</th>
+                <th  id="header-publish-date">Date of birth</th>
+                <th>Avatar</th>
                 <th>Type</th>
                 <th>Blocked</th>
                 <th>Action</th>

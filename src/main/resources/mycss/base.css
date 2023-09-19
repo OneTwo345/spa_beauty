@@ -55,8 +55,14 @@ th#price-check:hover {
 }
 
 .avatar-preview{
-    width: 150px;
-    height: 150px;
+    width: 500px;
+    height: 300px;
+    object-fit: cover;
+    margin-right: 1em;
+}
+.avatar-away{
+    width: 80px;
+    height: 80px;
     object-fit: cover;
     margin-right: 1em;
 }

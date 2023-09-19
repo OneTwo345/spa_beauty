@@ -39,6 +39,7 @@ public class UserService {
                         .email(user.getEmail())
                         .phone(user.getPhone())
                         .dob(user.getDob())
+                        .avatar(String.valueOf(user.getAvatar().getFileUrl()))
                         .statusCustomer(String.valueOf(user.getStatusCustomer()))
                         .eLock(String.valueOf(user.getELock()))
                         .build());
@@ -56,9 +57,7 @@ public class UserService {
     public void create(UserSaveRequest request){
         var user = AppUtil.mapper.map(request, User.class);
         user.setRole(ERole.ROLE_USER);
-//        user.setStatusCustomer(EStatusCustomer.SILVER);
         user.setELock(ELock.UNLOCK);
-//        user.setAvatar(file);
         userRepository.save(user);
     }
     public UserEditResponse findByIdUser(Long id){
@@ -66,6 +65,7 @@ public class UserService {
                 .orElseThrow(() -> new ResourceNotFoundException
                         (String.format(AppMessage.ID_NOT_FOUND, "User", id)));
         var result = AppUtil.mapper.map(user, UserEditResponse.class);
+        result.setAvatar(user.getAvatar().getFileUrl());
         result.setStatusCustomer(user.getStatusCustomer());
         result.setERole(user.getRole());
         result.setELock(user.getELock());
@@ -87,16 +87,8 @@ public class UserService {
         request.setId(id.toString());
         userRepository.save(userInDb);
 
-//        saveCategoryAndActor(request, user);
 
     }
-//    public void saveCategoryAndActor(BookSaveRequest request, Book book){
-//        var bookAuthors = new ArrayList<BookAuthor>();
-//        for (String idAuthor : request.getIdAuthors()) {
-//            Author author = new Author(Long.valueOf(idAuthor));
-//            bookAuthors.add(new BookAuthor(book, author));
-//        }
-//        bookAuthorRepository.saveAll(bookAuthors);
-//    }
+
 }
 

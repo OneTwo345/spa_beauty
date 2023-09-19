@@ -21,6 +21,7 @@ public class UserEditResponse {
     private String passWord;
 
 //    private String oldPassword;
+private String avatar;
 
     private String phone;
 

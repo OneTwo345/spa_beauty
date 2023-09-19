@@ -28,7 +28,6 @@ public class UserRestController {
     @GetMapping
     public ResponseEntity<Page<UserListResponse>> list(@PageableDefault(size = 5) Pageable pageable,
                                                        @RequestParam(defaultValue = "") String search
-
     ) {
         return new ResponseEntity<>(userService.getAll(search, pageable), HttpStatus.OK);
     }

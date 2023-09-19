@@ -19,7 +19,7 @@ public class UserSaveRequest {
 
     private String phone;
 
-    private String   dob;
+    private String  dob;
 
     private String statusCustomer;
     private SelectOptionRequest avatar;

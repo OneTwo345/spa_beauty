@@ -4,6 +4,7 @@ const ePagination = document.getElementById('pagination')
 const eSearch = document.getElementById('search')
 const eHeaderPublishDate = document.getElementById('header-publish-date')
 const formBody = document.getElementById('formBody');
+const avatarDefault = document.createElement('img');
 
 let rooms = [];
 let userSelected = {};
@@ -12,9 +13,6 @@ let pageable = {
     sort: 'id,desc',
 
 }
-
-
-
 
 userForm.onsubmit = async (e) => {
     e.preventDefault();
@@ -111,7 +109,17 @@ async function editRoom(data) {
 }
 
 async function createRoom(data) {
-
+    // console.log("cuatoi"+data)
+    // if (data.fire().status.ok) {
+    //     Swal.fire({
+    //         title: 'Created',
+    //         text: 'Phòng đã được tạo thành công.',
+    //         icon: 'success',
+    //         confirmButtonText: 'OK'
+    //     }).then(() => {
+    //         getList();
+    //     });
+    // }
     const response = await fetch('/api/users', {
         method: 'POST',
         headers: {
@@ -170,7 +178,7 @@ const findById = async (id) => {
 const onShowEdit = async (id) => {
     clearForm();
     userSelected = await findById(id);
-
+    avatarDefault.src = userSelected.avatar;
     $('#staticBackdropLabel').text('Edit User');
     $('#staticBackdrop').modal('show');
     $('#name').val(userSelected.name);
@@ -192,29 +200,18 @@ const onShowEdit = async (id) => {
 }
 
 
-function clearForm() {
-    userForm.reset();
-    userSelected = {};
-}
+
 
 function getDataFromForm(form) {
     const data = new FormData(form);
     const password = document.getElementById('password').value;
 
-    // Thêm giá trị mật khẩu vào dữ liệu
     data.append('passWord', password);
-
-    // Kiểm tra nếu userSelected có id, thì thêm id vào dữ liệu
     if (userSelected.id) {
         data.append('id', userSelected.id);
     }
-
-
-
     return Object.fromEntries(data.entries());
 }
-
-
 function renderItemStr(item) {
     let lockSelected = item.lock === 'LOCK' ? 'selected' : '';
     let unlockSelected = item.lock === 'UNLOCK' ? 'selected' : '';
@@ -234,6 +231,9 @@ function renderItemStr(item) {
         </td>
         <td>
             ${item.dob}
+        </td>
+        <td >
+           <img class="avatar-away" src="${item.avatar}" alt=""> 
         </td>
         <td>
             ${item.statusCustomer}
@@ -275,10 +275,6 @@ function onChangeSelect(id, selectedValue) {
         console.log('Cancelled');
     }
 }
-
-
-
-
 function getDataInput() {
     return [
         {
@@ -297,22 +293,13 @@ function getDataInput() {
             message: "Description must have minimum is 6 characters and maximum is 20 characters",
             required: true
         },
-        // {
-        //     label: 'PassWord',
-        //     name: 'password',
-        //     value: userSelected.password,
-        //     required: true,
-        //     pattern: "^[A-Za-z ]{6,20}",
-        //     message: "Username must have minimum is 6 characters and maximum is 20 characters",
-        // },
-
         {
             label: 'Phone',
             name: 'phone',
             value: userSelected.phone,
             // pattern: "[1-9][0-9]{1,10}",
             // message: 'Price errors',
-            pattern: "[0-9]{10}",
+            // pattern: "[0-9]{10}",
             message: 'Phone errors',
             required: true
         },
@@ -321,8 +308,6 @@ function getDataInput() {
             name: 'dob',
             value: userSelected.dob,
             type: 'date',
-            // pattern: "^[A-Za-z ]{6,120}",
-            // message: "Description must have minimum is 6 characters and maximum is 20 characters",
             required: true
         },
         {
@@ -474,7 +459,6 @@ function clearForm() {
     for (let i = 0; i < imageOld.length; i++) {
         imgEle.removeChild(imageOld[i])
     }
-    const avatarDefault = document.createElement('img');
     avatarDefault.src = '../assets/img/avatars/default_avatar.png';
     avatarDefault.classList.add('avatar-preview');
     imgEle.append(avatarDefault)
@@ -520,7 +504,7 @@ async function previewImage(evt) {
                     if (result) {
                         const id = result.id;
                         idImages.push(id);
-
+                        document.getElementById("saveChange").disabled = false;
                     } else {
                         console.error('Image ID not found in the response.');
                     }

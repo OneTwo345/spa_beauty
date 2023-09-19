@@ -1,5 +1,6 @@
 package com.example.spa_case.service.userService.response;
 
+import com.example.spa_case.model.File;
 import com.example.spa_case.model.enums.ELock;
 import lombok.*;
 
@@ -20,6 +21,7 @@ public class UserListResponse {
     private String phone;
 
     private LocalDate dob;
+    private String avatar;
 
     private String statusCustomer;
 
