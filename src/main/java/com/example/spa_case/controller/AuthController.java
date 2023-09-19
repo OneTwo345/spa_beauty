@@ -1,8 +1,9 @@
-package com.example.demo.controller;
+package com.example.spa_case.controller;
 
 
-import com.example.demo.service.auth.AuthService;
-import com.example.demo.service.auth.request.RegisterRequest;
+
+import com.example.spa_case.service.auth.AuthService;
+import com.example.spa_case.service.auth.request.RegisterRequest;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -36,8 +37,9 @@ public class AuthController {
     @PostMapping("/register")
     public String registration(@Valid @ModelAttribute("user") RegisterRequest request,
                                BindingResult result,
-                               Model model){
-        authService.checkUsernameOrPhoneNumberOrEmail(request, result);
+                               Model model)
+    {
+        authService.checkNameOrPhoneOrEmail(request, result);
         if(result.hasErrors()){
             return "/register";
         }

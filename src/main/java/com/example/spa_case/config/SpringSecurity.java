@@ -1,4 +1,4 @@
-package com.example.demo.config;
+package com.example.spa_case.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -11,6 +11,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+
 
 @Configuration
 @EnableWebSecurity
@@ -29,15 +30,16 @@ public class SpringSecurity {
         http.csrf().disable()
                 .authorizeHttpRequests((authorize) ->
                         authorize.requestMatchers("/register/**").permitAll()
-                                .requestMatchers("/index").permitAll()
-                                .requestMatchers("/products").hasAnyRole("USER", "ADMIN")
+                                .requestMatchers("/index", "/**").permitAll()
+
+                                .requestMatchers("/product").hasAnyRole("ADMIN")
+                                .requestMatchers("/user").hasAnyRole("USER")
                                 .requestMatchers("/api/**").permitAll()
-                                .anyRequest().authenticated()
                 ).formLogin(
                         form -> form
                                 .loginPage("/login")
                                 .loginProcessingUrl("/login")
-                                .defaultSuccessUrl("/products")
+                                .defaultSuccessUrl("/product")
                                 .permitAll()
                 ).logout(
                         logout -> logout
