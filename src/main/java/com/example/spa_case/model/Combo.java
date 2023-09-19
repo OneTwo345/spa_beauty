@@ -22,8 +22,8 @@ public class Combo {
 
     private BigDecimal price;
 
-    @ManyToOne
-    private Image poster;
+    @OneToOne
+    private File poster;
 
 
     @OneToMany(mappedBy = "combo")
@@ -33,5 +33,5 @@ public class Combo {
     private List<BillCombo> billCombos;
 
     @OneToMany(mappedBy = "combo")
-    private List<Image> images;
+    private List<File> images;
 }

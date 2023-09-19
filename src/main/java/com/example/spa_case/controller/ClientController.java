@@ -66,4 +66,10 @@ public class ClientController {
 
         return view;
     }
+//    @GetMapping("loginUp.html")
+//    public ModelAndView loginUp() {
+//        ModelAndView view = new ModelAndView("register");
+//
+//        return view;
+//    }
 }

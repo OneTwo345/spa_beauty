@@ -28,16 +28,24 @@ public class Product {
     //new Image set Poster
     // new List Image set images;
 
-    @ManyToOne
-    private Image poster;
+
+    @OneToOne
+    private File poster;
 
     @OneToMany(mappedBy = "product")
-    private List<Image> images;
+    private List<File> images;
+
 
     @OneToMany(mappedBy = "product")
     private List<ComboProduct> comboProducts;
 
     @OneToMany(mappedBy = "product")
     private List<BillProduct> billProducts;
+
+
+    public Product(Long id) {
+        this.id = id;
+    }
+
 
 }

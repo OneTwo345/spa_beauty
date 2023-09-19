@@ -5,17 +5,6 @@
     <button style="background-color: #ea9797; color: beige" type="button" class="btn  mt-4 " data-bs-toggle="modal" data-bs-target="#staticBackdrop" id="create">
         Create User
     </button>
-    <div class="input-group">
-        <label for="priceRange"></label><select class="form-control" id="priceRange">
-        <option value="0-50000000000" selected>----Choose----</option>
-        <option value="0-100">Dưới 100 đồng</option>
-            <option value="100-500">Từ 100 đến 500 đồng</option>
-            <option value="501-1000">Từ 501 đến 1000 đồng</option>
-            <option value="1001-2000">Từ 1001 đến 2000 đồng</option>
-        </select>
-
-    </div>
-
 
 
     <!-- Modal -->
@@ -28,25 +17,37 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="roomForm">
+                    <form id="userForm" >
                         <div class="row">
                             <div id="formBody">
 
                             </div>
-                            <div class="form-group col-12">
-                                <label for="authors">Authors</label>
-                                <select style="width: 100%!important; padding: .375rem .75rem!important; border-radius: 0 !important;"
-                                        class="js-example-basic-multiple form-control" id="authors" name="authors"
-                                        multiple="multiple">
-                                    <option th:each="author : ${authors}" th:value="${author.value}"
-                                            th:text="${author.name}"/>
-                                </select>
-                            </div>
+
+                        </div>
+                        <div class="mb-3">
+                            <label for="oldPassword" class="form-label" id="oldPasswordLabel"> Old Password</label>
+                            <input type="password" name="oldPassword" class="form-control" id="oldPassword" placeholder="Password">
+                        </div>
+                        <div>
+                            <label for="password" class="form-label"> Password</label>
+                            <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+                        </div>
+                        <div>
+                            <label for="confirmPassword" class="form-label" id="confirmPasswordLabel"> Confirm Password</label>
+                            <input type="password" class="form-control" id="confirmPassword" placeholder="Password">
+                        </div>
+                        <div>
+                            <div>Avatar</div>
+                            <label id="images" for="file">
+                                <input id="file" class="d-none" type="file"  onchange="previewImage(event)">
+                            </label>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary">Save changes</button>
+                            <button type="submit" class="btn btn-primary" id="saveChange" disabled>Save changes</button>
                         </div>
+
+
                     </form>
                 </div>
             </div>
@@ -57,15 +58,13 @@
         <table class="table table-bordered table-striped">
             <tr>
                 <th>No</th>
-                <th style="width: 250px">Title</th>
-                <th style="width: 250px">Description</th>
-                <th style="width: 250px">Publish Date</th>
-                <th id="price-check" class="arrow arrow-up" style="width: 100px">
-                    <span >Price &#9660;</span>
-                </th>
-                <th>Authors</th>
-                <th>Category</th>
+                <th >Name</th>
+                <th >Email</th>
+                <th >Phone</th>
+                <th  id="header-publish-date">Date of birth</th>
+                <th>Avatar</th>
                 <th>Type</th>
+                <th>Blocked</th>
                 <th>Action</th>
             </tr>
             <tbody id="tBody">
@@ -82,13 +81,17 @@
 </div>
 
 <th:block th:replace="~{layout.html :: footer}"></th:block>
-<script src="/assets/myjs/room.js"></script>
+<script src="/myjs/user.js"></script>
 <script>
     var eMenubar = document.getElementsByClassName("menu-item");
     for (var i = 0; i < eMenubar.length; i++) {
         eMenubar[i].classList.remove("active");
     }
     document.getElementById("menu-user").classList.add("active");
+    document.getElementById('userForm').addEventListener('submit', function(event) {
+
+    });
+
 </script>
 
 </html>

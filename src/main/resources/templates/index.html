@@ -38,15 +38,47 @@
     <!-- Customized Bootstrap Stylesheet -->
     <link href="../static/assets/user/css/style.css" rel="stylesheet">
 
+    <!--    <style>-->
+    <!--        /*.custom-select-style {*/-->
+    <!--        /*    background-color: white;*/-->
+    <!--        /*    border: 1px solid #aaa;*/-->
+    <!--        /*    border-radius: 0px;*/-->
+    <!--        /*    cursor: text;*/-->
+    <!--        /*    padding-bottom: 21px;*/-->
+    <!--        /*    padding-right: 5px;*/-->
+    <!--        /*    position: relative;*/-->
+    <!--        /*}*/-->
+
+
+    <!--    </style>-->
     <style>
-        .custom-select-style {
-            background-color: white;
-            border: 1px solid #aaa;
-            border-radius: 0px;
-            cursor: text;
-            padding-bottom: 21px;
-            padding-right: 5px;
+        .input-group > .form-control,
+        .input-group > .form-control-plaintext,
+        .input-group > .custom-select,
+        .input-group > .custom-file {
+            height: 49px;
             position: relative;
+            flex: 1 1 auto;
+            width: 1%;
+            min-width: 0;
+            margin-bottom: 0;
+            background-color: transparent;
+            padding: 19px 25px
+        }
+
+        .input-group-text {
+            display: flex;
+            align-items: center;
+            padding: 0.375rem 0.75rem;
+            margin-bottom: 0;
+            font-size: 1rem;
+            font-weight: 400;
+            line-height: 1.5;
+            color: #fff;
+            text-align: center;
+            white-space: nowrap;
+            background-color: #f9a392;
+            border: 1px solid #ced4da;
         }
     </style>
 </head>
@@ -112,7 +144,16 @@
                 </div>
                 <a href="contact.html" class="nav-item nav-link">Contact</a>
             </div>
-            <a href="" class="btn btn-primary d-none d-lg-block">Book Now</a>
+            <div>
+                <form class="d-flex">
+                    <div class="right-items login">
+                        <a href="/login" class="btn btn-primary d-none d-lg-block">Login</a>
+                    </div>
+                    <div>
+                        <a href="" class="btn btn-primary d-none d-lg-block">Book Now</a>
+                    </div>
+                </form>
+            </div>
         </div>
     </nav>
 </div>
@@ -220,79 +261,79 @@
             <h1>Spa & Beauty Services</h1>
         </div>
     </div>
-    <div class="owl-carousel service-carousel">
-        <div class="service-item position-relative">
-            <img class="img-fluid" src="../static/assets/user/img/service-1.jpg" alt="">
-            <div class="service-text text-center">
-                <h4 class="text-white font-weight-medium px-3">Body Massage</h4>
-                <p class="text-white px-3 mb-3">Elitr labore sit dolor erat est lorem diam sea ipsum diam dolor duo sit
-                    ipsum</p>
-                <div class="w-100 bg-white text-center p-4">
-                    <a class="btn btn-primary" href="">Make Order</a>
-                </div>
-            </div>
-        </div>
-        <div class="service-item position-relative">
-            <img class="img-fluid" src="../static/assets/user/img/service-2.jpg" alt="">
-            <div class="service-text text-center">
-                <h4 class="text-white font-weight-medium px-3">Stone Therapy</h4>
-                <p class="text-white px-3 mb-3">Elitr labore sit dolor erat est lorem diam sea ipsum diam dolor duo sit
-                    ipsum</p>
-                <div class="w-100 bg-white text-center p-4">
-                    <a class="btn btn-primary" href="">Make Order</a>
-                </div>
-            </div>
-        </div>
-        <div class="service-item position-relative">
-            <img class="img-fluid" src="../static/assets/user/img/service-3.jpg" alt="">
-            <div class="service-text text-center">
-                <h4 class="text-white font-weight-medium px-3">Facial Therapy</h4>
-                <p class="text-white px-3 mb-3">Elitr labore sit dolor erat est lorem diam sea ipsum diam dolor duo sit
-                    ipsum</p>
-                <div class="w-100 bg-white text-center p-4">
-                    <a class="btn btn-primary" href="">Make Order</a>
-                </div>
-            </div>
-        </div>
-        <div class="service-item position-relative">
-            <img class="img-fluid" src="../static/assets/user/img/service-4.jpg" alt="">
-            <div class="service-text text-center">
-                <h4 class="text-white font-weight-medium px-3">Skin Care</h4>
-                <p class="text-white px-3 mb-3">Elitr labore sit dolor erat est lorem diam sea ipsum diam dolor duo sit
-                    ipsum</p>
-                <div class="w-100 bg-white text-center p-4">
-                    <a class="btn btn-primary" href="">Make Order</a>
-                </div>
-            </div>
-        </div>
-        <div class="service-item position-relative">
-            <img class="img-fluid" src="../static/assets/user/img/service-5.jpg" alt="">
-            <div class="service-text text-center">
-                <h4 class="text-white font-weight-medium px-3">Stream Bath</h4>
-                <p class="text-white px-3 mb-3">Elitr labore sit dolor erat est lorem diam sea ipsum diam dolor duo sit
-                    ipsum</p>
-                <div class="w-100 bg-white text-center p-4">
-                    <a class="btn btn-primary" href="">Make Order</a>
-                </div>
-            </div>
-        </div>
-        <div class="service-item position-relative">
-            <img class="img-fluid" src="../static/assets/user/img/service-6.jpg" alt="">
-            <div class="service-text text-center">
-                <h4 class="text-white font-weight-medium px-3">Face Masking</h4>
-                <p class="text-white px-3 mb-3">Elitr labore sit dolor erat est lorem diam sea ipsum diam dolor duo sit
-                    ipsum</p>
-                <div class="w-100 bg-white text-center p-4">
-                    <a class="btn btn-primary" href="">Make Order</a>
-                </div>
-            </div>
-        </div>
+    <div class="owl-carousel service-carousel" id="productShow">
+        <!--        <div class="service-item position-relative">-->
+        <!--            <img class="img-fluid" src="../static/assets/user/img/service-1.jpg" alt="">-->
+        <!--            <div class="service-text text-center">-->
+        <!--                <h4 class="text-white font-weight-medium px-3">Body Massage</h4>-->
+        <!--                <p class="text-white px-3 mb-3">Elitr labore sit dolor erat est lorem diam sea ipsum diam dolor duo sit-->
+        <!--                    ipsum</p>-->
+        <!--                <div class="w-100 bg-white text-center p-4">-->
+        <!--                    <a class="btn btn-primary" href="">Make Order</a>-->
+        <!--                </div>-->
+        <!--            </div>-->
+        <!--        </div>-->
+        <!--        <div class="service-item position-relative">-->
+        <!--            <img class="img-fluid" src="../static/assets/user/img/service-2.jpg" alt="">-->
+        <!--            <div class="service-text text-center">-->
+        <!--                <h4 class="text-white font-weight-medium px-3">Stone Therapy</h4>-->
+        <!--                <p class="text-white px-3 mb-3">Elitr labore sit dolor erat est lorem diam sea ipsum diam dolor duo sit-->
+        <!--                    ipsum</p>-->
+        <!--                <div class="w-100 bg-white text-center p-4">-->
+        <!--                    <a class="btn btn-primary" href="">Make Order</a>-->
+        <!--                </div>-->
+        <!--            </div>-->
+        <!--        </div>-->
+        <!--        <div class="service-item position-relative">-->
+        <!--            <img class="img-fluid" src="../static/assets/user/img/service-3.jpg" alt="">-->
+        <!--            <div class="service-text text-center">-->
+        <!--                <h4 class="text-white font-weight-medium px-3">Facial Therapy</h4>-->
+        <!--                <p class="text-white px-3 mb-3">Elitr labore sit dolor erat est lorem diam sea ipsum diam dolor duo sit-->
+        <!--                    ipsum</p>-->
+        <!--                <div class="w-100 bg-white text-center p-4">-->
+        <!--                    <a class="btn btn-primary" href="">Make Order</a>-->
+        <!--                </div>-->
+        <!--            </div>-->
+        <!--        </div>-->
+        <!--        <div class="service-item position-relative">-->
+        <!--            <img class="img-fluid" src="../static/assets/user/img/service-4.jpg" alt="">-->
+        <!--            <div class="service-text text-center">-->
+        <!--                <h4 class="text-white font-weight-medium px-3">Skin Care</h4>-->
+        <!--                <p class="text-white px-3 mb-3">Elitr labore sit dolor erat est lorem diam sea ipsum diam dolor duo sit-->
+        <!--                    ipsum</p>-->
+        <!--                <div class="w-100 bg-white text-center p-4">-->
+        <!--                    <a class="btn btn-primary" href="">Make Order</a>-->
+        <!--                </div>-->
+        <!--            </div>-->
+        <!--        </div>-->
+        <!--        <div class="service-item position-relative">-->
+        <!--            <img class="img-fluid" src="../static/assets/user/img/service-5.jpg" alt="">-->
+        <!--            <div class="service-text text-center">-->
+        <!--                <h4 class="text-white font-weight-medium px-3">Stream Bath</h4>-->
+        <!--                <p class="text-white px-3 mb-3">Elitr labore sit dolor erat est lorem diam sea ipsum diam dolor duo sit-->
+        <!--                    ipsum</p>-->
+        <!--                <div class="w-100 bg-white text-center p-4">-->
+        <!--                    <a class="btn btn-primary" href="">Make Order</a>-->
+        <!--                </div>-->
+        <!--            </div>-->
+        <!--        </div>-->
+        <!--        <div class="service-item position-relative">-->
+        <!--            <img class="img-fluid" src="../static/assets/user/img/service-6.jpg" alt="">-->
+        <!--            <div class="service-text text-center">-->
+        <!--                <h4 class="text-white font-weight-medium px-3">Face Masking</h4>-->
+        <!--                <p class="text-white px-3 mb-3">Elitr labore sit dolor erat est lorem diam sea ipsum diam dolor duo sit-->
+        <!--                    ipsum</p>-->
+        <!--                <div class="w-100 bg-white text-center p-4">-->
+        <!--                    <a class="btn btn-primary" href="">Make Order</a>-->
+        <!--                </div>-->
+        <!--            </div>-->
+        <!--        </div>-->
     </div>
     <div class="row justify-content-center bg-appointment mx-0">
         <div class="col-lg-6 py-5">
             <div class="p-5 my-5" style="background: rgba(33, 30, 28, 0.7);">
-                <h1 class="text-white text-center mb-4">Make Appointment</h1>
-                <form>
+                <h1 class="text-white text-center mb-4">ĐẶT HẸN NGAY</h1>
+                <form id="billForm">
                     <div class="form-row">
                         <div class="col-sm-6">
                             <div class="form-group">
@@ -302,31 +343,35 @@
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <input type="email" class="form-control bg-transparent p-4" placeholder="Your Email"
-                                       required="required"/>
+                                <input type="number" class="form-control bg-transparent p-4" placeholder="Friend"
+                                       required="required" min="0"/>
                             </div>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <div class="date" id="date" data-target-input="nearest">
-                                    <input type="text" class="form-control bg-transparent p-4 datetimepicker-input"
-                                           placeholder="Select Date" data-target="#date" data-toggle="datetimepicker"/>
+                                <div class="input-group date" id="datetimepicker" data-target-input="nearest">
+                                    <input type="text" class="form-control datetimepicker-input"
+                                           data-target="#datetimepicker" placeholder="Select Date and Time"/>
+                                    <div class="input-group-append" data-target="#datetimepicker"
+                                         data-toggle="datetimepicker">
+                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <div class="time" id="time" data-target-input="nearest">
-                                    <input type="text" class="form-control bg-transparent p-4 datetimepicker-input"
-                                           placeholder="Select Time" data-target="#time" data-toggle="datetimepicker"/>
+                                <div class="form-group">
+                                    <input type="text" class="form-control bg-transparent p-4" placeholder="Your Phone"
+                                           required="required"/>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="form-row">
-                        <div class="col-sm-6">
+                        <div class="col-sm-12">
                             <div class="form-group">
                                 <select id="mySelect"
                                         class="custom-select bg-transparent px-4 js-example-basic-multiple"
@@ -341,20 +386,31 @@
                             </div>
                         </div>
 
+
+                    </div>
+                    <div class="form-row">
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <input type="text" class="form-control bg-transparent p-4" placeholder="Your Phone"
-                                       required="required"/>
+                                <select
+                                        class="custom-select bg-transparent px-4 "
+                                        style="height: 47px;">
+                                    <option value="1">VIP</option>
+                                    <option value="2">BASIC</option>
+                                    <option value="3">FAMILY</option>
+                                    <option value="4" selected>NONE</option>
+
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <button class="btn btn-primary btn-block" type="submit" style="height: 47px;">Make
+                                    Appointment
+                                </button>
                             </div>
                         </div>
                     </div>
-                    <div class="form-row">
-                        <div class="col-sm-6 offset-sm-6">
-                            <button class="btn btn-primary btn-block" type="submit" style="height: 47px;">Make
-                                Appointment
-                            </button>
-                        </div>
-                    </div>
+
                 </form>
             </div>
         </div>
@@ -732,30 +788,24 @@
 
 <!-- Template Javascript -->
 <script src="../static/assets/user/js/main.js"></script>
-
+<script src="../myjs/productClient.js"></script>
 <!-- select2 -->
 
 <script>
-
-
     $(document).ready(function () {
         $(".js-example-basic-multiple").select2({
             placeholder: "Select Service",
             allowClear: true,
             padding: '1.5 rem'
         });
-
-
-
         const select = document.getElementsByClassName('select2-selection select2-selection--multiple')[0].style;
         select.borderRadius = '0';
         select.background = 'transparent';
-        select.paddingBottom = '23px';
-        select.padding = '1.5 rem'
-
-
-
-
+        select.paddingBottom = '19px';
+        select.paddingTop = '5px';
+        select.paddingRight = '0px';
+        select.paddingLeft = '20px';
+        select.height = "47px";
     });
 </script>
 </body>
