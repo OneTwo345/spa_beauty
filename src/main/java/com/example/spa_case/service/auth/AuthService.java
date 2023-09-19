@@ -1,11 +1,13 @@
-package com.example.demo.service.auth;
+package com.example.spa_case.service.auth;
 
-import com.example.demo.model.User;
-import com.example.demo.model.enums.ERole;
-import com.example.demo.repository.UserRepository;
-import com.example.demo.service.auth.request.RegisterRequest;
-import com.example.demo.ulti.AppUtils;
+
+import com.example.spa_case.model.User;
+import com.example.spa_case.model.enums.ERole;
+import com.example.spa_case.repository.UserRepository;
+import com.example.spa_case.service.auth.request.RegisterRequest;
+import com.example.spa_case.util.AppUtil;
 import lombok.AllArgsConstructor;
+
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -25,15 +27,15 @@ public class AuthService implements UserDetailsService {
     private final PasswordEncoder passwordEncoder;
 
     public void register(RegisterRequest request){
-        var user = AppUtils.mapper.map(request, User.class);
+        var user = AppUtil.mapper.map(request, User.class);
         user.setRole(ERole.ROLE_USER);
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setPassWord(passwordEncoder.encode(user.getPassWord()));
         userRepository.save(user);
     }
 
-    public boolean checkUsernameOrPhoneNumberOrEmail(RegisterRequest request, BindingResult result){
+    public boolean checkNameOrPhoneOrEmail(RegisterRequest request, BindingResult result){
         boolean check = false;
-        if(userRepository.existsByUsernameIgnoreCase(request.getUsername())){
+        if(userRepository.existsByNameIgnoreCase(request.getName())){
             result.reject("username", null,
                     "There is already an account registered with the same username");
             check = true;
@@ -43,7 +45,7 @@ public class AuthService implements UserDetailsService {
                     "There is already an account registered with the same email");
             check = true;
         }
-        if(userRepository.existsByPhoneNumber(request.getPhoneNumber())){
+        if(userRepository.existsByPhone(request.getPhone())){
             result.reject("phoneNumber", null,
                     "There is already an account registered with the same phone number");
             check = true;
@@ -51,14 +53,15 @@ public class AuthService implements UserDetailsService {
         return check;
     }
 
+
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsernameIgnoreCaseOrEmailIgnoreCaseOrPhoneNumber(username,username,username)
+    public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {
+        User user = userRepository.findByNameIgnoreCaseOrEmailIgnoreCaseOrPhone(name,name,name)
                 .orElseThrow(() -> new UsernameNotFoundException("User not Exist") );
         var role = new ArrayList<SimpleGrantedAuthority>();
         role.add(new SimpleGrantedAuthority(user.getRole().toString()));
 
-        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), role);
+        return new org.springframework.security.core.userdetails.User(user.getName(), user.getPassWord(), role);
     }
     // để làm 1. kiểm tra xem user có tồn tại trong hệ thông hay không và tìm bằng 3 field Username Email PhoneNumber
     // 2. Nếu có thì sẽ trả về User của .security.core.userdetails.User để nó lưu vô kho spring sercurity context holder

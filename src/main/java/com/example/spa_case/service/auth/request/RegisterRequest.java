@@ -1,4 +1,4 @@
-package com.example.demo.service.auth.request;
+package com.example.spa_case.service.auth.request;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,11 +7,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class RegisterRequest {
 
-    private String fullName;
+    private String name;
 
-    private String phoneNumber;
-
-    private String username;
+    private String phone;
 
     private String password;
 

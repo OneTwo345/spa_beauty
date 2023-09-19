@@ -1,5 +1,6 @@
 package com.example.spa_case.model;
 
+import com.example.spa_case.model.enums.ERole;
 import com.example.spa_case.model.enums.EStatusCustomer;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -37,4 +38,7 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     private EStatusCustomer statusCustomer;
+
+    @Enumerated(value = EnumType.STRING)
+    private ERole role;
 }
