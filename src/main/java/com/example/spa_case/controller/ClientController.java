@@ -42,7 +42,7 @@ public class ClientController {
 
         return view;
     }
-    @GetMapping("price.html")
+    @GetMapping("/price")
     public ModelAndView price() {
         ModelAndView view = new ModelAndView("price");
 

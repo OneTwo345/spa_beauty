@@ -7,10 +7,13 @@ import com.example.spa_case.model.enums.ERole;
 import com.example.spa_case.model.enums.EStatusCustomer;
 import com.example.spa_case.repository.FileRepository;
 import com.example.spa_case.repository.UserRepository;
+import com.example.spa_case.service.productService.response.ProductListResponse;
 import com.example.spa_case.service.userService.request.UserEditRequest;
+import com.example.spa_case.service.userService.request.UserRegisterRequest;
 import com.example.spa_case.service.userService.request.UserSaveRequest;
 import com.example.spa_case.service.userService.response.UserEditResponse;
 import com.example.spa_case.service.userService.response.UserListResponse;
+import com.example.spa_case.service.userService.response.UserRegisterResponse;
 import com.example.spa_case.util.AppMessage;
 import com.example.spa_case.util.AppUtil;
 import com.example.spa_case.service.dto.request.SelectOptionRequest;
@@ -21,7 +24,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @AllArgsConstructor
@@ -90,5 +95,29 @@ public class UserService {
 
     }
 
+    public List<UserRegisterResponse> getAllUserRegister() {
+        return userRepository.findAll()
+                .stream()
+                .map(service -> UserRegisterResponse.builder()
+                        .id(service.getId())
+                        .name(service.getName())
+                        .email(service.getEmail())
+                        .passWord(service.getPassWord())
+                        // Chuyển thành chuỗi
+                        .build())
+                .collect(Collectors.toList());
+    }
+
+    public void createRegister(UserRegisterRequest request){
+        var user = AppUtil.mapper.map(request, User.class);
+        user.setRole(ERole.ROLE_USER);
+        userRepository.save(user);
+    }
+
+    public Optional<User> findByNameIgnoreCaseOrEmailIgnoreCaseOrPhone(String loginName) {
+        return Optional.ofNullable(userRepository.findByNameIgnoreCaseOrEmailIgnoreCaseOrPhone(loginName, loginName, loginName)
+                .orElseThrow(() -> new ResourceNotFoundException
+                        (String.format(AppMessage.ID_NOT_FOUND, "User"))));
+    }
 }
 

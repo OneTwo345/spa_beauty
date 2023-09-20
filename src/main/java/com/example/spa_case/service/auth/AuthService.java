@@ -55,8 +55,8 @@ public class AuthService implements UserDetailsService {
 
 
     @Override
-    public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {
-        User user = userRepository.findByNameIgnoreCaseOrEmailIgnoreCaseOrPhone(name,name,name)
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = userRepository.findByNameIgnoreCaseOrEmailIgnoreCaseOrPhone(username,username,username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not Exist") );
         var role = new ArrayList<SimpleGrantedAuthority>();
         role.add(new SimpleGrantedAuthority(user.getRole().toString()));
