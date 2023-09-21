@@ -37,17 +37,8 @@
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="../static/assets/user/css/style.css" rel="stylesheet">
-
-    <!--    <style>-->
-    <!--        /*.custom-select-style {*/-->
-    <!--        /*    background-color: white;*/-->
-    <!--        /*    border: 1px solid #aaa;*/-->
-    <!--        /*    border-radius: 0px;*/-->
-    <!--        /*    cursor: text;*/-->
-    <!--        /*    padding-bottom: 21px;*/-->
-    <!--        /*    padding-right: 5px;*/-->
-    <!--        /*    position: relative;*/-->
-    <!--        /*}*/-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.6/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.6/dist/sweetalert2.min.js"></script>
 
 
     <!--    </style>-->
@@ -80,6 +71,8 @@
             background-color: #f9a392;
             border: 1px solid #ced4da;
         }
+
+
     </style>
 </head>
 
@@ -121,7 +114,7 @@
 <!-- Navbar Start -->
 <div class="container-fluid p-0">
     <nav class="navbar navbar-expand-lg bg-white navbar-light py-3 py-lg-0 px-lg-5">
-        <a href="index.html" class="navbar-brand ml-lg-3">
+        <a href="index" class="navbar-brand ml-lg-3">
             <h1 class="m-0 text-primary"><span class="text-dark">SPA</span> Center</h1>
         </a>
         <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
@@ -129,20 +122,20 @@
         </button>
         <div class="collapse navbar-collapse justify-content-between px-lg-3" id="navbarCollapse">
             <div class="navbar-nav m-auto py-0">
-                <a href="index.html" class="nav-item nav-link active">Home</a>
-                <a href="about.html" class="nav-item nav-link">About</a>
-                <a href="service.html" class="nav-item nav-link">Services</a>
-                <a href="price.html" class="nav-item nav-link">Pricing</a>
+                <a href="index" class="nav-item nav-link active">Home</a>
+                <a href="about" class="nav-item nav-link">About</a>
+                <a href="service" class="nav-item nav-link">Services</a>
+                <a href="price" class="nav-item nav-link">Pricing</a>
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Pages</a>
                     <div class="dropdown-menu rounded-0 m-0">
-                        <a href="appointment.html" class="dropdown-item">Appointment</a>
-                        <a href="opening.html" class="dropdown-item">Open Hours</a>
-                        <a href="team.html" class="dropdown-item">Our Team</a>
-                        <a href="testimonial.html" class="dropdown-item">Testimonial</a>
+                        <a href="appointment" class="dropdown-item">Appointment</a>
+                        <a href="opening" class="dropdown-item">Open Hours</a>
+                        <a href="teaml" class="dropdown-item">Our Team</a>
+                        <a href="testimonial" class="dropdown-item">Testimonial</a>
                     </div>
                 </div>
-                <a href="contact.html" class="nav-item nav-link">Contact</a>
+                <a href="contact " class="nav-item nav-link">Contact</a>
             </div>
             <div>
                 <form class="d-flex">
@@ -337,13 +330,15 @@
                     <div class="form-row">
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <input type="text" class="form-control bg-transparent p-4" placeholder="Your Name"
+                                <input type="text" name="customerName" class="form-control bg-transparent p-4"
+                                       placeholder="Your Name"
                                        required="required"/>
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <input type="number" class="form-control bg-transparent p-4" placeholder="Friend"
+                                <input type="number" name="customerQuantity" class="form-control bg-transparent p-4"
+                                       placeholder="Friend"
                                        required="required" min="0"/>
                             </div>
                         </div>
@@ -352,7 +347,7 @@
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <div class="input-group date" id="datetimepicker" data-target-input="nearest">
-                                    <input type="text" class="form-control datetimepicker-input"
+                                    <input type="text" name="timeBook" class="form-control datetimepicker-input"
                                            data-target="#datetimepicker" placeholder="Select Date and Time"/>
                                     <div class="input-group-append" data-target="#datetimepicker"
                                          data-toggle="datetimepicker">
@@ -364,7 +359,8 @@
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <div class="form-group">
-                                    <input type="text" class="form-control bg-transparent p-4" placeholder="Your Phone"
+                                    <input type="text" name="customerPhone" class="form-control bg-transparent p-4"
+                                           placeholder="Your Phone"
                                            required="required"/>
                                 </div>
                             </div>
@@ -373,15 +369,10 @@
                     <div class="form-row">
                         <div class="col-sm-12">
                             <div class="form-group">
-                                <select id="mySelect"
+                                <select id="selectProducts"
+                                        name="idProduct"
                                         class="custom-select bg-transparent px-4 js-example-basic-multiple"
                                         multiple="multiple" style="height: 47px;">
-                                    <option value="1">Stone Therapy</option>
-                                    <option value="2">Facial Therapy</option>
-                                    <option value="3">Skin Care</option>
-                                    <option value="4">Steam Bath</option>
-                                    <option value="5">Face Masking</option>
-                                    <option value="6">Body Massage</option>
                                 </select>
                             </div>
                         </div>
@@ -391,20 +382,18 @@
                     <div class="form-row">
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <select
-                                        class="custom-select bg-transparent px-4 "
-                                        style="height: 47px;">
-                                    <option value="1">VIP</option>
-                                    <option value="2">BASIC</option>
-                                    <option value="3">FAMILY</option>
-                                    <option value="4" selected>NONE</option>
+                                <select id="selectCombos"
+                                        name="idCombo"
+                                        class="custom-select bg-transparent px-4 js-example-basic-multiple"
+                                        multiple="multiple" style="height: 47px;">
 
                                 </select>
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <button class="btn btn-primary btn-block" type="submit" style="height: 47px;">Make
+                                <button id="btnCreateBill" class="btn btn-primary btn-block" type="submit"
+                                        style="height: 47px;">Make
                                     Appointment
                                 </button>
                             </div>
@@ -788,24 +777,40 @@
 
 <!-- Template Javascript -->
 <script src="../static/assets/user/js/main.js"></script>
-<script src="../myjs/productClient.js"></script>
+<!--<script src="../myjs/productClient.js"></script>-->
 <!-- select2 -->
+<script src="../myjs/base.js"></script>
+<script src="../myjs/productClient.js"></script>
+<script src="../myjs/appoinment.js"></script>
+
 
 <script>
     $(document).ready(function () {
-        $(".js-example-basic-multiple").select2({
-            placeholder: "Select Service",
-            allowClear: true,
-            padding: '1.5 rem'
+        $(".js-example-basic-multiple").each(function (index) {
+            var placeholderText = "";
+            if (index === 0) {
+                placeholderText = "Select Service";
+            } else if (index === 1) {
+                placeholderText = "Select Combo";
+            }
+
+            $(this).select2({
+                placeholder: placeholderText,
+                allowClear: true,
+                padding: '1.5 rem'
+            });
+
+            var selectElement = $(this).next().find('.select2-selection--multiple');
+            selectElement.css({
+                borderRadius: '0',
+                background: 'transparent',
+                paddingBottom: '19px',
+                paddingTop: '5px',
+                paddingRight: '0px',
+                paddingLeft: '20px',
+                height: '47px'
+            });
         });
-        const select = document.getElementsByClassName('select2-selection select2-selection--multiple')[0].style;
-        select.borderRadius = '0';
-        select.background = 'transparent';
-        select.paddingBottom = '19px';
-        select.paddingTop = '5px';
-        select.paddingRight = '0px';
-        select.paddingLeft = '20px';
-        select.height = "47px";
     });
 </script>
 </body>

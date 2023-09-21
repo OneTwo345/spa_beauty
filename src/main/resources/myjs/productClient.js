@@ -1,5 +1,5 @@
 const service = document.getElementById("productShow");
-let products = [];
+let productsClient = [];
 
 async function getProducts() {
     const res = await fetch('http://localhost:8080/api/products/list');
@@ -9,44 +9,10 @@ async function getProducts() {
 
 async function renderCarousel() {
     const list = await getProducts();
-    products = list
+    productsClient = list
     renderServiceCarousel(list);
 }
 
-// function renderServiceCarousel(items) {
-//     let str = '';
-//     items.forEach((e, i) => {
-//         str += renderItemStr(e, i);
-//     })
-//     service.innerHTML = str;
-//
-//     // Service carousel
-//     $(".service-carousel").owlCarousel({
-//         autoplay: true,
-//         smartSpeed: 1500,
-//         loop: true,
-//         dots: false,
-//         nav : false,
-//         responsive: {
-//             0:{
-//                 items:1
-//             },
-//             576:{
-//                 items:2
-//             },
-//             768:{
-//                 items:3
-//             },
-//             992:{
-//                 items:4
-//             },
-//             1200:{
-//                 items:5
-//             }
-//         }
-//
-//     });
-// }
 function renderServiceCarousel(items) {
     let str = '';
     items.forEach((e, i) => {
@@ -85,7 +51,6 @@ function renderItemStr(item, index) {
                     <p class="text-white px-3 mb-3">${item.description}</p>
                     <p class="text-white px-3 mb-3"> Chỉ với ${item.price} VND</p>
                     <div class="w-100 bg-white text-center p-4">
-                        <a class="btn btn-primary" href="">Make Order</a>
                     </div>
                 </div>
             </div>`

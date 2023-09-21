@@ -51,7 +51,8 @@ public class ProductService {
                         .name(service.getName())
                         .description(service.getDescription())
                         .price(service.getPrice())
-                        .poster(String.valueOf(service.getPoster().getName()))
+                        .poster(service.getPoster().getFileUrl())
+//                        .image(service.getImages().toString())toString
                         // Chuyển thành chuỗi
                         .build())
                 .collect(Collectors.toList());

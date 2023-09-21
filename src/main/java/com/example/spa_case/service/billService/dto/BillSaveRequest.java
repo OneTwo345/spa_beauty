@@ -16,7 +16,11 @@ public class BillSaveRequest {
 
     private String customerQuantity;
 
-    private LocalDateTime timeBook;
+    private String timeBook;
+
+    private String productPrice;
+
+    private String comboPrice;
 
     private List<String> idProduct;
 
