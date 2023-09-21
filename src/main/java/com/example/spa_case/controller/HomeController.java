@@ -3,16 +3,19 @@ package com.example.spa_case.controller;
 import com.example.spa_case.model.enums.ELock;
 import com.example.spa_case.model.enums.ERole;
 import com.example.spa_case.model.enums.EStatusCustomer;
+import com.example.spa_case.service.productService.ProductService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+
 @Controller
 @AllArgsConstructor
 @RequestMapping(value="/")
 public class HomeController {
+    private final ProductService productService;
     @GetMapping("/dashboard")
     public ModelAndView home() {
         return new ModelAndView("/dashboard");
@@ -33,7 +36,9 @@ public class HomeController {
 
     @GetMapping("/combo")
     public ModelAndView combo() {
-        return new ModelAndView("/combo");
+        ModelAndView view = new ModelAndView("/combo");
+        view.addObject("products", productService.findAll());
+        return view;
     }
     @GetMapping("/bill")
     public ModelAndView bill() {

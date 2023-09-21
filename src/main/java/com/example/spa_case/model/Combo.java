@@ -22,7 +22,7 @@ public class Combo {
 
     private BigDecimal price;
 
-    @OneToOne
+    @ManyToOne
     private File poster;
 
 

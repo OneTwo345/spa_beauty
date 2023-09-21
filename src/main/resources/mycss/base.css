@@ -66,3 +66,9 @@ th#price-check:hover {
     object-fit: cover;
     margin-right: 1em;
 }
+.avatar-previews{
+    width: 200px;
+    height: 100px;
+    object-fit: cover;
+    margin-right: 1em;
+}
