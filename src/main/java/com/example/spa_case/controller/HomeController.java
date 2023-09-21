@@ -43,6 +43,14 @@ public class HomeController {
         return modelAndView;
     }
 
+    @GetMapping("/listproduct")
+    public ModelAndView listproduct() {
+        modelAndView.setViewName("listproduct");
+        ModelAndView modelAndView = Login();
+        modelAndView.addObject("someKey", "someValue");
+        return modelAndView;
+    }
+
     public ModelAndView Login(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null && authentication.isAuthenticated() && authentication.getPrincipal() instanceof UserDetails) {
