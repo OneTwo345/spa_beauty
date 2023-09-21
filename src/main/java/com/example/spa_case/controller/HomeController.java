@@ -25,13 +25,25 @@ import java.util.Optional;
 public class HomeController {
 
     private final UserService userService;
+     private final ModelAndView modelAndView = new ModelAndView();
 
     @GetMapping("/")
     public ModelAndView getHome() {
-        ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("index");
+        ModelAndView modelAndView = Login();
+        modelAndView.addObject("someKey", "someValue");
+        return modelAndView;
+    }
 
-        // Kiểm tra xem người dùng đã đăng nhập hay chưa
+    @GetMapping("/price")
+    public ModelAndView price() {
+        modelAndView.setViewName("price");
+        ModelAndView modelAndView = Login();
+        modelAndView.addObject("someKey", "someValue");
+        return modelAndView;
+    }
+
+    public ModelAndView Login(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null && authentication.isAuthenticated() && authentication.getPrincipal() instanceof UserDetails) {
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
@@ -61,9 +73,15 @@ public class HomeController {
 
         return "redirect:/login?logout";
     }
+    @GetMapping("/access-denied")
+    public String error403(){
+        return "403";
+    }
 
     @GetMapping("/dashboard")
     public ModelAndView home() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         return new ModelAndView("/dashboard");
     }
     @GetMapping("/user")

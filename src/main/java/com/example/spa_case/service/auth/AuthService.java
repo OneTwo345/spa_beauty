@@ -36,18 +36,15 @@ public class AuthService implements UserDetailsService {
     public boolean checkNameOrPhoneOrEmail(RegisterRequest request, BindingResult result){
         boolean check = false;
         if(userRepository.existsByNameIgnoreCase(request.getName())){
-            result.reject("username", null,
-                    "There is already an account registered with the same username");
+            result.rejectValue("username", "username", "Tên người dùng đã tồn tại");
             check = true;
         }
         if(userRepository.existsByEmailIgnoreCase(request.getEmail())){
-            result.reject("email", null,
-                    "There is already an account registered with the same email");
+            result.rejectValue("email", "email", "Email đã tồn tại");
             check = true;
         }
         if(userRepository.existsByPhone(request.getPhone())){
-            result.reject("phoneNumber", null,
-                    "There is already an account registered with the same phone number");
+            result.rejectValue("phoneNumber", "phoneNumber", "Số điện thoại đã tồn tại");
             check = true;
         }
         return check;

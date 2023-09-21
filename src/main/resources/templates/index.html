@@ -31,12 +31,12 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
 
     <!-- Libraries Stylesheet -->
-    <link href="../static/assets/user/lib/animate/animate.min.css" rel="stylesheet">
-    <link href="../static/assets/user/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
-    <link href="../static/assets/user/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet"/>
+    <link href="/assets/user/lib/animate/animate.min.css" rel="stylesheet">
+    <link href="/assets/user/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="/assets/user/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet"/>
 
     <!-- Customized Bootstrap Stylesheet -->
-    <link href="../static/assets/user/css/style.css" rel="stylesheet">
+    <link href="/assets/user/css/style.css" rel="stylesheet">
 
     <!--    <style>-->
     <!--        /*.custom-select-style {*/-->
@@ -131,7 +131,6 @@
             <div class="navbar-nav m-auto py-0">
                 <a href="/" class="nav-item nav-link active">Home</a>
                 <a href="/price" class="nav-item nav-link">Pricing</a>
-                </div>
             </div>
             <div>
                 <form class="d-flex">
@@ -140,7 +139,7 @@
                     </div>
                     <div  class="right-items login d-flex" th:if="${loggedIn == true}" >
                         <div style="padding-right: 20px" >
-                        <p class="btn btn-primary d-none d-lg-block " th:text="${user.name}"></p>
+                        <a class="btn btn-primary d-none d-lg-block " th:href="${user.role.toString() == 'ROLE_ADMIN' ? '/dashboard' : '/user'}" th:text="${user.name}"></a>
                         </div>
                         <div>
                         <a href="/logout" class="btn btn-primary d-none d-lg-block " >Logout</a>
@@ -167,7 +166,7 @@
         </ol>
         <div class="carousel-inner">
             <div class="carousel-item position-relative active" style="min-height: 100vh;">
-                <img class="position-absolute w-100 h-100" src="../static/assets/user/img/carousel-1.jpg"
+                <img class="position-absolute w-100 h-100" src="/assets/user/img/carousel-1.jpg"
                      style="object-fit: cover;">
                 <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
                     <div class="p-3" style="max-width: 900px;">
@@ -181,7 +180,7 @@
                 </div>
             </div>
             <div class="carousel-item position-relative" style="min-height: 100vh;">
-                <img class="position-absolute w-100 h-100" src="../static/assets/user/img/carousel-2.jpg"
+                <img class="position-absolute w-100 h-100" src="/assets/user/img/carousel-2.jpg"
                      style="object-fit: cover;">
                 <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
                     <div class="p-3" style="max-width: 900px;">
@@ -196,7 +195,7 @@
                 </div>
             </div>
             <div class="carousel-item position-relative" style="min-height: 100vh;">
-                <img class="position-absolute w-100 h-100" src="../static/assets/user/img/carousel-3.jpg"
+                <img class="position-absolute w-100 h-100" src="/assets/user/img/carousel-3.jpg"
                      style="object-fit: cover;">
                 <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
                     <div class="p-3" style="max-width: 900px;">
@@ -221,7 +220,7 @@
     <div class="container py-5">
         <div class="row align-items-center">
             <div class="col-lg-6 pb-5 pb-lg-0">
-                <img class="img-fluid w-100" src="../static/assets/user/img/about.jpg" alt="">
+                <img class="img-fluid w-100" src="/assets/user/img/about.jpg" alt="">
             </div>
             <div class="col-lg-6">
                 <h6 class="d-inline-block text-primary text-uppercase bg-light py-1 px-2">About Us</h6>
@@ -356,7 +355,7 @@
         <div class="row">
             <div class="col-lg-6" style="min-height: 500px;">
                 <div class="position-relative h-100">
-                    <img class="position-absolute w-100 h-100" src="../static/assets/user/img/opening.jpg"
+                    <img class="position-absolute w-100 h-100" src="/assets/user/img/opening.jpg"
                          style="object-fit: cover;">
                 </div>
             </div>
@@ -389,7 +388,7 @@
         <div class="row">
             <div class="col-lg-5" style="min-height: 500px;">
                 <div class="position-relative h-100">
-                    <img class="position-absolute w-100 h-100" src="../static/assets/user/img/pricing.jpg"
+                    <img class="position-absolute w-100 h-100" src="/assets/user/img/pricing.jpg"
                          style="object-fit: cover;">
                 </div>
             </div>
@@ -474,7 +473,7 @@
         <div class="row">
             <div class="col-lg-3 col-md-6">
                 <div class="team position-relative overflow-hidden mb-5">
-                    <img class="img-fluid" src="../static/assets/user/img/team-1.jpg" alt="">
+                    <img class="img-fluid" src="/assets/user/img/team-1.jpg" alt="">
                     <div class="position-relative text-center">
                         <div class="team-text bg-primary text-white">
                             <h5 class="text-white text-uppercase">Olivia Mia</h5>
@@ -494,7 +493,7 @@
             </div>
             <div class="col-lg-3 col-md-6">
                 <div class="team position-relative overflow-hidden mb-5">
-                    <img class="img-fluid" src="../static/assets/user/img/team-2.jpg" alt="">
+                    <img class="img-fluid" src="/assets/user/img/team-2.jpg" alt="">
                     <div class="position-relative text-center">
                         <div class="team-text bg-primary text-white">
                             <h5 class="text-white text-uppercase">Cory Brown</h5>
@@ -514,7 +513,7 @@
             </div>
             <div class="col-lg-3 col-md-6">
                 <div class="team position-relative overflow-hidden mb-5">
-                    <img class="img-fluid" src="../static/assets/user/img/team-3.jpg" alt="">
+                    <img class="img-fluid" src="/assets/user/img/team-3.jpg" alt="">
                     <div class="position-relative text-center">
                         <div class="team-text bg-primary text-white">
                             <h5 class="text-white text-uppercase">Elizabeth Ross</h5>
@@ -534,7 +533,7 @@
             </div>
             <div class="col-lg-3 col-md-6">
                 <div class="team position-relative overflow-hidden mb-5">
-                    <img class="img-fluid" src="../static/assets/user/img/team-4.jpg" alt="">
+                    <img class="img-fluid" src="/assets/user/img/team-4.jpg" alt="">
                     <div class="position-relative text-center">
                         <div class="team-text bg-primary text-white">
                             <h5 class="text-white text-uppercase">Kelly Walke</h5>
@@ -563,7 +562,7 @@
     <div class="container py-5">
         <div class="row align-items-center">
             <div class="col-lg-6 pb-5 pb-lg-0">
-                <img class="img-fluid w-100" src="../static/assets/user/img/testimonial.jpg" alt="">
+                <img class="img-fluid w-100" src="/assets/user/img/testimonial.jpg" alt="">
             </div>
             <div class="col-lg-6">
                 <h6 class="d-inline-block text-primary text-uppercase bg-light py-1 px-2">Testimonial</h6>
@@ -573,7 +572,7 @@
                         <i class="fa fa-3x fa-quote-right text-primary position-absolute"
                            style="top: -6px; right: 0;"></i>
                         <div class="d-flex align-items-center mb-3">
-                            <img class="img-fluid rounded-circle" src="../static/assets/user/img/testimonial-1.jpg"
+                            <img class="img-fluid rounded-circle" src="/assets/user/img/testimonial-1.jpg"
                                  style="width: 60px; height: 60px;" alt="">
                             <div class="ml-3">
                                 <h6 class="text-uppercase">Client Name</h6>
@@ -587,7 +586,7 @@
                         <i class="fa fa-3x fa-quote-right text-primary position-absolute"
                            style="top: -6px; right: 0;"></i>
                         <div class="d-flex align-items-center mb-3">
-                            <img class="img-fluid rounded-circle" src="../static/assets/user/img/testimonial-2.jpg"
+                            <img class="img-fluid rounded-circle" src="/assets/user/img/testimonial-2.jpg"
                                  style="width: 60px; height: 60px;" alt="">
                             <div class="ml-3">
                                 <h6 class="text-uppercase">Client Name</h6>
@@ -601,7 +600,7 @@
                         <i class="fa fa-3x fa-quote-right text-primary position-absolute"
                            style="top: -6px; right: 0;"></i>
                         <div class="d-flex align-items-center mb-3">
-                            <img class="img-fluid rounded-circle" src="../static/assets/user/img/testimonial-3.jpg"
+                            <img class="img-fluid rounded-circle" src="/assets/user/img/testimonial-3.jpg"
                                  style="width: 60px; height: 60px;" alt="">
                             <div class="ml-3">
                                 <h6 class="text-uppercase">Client Name</h6>
@@ -624,7 +623,7 @@
     <div class="container pt-5">
         <div class="row">
             <div class="col-lg-6 pr-lg-5 mb-5">
-                <a href="index.html" class="navbar-brand">
+                <a href="/" class="navbar-brand">
                     <h1 class="mb-3 text-white"><span class="text-primary">SPA</span> Center</h1>
                 </a>
                 <p>Aliquyam sed elitr elitr erat sed diam ipsum eirmod eos lorem nonumy. Tempor sea ipsum diam sed clita
@@ -705,21 +704,21 @@
 <!-- JavaScript Libraries -->
 <!--    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>-->
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-<script src="../static/assets/user/lib/easing/easing.min.js"></script>
-<script src="../static/assets/user/lib/waypoints/waypoints.min.js"></script>
-<script src="../static/assets/user/lib/counterup/counterup.min.js"></script>
-<script src="../static/assets/user/lib/owlcarousel/owl.carousel.min.js"></script>
-<script src="../static/assets/user/lib/tempusdominus/js/moment.min.js"></script>
-<script src="../static/assets/user/lib/tempusdominus/js/moment-timezone.min.js"></script>
-<script src="../static/assets/user/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+<script src="/assets/user/lib/easing/easing.min.js"></script>
+<script src="/assets/user/lib/waypoints/waypoints.min.js"></script>
+<script src="/assets/user/lib/counterup/counterup.min.js"></script>
+<script src="/assets/user/lib/owlcarousel/owl.carousel.min.js"></script>
+<script src="/assets/user/lib/tempusdominus/js/moment-timezone.min.js"></script>
+<script src="/assets/user/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+<script src="/assets/user/lib/tempusdominus/js/moment.min.js"></script>
 
 <!-- Contact Javascript File -->
-<script src="../static/assets/user/mail/jqBootstrapValidation.min.js"></script>
-<script src="../static/assets/user/mail/contact.js"></script>
+<script src="/assets/user/mail/jqBootstrapValidation.min.js"></script>
+<script src="/assets/user/mail/contact.js"></script>
 
 <!-- Template Javascript -->
-<script src="../static/assets/user/js/main.js"></script>
-<script src="../myjs/productClient.js"></script>
+<script src="/assets/user/js/main.js"></script>
+<script src="/myjs/productClient.js"></script>
 <!-- select2 -->
 
 <script>
@@ -738,17 +737,6 @@
         select.paddingLeft = '20px';
         select.height = "47px";
     });
-</script>
-<script>
-    var id = null;
-    if (id === null) {
-        document.getElementById("login-btn").style.display = "block";
-        document.getElementById("user-name").style.display = "none";
-    } else {
-        document.getElementById("user-name").textContent = `${userForm.name}`;
-        document.getElementById("login-btn").style.display = "none";
-        document.getElementById("user-name").style.display = "inline";
-    }
 </script>
 </body>
 

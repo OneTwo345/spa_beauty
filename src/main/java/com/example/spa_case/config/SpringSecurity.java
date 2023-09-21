@@ -29,11 +29,12 @@ public class SpringSecurity {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeHttpRequests((authorize) ->
-                        authorize.requestMatchers("/register/**", "/**").permitAll()
-                                .requestMatchers("/index", "/**").permitAll()
+                        authorize.requestMatchers("/register/**").permitAll()
+                                .requestMatchers("/index","/assets/**", "/" ).permitAll()
                                 .requestMatchers("/dashboard").hasAnyRole("ADMIN")
                                 .requestMatchers("/user").hasAnyRole("USER")
                                 .requestMatchers("/api/**").permitAll()
+                                .anyRequest().authenticated()
                 ).formLogin(
                         form -> form
                                 .loginPage("/login")
@@ -44,7 +45,11 @@ public class SpringSecurity {
                         logout -> logout
                                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                                 .permitAll()
+                ).exceptionHandling(
+                        exception -> exception
+                                .accessDeniedPage("/access-denied") // Custom 403 page
                 );
+
         return http.build();
     }
 
