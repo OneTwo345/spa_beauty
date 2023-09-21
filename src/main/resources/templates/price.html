@@ -87,7 +87,7 @@
                         </div>
                         <div  class="right-items login d-flex" th:if="${loggedIn == true}" >
                             <div style="padding-right: 20px" >
-                                <p class="btn btn-primary d-none d-lg-block " th:text="${user.name}"></p>
+                                <a class="btn btn-primary d-none d-lg-block " th:href="${user.role.toString() == 'ROLE_ADMIN' ? '/dashboard' : '/user'}" th:text="${user.name}"></a>
                             </div>
                             <div>
                                 <a href="/logout" class="btn btn-primary d-none d-lg-block " >Logout</a>

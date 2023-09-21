@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="utf-8">
@@ -124,7 +124,6 @@
             <div class="navbar-nav m-auto py-0">
                 <a href="/" class="nav-item nav-link active">Home</a>
                 <a href="/price" class="nav-item nav-link ">Pricing</a>
-
             </div>
             <div>
                 <form class="d-flex">
@@ -133,7 +132,7 @@
                     </div>
                     <div  class="right-items login d-flex" th:if="${loggedIn == true}" >
                         <div style="padding-right: 20px" >
-                            <p class="btn btn-primary d-none d-lg-block " th:text="${user.name}"></p>
+                            <a class="btn btn-primary d-none d-lg-block " th:href="${user.role.toString() == 'ROLE_ADMIN' ? '/dashboard' : '/user'}" th:text="${user.name}"></a>
                         </div>
                         <div>
                             <a href="/logout" class="btn btn-primary d-none d-lg-block " >Logout</a>
