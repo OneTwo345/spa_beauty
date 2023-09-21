@@ -48,6 +48,8 @@ public class User {
     @ManyToOne
     private File avatar;
 
+    @OneToMany(mappedBy = "user")
+    private List<Bill> bills;
 
     @Enumerated(value = EnumType.STRING)
     private ERole role;

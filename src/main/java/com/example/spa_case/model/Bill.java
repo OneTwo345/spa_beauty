@@ -38,6 +38,9 @@ public class Bill {
     private List<BillCombo> billCombos;
     @ManyToOne
     private Customer customer;
+    @ManyToOne
+    private User user;
+
 
 
 

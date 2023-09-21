@@ -8,6 +8,8 @@ import com.example.spa_case.repository.*;
 import com.example.spa_case.service.billService.dto.BillDetailResponse;
 import com.example.spa_case.service.billService.dto.BillListResponse;
 import com.example.spa_case.service.billService.dto.BillSaveRequest;
+import com.example.spa_case.service.billService.response.BillAdminListResponse;
+import com.example.spa_case.service.productService.response.ProductListResponse;
 import com.example.spa_case.service.request.SelectOptionRequest;
 import com.example.spa_case.util.AppUtil;
 import jakarta.transaction.Transactional;
@@ -33,12 +35,14 @@ public class BillService {
     private final BillComboRepository billComboRepository;
     private final ComboRepository comboRepository;
 
-
+    private final BillAdminRepository billAdminRepository;
 
 
 
     public void create(BillSaveRequest request) {
         var bill = AppUtil.mapper.map(request, Bill.class);
+        BigDecimal totalBillPrice = BigDecimal.valueOf(0.00);
+
         bill = billRepository.save(bill);
         Bill finalBill = bill;
         List<Long> idProducts = request.getIdProduct().stream().map(Long::valueOf).toList();
@@ -46,7 +50,7 @@ public class BillService {
            var result =  new BillProduct(finalBill,product);
            result.setProductName(product.getName());
            result.setPrice(product.getPrice());
-           return result;
+            return result;
         }).collect(Collectors.toList()));
 
         List<Long> idCombos = request.getIdCombo().stream().map(Long::valueOf).toList();
@@ -57,36 +61,9 @@ public class BillService {
             return result;
         }).collect(Collectors.toList()));
 
+
     }
 
-//    public Page<BillListResponse> getBills(Pageable pageable) {
-//        Page<Bill> billPage = billRepository.findAll(pageable);
-//        Page<BillListResponse> billListResponses = billPage.map(bill -> {
-//            BillListResponse billListResponse = AppUtil.mapper.map(bill, BillListResponse.class);
-//
-//            billListResponse.setProducts(bill.getBillProducts()
-//                    .stream()
-//                    .map(billProduct -> {
-//                        String productName = billProduct.getProduct().getName();
-//                        BigDecimal productPrice = billProduct.getProduct().getPrice();
-//                        return productName + " (" + productPrice + ")";
-//
-//                    })
-//                    .collect(Collectors.toList()));
-//
-//            billListResponse.setCombos(bill.getBillCombos()
-//                    .stream()
-//                    .map(billCombo -> {
-//                        String comboName = billCombo.getCombo().getName();
-//                        BigDecimal comboPrice = billCombo.getCombo().getPrice();
-//                        return comboName + " (" + comboPrice + ")";
-//                    })
-//                    .collect(Collectors.toList()));
-//
-//            return billListResponse;
-//        });
-//        return billListResponses;
-//    }
 
     public Page<BillListResponse> getBills(Pageable pageable) {
         Page<Bill> billPage = billRepository.findAll(pageable);
@@ -131,17 +108,6 @@ public class BillService {
 
 
 
-    // Hàm getAll không cần phân trang (không xóa)
-//    public List<BillListResponse> getBills(){
-//        return billRepository.findAll().stream().map(e -> {
-//            var result = AppUtil.mapper.map(e, BillListResponse.class);
-////            result.setType(e.getType().getName());
-//            result.setProducts(e.getBillProducts()
-//                    .stream().map(c -> c.getProduct().getName())
-//                    .collect(Collectors.joining(", ")));
-//            return result;
-//        }).collect(Collectors.toList());
-//    }
 
     public void update(BillSaveRequest request, Long id){
         var billDb = billRepository.findById(id).orElse(new Bill());
@@ -177,5 +143,29 @@ public class BillService {
 
         billProductRepository.deleteByBill(bill);
         billRepository.delete(bill);
+    }
+
+
+    public Page<BillAdminListResponse> getAll(String search, Pageable pageable, BigDecimal min, BigDecimal max) {
+        search = "%" + search + "%";
+        return billAdminRepository.searchAllByService(search, pageable, min, max)
+                .map(bill -> BillAdminListResponse.builder()
+                        .id(bill.getId())
+                        .user(bill.getUser().getName())
+                        .customerName(bill.getCustomerName())
+                        .customerEmail(bill.getCustomerEmail())
+                        .customerPhone(bill.getCustomerPhone())
+                        .customerQuantity(bill.getCustomerQuantity())
+                        .appointmentTime(bill.getAppointmentTime())
+                        .price(bill.getPrice())
+                        .products(bill.getBillProducts()
+                                .stream()
+                                .map(comboProduct -> comboProduct.getProduct().getName())
+                                .collect(Collectors.joining(", ")))
+                        .combos(bill.getBillCombos()
+                                .stream()
+                                .map(billCombo -> billCombo.getCombo().getName())
+                                .collect(Collectors.joining(" ")))// Chuyển thành chuỗi
+                        .build());
     }
 }

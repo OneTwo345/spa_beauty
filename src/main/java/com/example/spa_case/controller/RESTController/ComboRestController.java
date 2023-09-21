@@ -16,12 +16,18 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/combos")
 @AllArgsConstructor
 public class ComboRestController {
     private final ComboService comboService;
+    @GetMapping("/list")
+    public ResponseEntity<List<ComboListResponse>> getComboList() {
+        List<ComboListResponse> comboList = comboService.getComboList();
+        return ResponseEntity.ok(comboList);
+    }
     @PostMapping
     public void create(@RequestBody ComboSaveRequest request){
         comboService.create(request);

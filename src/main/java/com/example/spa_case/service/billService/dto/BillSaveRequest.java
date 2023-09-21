@@ -26,6 +26,6 @@ public class BillSaveRequest {
 
     private List<String> idCombo;
 
-
+    private String price;
 
 }

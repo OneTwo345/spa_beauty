@@ -14,6 +14,7 @@ import com.example.spa_case.service.comboService.response.ComboListResponse;
 import com.example.spa_case.service.comboService.response.ComboListsResponse;
 import com.example.spa_case.service.dto.request.SelectOptionRequest;
 import com.example.spa_case.service.productService.response.ProductListResponse;
+import com.example.spa_case.service.response.SelectOptionResponse;
 import com.example.spa_case.util.AppMessage;
 import com.example.spa_case.util.AppUtil;
 import lombok.AllArgsConstructor;
@@ -70,7 +71,17 @@ public class ComboService {
                         // Chuyển thành chuỗi
                         .build());
     }
-
+    public List<ComboListResponse> getComboList() {
+        return comboRepository.findAll()
+                .stream()
+                .map(service -> ComboListResponse.builder()
+                        .id(service.getId())
+                        .name(service.getName())
+                        .price(service.getPrice())
+                        // Chuyển thành chuỗi
+                        .build())
+                .collect(Collectors.toList());
+    }
     public Combo findById(Long id) {
         return comboRepository.findById(id).orElseThrow(
                 () -> new RuntimeException(String.format(AppMessage.ID_NOT_FOUND, "combo", id)));
@@ -123,5 +134,10 @@ public class ComboService {
         fileRepository.deleteAllByComboId(id);
         comboProductRepository.deleteAllByComboId(id);
         comboRepository.delete(combo);
+    }
+    public List<SelectOptionResponse> findAll() {
+        return comboRepository.findAll()
+                .stream().map(combo -> new SelectOptionResponse(combo.getId()
+                        .toString(), combo.getName())).collect(Collectors.toList());
     }
 }

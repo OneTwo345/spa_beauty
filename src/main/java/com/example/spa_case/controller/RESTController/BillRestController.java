@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/bills")
+@RequestMapping("/api/bills")
 @AllArgsConstructor
 public class BillRestController {
 
@@ -30,7 +30,7 @@ public class BillRestController {
 
 
     @GetMapping
-    public ResponseEntity<Page<BillListResponse>> getRooms(Pageable pageable) {
+    public ResponseEntity<Page<BillListResponse>> getBills(Pageable pageable) {
         return new ResponseEntity<>(billService.getBills(pageable), HttpStatus.OK);
     }
 

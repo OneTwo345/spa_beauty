@@ -4,6 +4,7 @@ import com.example.spa_case.model.User;
 import com.example.spa_case.model.enums.ELock;
 import com.example.spa_case.model.enums.ERole;
 import com.example.spa_case.model.enums.EStatusCustomer;
+import com.example.spa_case.service.comboService.ComboService;
 import com.example.spa_case.service.userService.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -24,6 +25,7 @@ import java.util.Optional;
 @RequestMapping(value="/")
 public class HomeController {
     private final ProductService productService;
+    private final ComboService comboService;
     private final UserService userService;
      private final ModelAndView modelAndView = new ModelAndView();
 
@@ -107,6 +109,10 @@ public class HomeController {
     }
     @GetMapping("/bill")
     public ModelAndView bill() {
-        return new ModelAndView("/bill");
+        ModelAndView view = new ModelAndView("/bill");
+        view.addObject("combos",comboService.findAll());
+        view.addObject("products", productService.findAll());
+        view.addObject("user", productService.findAll());
+        return view;
     }
 }

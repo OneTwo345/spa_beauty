@@ -28,18 +28,27 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="roomForm">
+                    <form id="billForm">
                         <div class="row">
                             <div id="formBody">
 
                             </div>
                             <div class="form-group col-12">
-                                <label for="authors">Authors</label>
+                                <label for="products">products</label>
                                 <select style="width: 100%!important; padding: .375rem .75rem!important; border-radius: 0 !important;"
-                                        class="js-example-basic-multiple form-control" id="authors" name="authors"
+                                        class="js-example-basic-multiple form-control" id="products" name="products"
                                         multiple="multiple">
-                                    <option th:each="author : ${authors}" th:value="${author.value}"
-                                            th:text="${author.name}"/>
+                                    <option th:each="product : ${products}" th:value="${product.value}"
+                                            th:text="${product.name}"/>
+                                </select>
+                            </div>
+                            <div class="form-group col-12">
+                                <label for="combos">combos</label>
+                                <select style="width: 100%!important; padding: .375rem .75rem!important; border-radius: 0 !important;"
+                                        class="js-example-basic-multiple form-control" id="combos" name="combos"
+                                        multiple="multiple">
+                                    <option th:each="combo : ${combos}" th:value="${combo.value}"
+                                            th:text="${combo.name}"/>
                                 </select>
                             </div>
                         </div>
@@ -57,15 +66,17 @@
         <table class="table table-bordered table-striped">
             <tr>
                 <th>No</th>
-                <th style="width: 250px">Title</th>
-                <th style="width: 250px">Description</th>
-                <th style="width: 250px">Publish Date</th>
+                <th >Name</th>
+                <th >Phone</th>
+                <th >Quantity Customer</th>
+                <th> Time Book</th>
+                <th> Appointment Time</th>
+                <th> Products</th>
+                <th> Combos</th>
                 <th id="price-check" class="arrow arrow-up" style="width: 100px">
                     <span >Price &#9660;</span>
                 </th>
-                <th>Authors</th>
-                <th>Category</th>
-                <th>Type</th>
+
                 <th>Action</th>
             </tr>
             <tbody id="tBody">
@@ -82,7 +93,7 @@
 </div>
 
 <th:block th:replace="~{layout.html :: footer}"></th:block>
-<script src="/assets/myjs/room.js"></script>
+<script src="/myjs/bill.js"></script>
 <script>
     var eMenubar = document.getElementsByClassName("menu-item");
     for (var i = 0; i < eMenubar.length; i++) {
