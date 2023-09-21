@@ -1,5 +1,5 @@
 
-const productForm = document.getElementById('productForm');
+const comboForm = document.getElementById('comboForm');
 const tBody = document.getElementById('tBody');
 const ePagination = document.getElementById('pagination')
 const eSearch = document.getElementById('search')
@@ -7,12 +7,12 @@ const ePriceRange = document.getElementById('priceRange');
 const formBody = document.getElementById('formBody');
 const ePrice = document.getElementById('price-check')
 let rooms = [];
-let productSelected = {};
+let comboSelected = {};
 let idImages = [];
 let idPoster = [];
 const avatarDefaultImage = document.createElement('img');
 const avatarDefaultPoster = document.createElement('img');
-
+let products;
 let pageable = {
     page: 1,
     sort: 'id,desc',
@@ -60,12 +60,22 @@ function searchByPrice(min, max) {
 //     // select.background ='black'
 //
 // });
-productForm.onsubmit = async (e) => {
+$(document).ready(function () {
+    $('.js-example-basic-single').select2({
+        dropdownParent: $('#staticBackdrop')
+    });
+    $('.js-example-basic-multiple').select2({
+        dropdownParent: $('#staticBackdrop')
+    })
+});
+comboForm.onsubmit = async (e) => {
+    const idProducts = $("#products").select2('data').map(e => e.id);
     e.preventDefault();
-    let data = getDataFromForm(productForm);
+    let data = getDataFromForm(comboForm);
     data = {
         ...data,
-        id: productSelected.id,
+        id: comboSelected.id,
+        idProducts,
         poster:{id:idPoster[0]},
         images: idImages.map(e => {
             return {
@@ -73,7 +83,11 @@ productForm.onsubmit = async (e) => {
             }
         })
     }
-    if (productSelected.id) {
+    // if(data.idProducts.length === 0){
+    //     alertify.error('Please select an author!');
+    //     return;
+    // }
+    if (comboSelected.id) {
         await editRoom(data);
     } else {
         await createRoom(data)
@@ -89,7 +103,7 @@ async function renderTable() {
     addEventEditAndDelete();
 }
 async function getRooms() {
-    const res = await fetch('/api/products');
+    const res = await fetch('/api/combos');
     return await res.json();
 }
 const addEventEditAndDelete = () => {
@@ -105,9 +119,9 @@ const addEventEditAndDelete = () => {
 
 async function  editRoom (data){
 
-    showImgInForm(productSelected.images);
+    showImgInForm(comboSelected.images);
 
-    const response = await fetch('/api/products/'+data.id, {
+    const response = await fetch('/api/combos/'+data.id, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
@@ -134,7 +148,7 @@ async function  editRoom (data){
 }
 async function createRoom(data) {
     console.log(data)
-    const response = await fetch('/api/products', {
+    const response = await fetch('/api/combos', {
 
         method: 'POST',
         headers: {
@@ -164,7 +178,7 @@ async function createRoom(data) {
 const onShowCreate = () => {
     clearForm1();
     clearForm2();
-    $('#staticBackdropLabel').text('Create Product');
+    $('#staticBackdropLabel').text('Create Combo');
     renderForm(formBody, getDataInput());
 
 }
@@ -172,26 +186,35 @@ document.getElementById('create').onclick = () => {
     onShowCreate();
 }
 const findById = async (id) => {
-    const response = await fetch('/api/products/' + id);
+    const response = await fetch('/api/combos/' + id);
     return await response.json();
 }
 const onShowEdit = async (id) => {
     clearForm1();
     clearForm2();
-    productSelected = await findById(id);
-    avatarDefaultPoster.src = productSelected.poster;
-    showImgInForm(productSelected.images);
+    comboSelected = await findById(id);
+    avatarDefaultPoster.src = comboSelected.poster;
+    showImgInForm(comboSelected.images);
     $('#staticBackdropLabel').text('Edit Product');
     $('#staticBackdrop').modal('show');
-    $('#title').val(productSelected.title);
-    $('#description').val(productSelected.description);
-    $('#price').val(productSelected.price);
+    $('#name').val(comboSelected.title);
+    $('#price').val(comboSelected.price);
+    checkProductSelect();
 
-    // $('#poster').val(productSelected.poster);
-    // $('#image').val(productSelected.poster);
+    // $('#poster').val(comboSelected.poster);
+    // $('#image').val(comboSelected.poster);
     renderForm(formBody, getDataInput());
 
 }
+function checkProductSelect() {
+    console.log(comboSelected);
+    console.log("aa"+comboSelected.productsID)
+
+    $('#products').val(comboSelected.productsID);
+    $('#products').trigger('change');
+    console.log($('#select2').trigger('change'))
+}
+
 function showImgInForm(images) {
     const imgEle = document.getElementById("images");
     const imageOld = imgEle.querySelectorAll('img');
@@ -227,12 +250,13 @@ function renderItemStr(item) {
                     <td>
                         ${item.name}
                     </td>
-                    <td>
-                        ${item.description}
-                    </td>
-                    
+                   
+                  
                     <td>
                         ${formatCurrency(item.price)}
+                    </td>
+                    <td>
+                    ${item.products}
                     </td>
                     <td>
                         <img src="${item.poster}" alt="" class="avatar-away">
@@ -253,25 +277,16 @@ function getDataInput() {
         {
             label: 'Name',
             name: 'name',
-            value: productSelected.name,
+            value: comboSelected.name,
             required: true,
             pattern: "^[A-Za-z ]{6,20}",
             message: "Username must have minimum is 6 characters and maximum is 20 characters",
         },
-        {
-            label: 'Description',
-            name: 'description',
-            value: productSelected.description,
-            pattern: "^[A-Za-z ]{6,120}",
-            message: "Description must have minimum is 6 characters and maximum is 20 characters",
-            required: true
-        },
-
 
         {
             label: 'Price',
             name: 'price',
-            value: productSelected.price,
+            value: comboSelected.price,
             pattern: "[1-9][0-9]{1,10}",
             message: 'Price errors',
             required: true
@@ -280,7 +295,7 @@ function getDataInput() {
 }
 
 async function getList() {
-    const response = await fetch(`/api/products?page=${pageable.page - 1 || 0}&sort=${pageable.sortCustom || 'id,desc'}&search=${pageable.search || ''}&min=${pageable.min || ''}&max=${pageable.max || ''}`);
+    const response = await fetch(`/api/combos?page=${pageable.page - 1 || 0}&sort=${pageable.sortCustom || 'id,desc'}&search=${pageable.search || ''}&min=${pageable.min || ''}&max=${pageable.max || ''}`);
     const result = await response.json();
     pageable = {
         ...pageable,
@@ -308,7 +323,7 @@ function renderTBody(items) {
     tBody.innerHTML = str;
 }
 
-async function deleteItem(itemId) {
+async function deleteItem(id) {
     const { isConfirmed } = await Swal.fire({
         title: 'Xác nhận xóa',
         text: 'Bạn có chắc chắn muốn xóa mục này?',
@@ -322,7 +337,7 @@ async function deleteItem(itemId) {
         return; // Người dùng đã hủy xóa
     }
 
-    const response = await fetch(`/api/products/${itemId}`, {
+    const response = await fetch(`/api/combos/${id}`, {
         method: 'DELETE',
     });
 
@@ -421,8 +436,8 @@ function clearForm1() {
     avatarDefaultImage.src = '../assets/img/avatars/default_avatar.png';
     avatarDefaultImage.classList.add('avatar-previews');
     imgEle.append(avatarDefaultImage)
-    productForm.reset();
-    userSelected = {};
+    comboForm.reset();
+    comboSelected = {};
 }
 
 function clearForm2() {
@@ -436,8 +451,8 @@ function clearForm2() {
     avatarDefaultPoster.src = '../assets/img/avatars/default_avatar.png';
     avatarDefaultPoster.classList.add('avatar-previews');
     imgEle.append(avatarDefaultPoster)
-    productForm.reset();
-    productSelected = {};
+    comboForm.reset();
+    comboSelected = {};
 }
 
 async function previewImage(evt) {

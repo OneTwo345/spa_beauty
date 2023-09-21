@@ -2,9 +2,7 @@ package com.example.spa_case.model;
 
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.math.BigDecimal;
 
@@ -13,7 +11,8 @@ import java.util.List;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 @Table(name = "products")
 public class Product {
     @Id
@@ -25,8 +24,6 @@ public class Product {
     private BigDecimal price;
 
     private String description;
-    //new Image set Poster
-    // new List Image set images;
 
 
     @ManyToOne
