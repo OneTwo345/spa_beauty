@@ -1,4 +1,4 @@
-package com.example.spa_case.service.productService.request;
+package com.example.spa_case.service.comboService.request;
 
 import com.example.spa_case.service.dto.request.SelectOptionRequest;
 import lombok.Data;
@@ -8,13 +8,11 @@ import java.util.List;
 
 @Data
 @NoArgsConstructor
-public class ProductSaveRequest {
+public class ComboSaveRequest {
     private String name;
 
     private String price;
-
-    private String description;
-
+    private List<String> idProducts;
     private SelectOptionRequest poster;
 
     private List<SelectOptionRequest> images;

@@ -3,11 +3,14 @@ package com.example.spa_case.controller.RESTController;
 
 
 import com.example.spa_case.model.enums.ELock;
+import com.example.spa_case.service.productService.response.ProductListResponse;
 import com.example.spa_case.service.userService.UserService;
 import com.example.spa_case.service.userService.request.UserEditRequest;
+import com.example.spa_case.service.userService.request.UserRegisterRequest;
 import com.example.spa_case.service.userService.request.UserSaveRequest;
 import com.example.spa_case.service.userService.response.UserEditResponse;
 import com.example.spa_case.service.userService.response.UserListResponse;
+import com.example.spa_case.service.userService.response.UserRegisterResponse;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -15,9 +18,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/users")
@@ -63,5 +69,16 @@ public class UserRestController {
 
         userService.update(request,id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/list")
+    public ResponseEntity<List<UserRegisterResponse>> getAllUserRegister() {
+        List<UserRegisterResponse> userRegisterResponse = userService.getAllUserRegister();
+        return ResponseEntity.ok(userRegisterResponse);
+    }
+
+    @PostMapping("/list")
+    public void createRegister(@RequestBody UserRegisterRequest request) {
+        userService.createRegister(request);
     }
 }

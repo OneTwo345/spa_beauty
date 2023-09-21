@@ -29,23 +29,26 @@ public class SpringSecurity {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeHttpRequests((authorize) ->
-                        authorize.requestMatchers("/register/**", "/**").permitAll()
-                                .requestMatchers("/index", "/**").permitAll()
-
-                                .requestMatchers("/product").hasAnyRole("ADMIN")
-                                .requestMatchers("/user").hasAnyRole("USER")
+                        authorize.requestMatchers("/register/**").permitAll()
+                                .requestMatchers("/index","/assets/**", "/" ,"/myjs/**", "/cdn-cgi/**", "/error/**").permitAll()
+                                .requestMatchers("/dashboard","/product", "/user", "/bill", "/combo").hasAnyRole("ADMIN")
                                 .requestMatchers("/api/**").permitAll()
+                                .anyRequest().authenticated()
                 ).formLogin(
                         form -> form
                                 .loginPage("/login")
                                 .loginProcessingUrl("/login")
-                                .defaultSuccessUrl("/product")
+                                .defaultSuccessUrl("/login-success")
                                 .permitAll()
                 ).logout(
                         logout -> logout
                                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                                 .permitAll()
+                ).exceptionHandling(
+                        exception -> exception
+                                .accessDeniedPage("/access-denied") // Custom 403 page
                 );
+
         return http.build();
     }
 

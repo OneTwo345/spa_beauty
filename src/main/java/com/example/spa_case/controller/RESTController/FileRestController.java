@@ -22,4 +22,16 @@ public class FileRestController {
     public File upload(@RequestParam("avatar") MultipartFile avatar) throws IOException {
         return uploadFileService.saveAvatar(avatar);
     }
+//    @PostMapping
+//    public File upload1(@RequestParam("poster") MultipartFile poster,@RequestParam("image") MultipartFile image) throws IOException {
+//        return uploadFileService.saveAvatar(avatar);
+//    }
+    @PostMapping("/images")
+    public File uploadImage(@RequestParam("images") MultipartFile avatar) throws IOException {
+        return uploadFileService.saveAvatar(avatar);
+    }
+    @PostMapping("/posters")
+    public File uploadPost(@RequestParam("poster") MultipartFile avatar) throws IOException {
+        return uploadFileService.saveAvatar(avatar);
+    }
 }

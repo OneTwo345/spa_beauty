@@ -16,6 +16,7 @@ public class AppUtil {
     static {
         mapper = new ModelMapper();
         mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+        mapper.getConfiguration().setSkipNullEnabled(true);
         Converter<String, LocalDate> toStringDate = new AbstractConverter<>() {
             @Override
             protected LocalDate convert(String source) {
@@ -35,6 +36,7 @@ public class AppUtil {
 
             }
         };
+
         Converter<LocalDateTime, LocalTime> toTimeDateTime = new AbstractConverter<>() {
             @Override
             protected LocalTime convert(LocalDateTime source) {

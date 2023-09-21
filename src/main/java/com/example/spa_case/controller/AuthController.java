@@ -6,6 +6,9 @@ import com.example.spa_case.service.auth.AuthService;
 import com.example.spa_case.service.auth.request.RegisterRequest;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -32,6 +35,15 @@ public class AuthController {
         model.addAttribute("user", user);
         return "register";
     }
+    @GetMapping("/login-success")
+    public String loginSuccess(){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null && auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))) {
+            return "redirect:/dashboard";
+        }else{
+            return "redirect:/";
+        }
+    }
 
 
     @PostMapping("/register")
@@ -40,6 +52,7 @@ public class AuthController {
                                Model model)
     {
         authService.checkNameOrPhoneOrEmail(request, result);
+        model.addAttribute("user",request);
         if(result.hasErrors()){
             return "/register";
         }

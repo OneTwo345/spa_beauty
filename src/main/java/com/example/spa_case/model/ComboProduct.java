@@ -6,7 +6,7 @@ import lombok.*;
 import java.math.BigDecimal;
 
 @Entity
-@AllArgsConstructor
+//@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
@@ -16,13 +16,13 @@ public class ComboProduct {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String productName;
-
-    private BigDecimal price;
-
     @ManyToOne
     private Combo combo;
 
     @ManyToOne
     private Product product;
+    public ComboProduct(Combo combo, Product product){
+        this.combo=combo;
+        this.product=product;
+    }
 }

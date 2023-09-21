@@ -18,7 +18,9 @@ public class BillListResponse {
 
     private Long customerQuantity;
 
-    private BigDecimal price;
+    private BigDecimal totalProductPrice;
+
+    private BigDecimal totalComboPrice;
 
     private LocalDateTime timeBook;
 

@@ -49,7 +49,7 @@
     });
 
 
-    // // Service carousel
+    // Service carousel
     // $(".service-carousel").owlCarousel({
     //     autoplay: true,
     //     smartSpeed: 1500,
