@@ -1,5 +1,5 @@
 const service = document.getElementById("productShow");
-let products = [];
+let productsClient = [];
 
 async function getProducts() {
     const res = await fetch('http://localhost:8080/api/products/list');
@@ -9,7 +9,7 @@ async function getProducts() {
 
 async function renderCarousel() {
     const list = await getProducts();
-    products = list
+    productsClient = list
     renderServiceCarousel(list);
 }
 
@@ -51,7 +51,6 @@ function renderItemStr(item, index) {
                     <p class="text-white px-3 mb-3">${item.description}</p>
                     <p class="text-white px-3 mb-3"> Chỉ với ${item.price} VND</p>
                     <div class="w-100 bg-white text-center p-4">
-                        <a class="btn btn-primary" href="">Make Order</a>
                     </div>
                 </div>
             </div>`
