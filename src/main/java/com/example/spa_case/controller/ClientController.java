@@ -11,6 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 @AllArgsConstructor
 @RequestMapping(value="/")
 public class ClientController {
+
     @GetMapping("index")
     public ModelAndView index() {
         ModelAndView view = new ModelAndView("index");
@@ -42,12 +43,7 @@ public class ClientController {
 
         return view;
     }
-    @GetMapping("price")
-    public ModelAndView price() {
-        ModelAndView view = new ModelAndView("price");
 
-        return view;
-    }
     @GetMapping("service")
     public ModelAndView service() {
         ModelAndView view = new ModelAndView("service");

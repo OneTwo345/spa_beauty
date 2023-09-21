@@ -70,7 +70,6 @@ public class ProductService {
                         .description(service.getDescription())
                         .price(service.getPrice())
                         .poster(service.getPoster().getFileUrl())
-//                        .image(service.getImages().toString())toString
                         // Chuyển thành chuỗi
                         .build())
                 .collect(Collectors.toList());

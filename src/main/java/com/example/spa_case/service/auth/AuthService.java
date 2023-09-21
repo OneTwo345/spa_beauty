@@ -2,12 +2,14 @@ package com.example.spa_case.service.auth;
 
 
 import com.example.spa_case.model.User;
+import com.example.spa_case.model.enums.ELock;
 import com.example.spa_case.model.enums.ERole;
 import com.example.spa_case.repository.UserRepository;
 import com.example.spa_case.service.auth.request.RegisterRequest;
 import com.example.spa_case.util.AppUtil;
 import lombok.AllArgsConstructor;
 
+import org.springframework.security.authentication.LockedException;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -36,18 +38,15 @@ public class AuthService implements UserDetailsService {
     public boolean checkNameOrPhoneOrEmail(RegisterRequest request, BindingResult result){
         boolean check = false;
         if(userRepository.existsByNameIgnoreCase(request.getName())){
-            result.reject("username", null,
-                    "There is already an account registered with the same username");
+            result.rejectValue("name", "name", "Tên người dùng đã tồn tại");
             check = true;
         }
         if(userRepository.existsByEmailIgnoreCase(request.getEmail())){
-            result.reject("email", null,
-                    "There is already an account registered with the same email");
+            result.rejectValue("email", "email", "Email đã tồn tại");
             check = true;
         }
         if(userRepository.existsByPhone(request.getPhone())){
-            result.reject("phoneNumber", null,
-                    "There is already an account registered with the same phone number");
+            result.rejectValue("phone", "phone", "Số điện thoại đã tồn tại");
             check = true;
         }
         return check;
@@ -55,9 +54,13 @@ public class AuthService implements UserDetailsService {
 
 
     @Override
-    public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {
-        User user = userRepository.findByNameIgnoreCaseOrEmailIgnoreCaseOrPhone(name,name,name)
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = userRepository.findByNameIgnoreCaseOrEmailIgnoreCaseOrPhone(username,username,username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not Exist") );
+        if (user.getELock() == ELock.LOCK) {
+            throw new LockedException("User account is locked");
+        }
+
         var role = new ArrayList<SimpleGrantedAuthority>();
         role.add(new SimpleGrantedAuthority(user.getRole().toString()));
 
