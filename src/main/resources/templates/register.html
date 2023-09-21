@@ -1,129 +1,132 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Login V13</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="/assets/login/css/style.css" rel="stylesheet">
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <title>Login V13</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="/assets/login/css/style.css" rel="stylesheet">
 
 
-    <meta name="robots" content="noindex, follow">
-    <script nonce="7ad4f33e-230e-4c10-9e8d-a6c7b91d71cf">(function (w, d) {
-        !function (a, b, c, d) {
-            a[c] = a[c] || {};
-            a[c].executed = [];
-            a.zaraz = {deferred: [], listeners: []};
-            a.zaraz.q = [];
-            a.zaraz._f = function (e) {
-                return async function () {
-                    var f = Array.prototype.slice.call(arguments);
-                    a.zaraz.q.push({m: e, a: f})
-                }
-            };
-            for (const g of ["track", "set", "debug"]) a.zaraz[g] = a.zaraz._f(g);
-            a.zaraz.init = () => {
-                var h = b.getElementsByTagName(d)[0], i = b.createElement(d), j = b.getElementsByTagName("title")[0];
-                j && (a[c].t = b.getElementsByTagName("title")[0].text);
-                a[c].x = Math.random();
-                a[c].w = a.screen.width;
-                a[c].h = a.screen.height;
-                a[c].j = a.innerHeight;
-                a[c].e = a.innerWidth;
-                a[c].l = a.location.href;
-                a[c].r = b.referrer;
-                a[c].k = a.screen.colorDepth;
-                a[c].n = b.characterSet;
-                a[c].o = (new Date).getTimezoneOffset();
-                if (a.dataLayer) for (const n of Object.entries(Object.entries(dataLayer).reduce(((o, p) => ({...o[1], ...p[1]})), {}))) zaraz.set(n[0], n[1], {scope: "page"});
-                a[c].q = [];
-                for (; a.zaraz.q.length;) {
-                    const q = a.zaraz.q.shift();
-                    a[c].q.push(q)
-                }
-                i.defer = !0;
-                for (const r of [localStorage, sessionStorage]) Object.keys(r || {}).filter((t => t.startsWith("_zaraz_"))).forEach((s => {
-                    try {
-                        a[c]["z_" + s.slice(7)] = JSON.parse(r.getItem(s))
-                    } catch {
-                        a[c]["z_" + s.slice(7)] = r.getItem(s)
+        <meta name="robots" content="noindex, follow">
+        <script nonce="7ad4f33e-230e-4c10-9e8d-a6c7b91d71cf">(function (w, d) {
+            !function (a, b, c, d) {
+                a[c] = a[c] || {};
+                a[c].executed = [];
+                a.zaraz = {deferred: [], listeners: []};
+                a.zaraz.q = [];
+                a.zaraz._f = function (e) {
+                    return async function () {
+                        var f = Array.prototype.slice.call(arguments);
+                        a.zaraz.q.push({m: e, a: f})
                     }
-                }));
-                i.referrerPolicy = "origin";
-                i.src = "/cdn-cgi/zaraz/s.js?z=" + btoa(encodeURIComponent(JSON.stringify(a[c])));
-                h.parentNode.insertBefore(i, h)
-            };
-            ["complete", "interactive"].includes(b.readyState) ? zaraz.init() : a.addEventListener("DOMContentLoaded", zaraz.init)
-        }(w, d, "zarazData", "script");
-    })(window, document);</script>
-</head>
-<body style="background-color: #999999;">
-<div class="limiter">
-    <div class="container-login100">
-        <div class="login100-more" style="background-image: url('/assets/user/img/team-3.jpg');"></div>
-        <div class="wrap-login100 p-l-50 p-r-50 p-t-72 p-b-50">
-            <form class="login100-form validate-form" id="registerForm" method="post" th:object="${user}">
-<span class="login100-form-title p-b-59">
-Sign Up
-</span>
-                <div class="wrap-input100 validate-input" data-validate="Name is required">
-                    <span class="label-input100">Full Name</span>
-                    <input class="input100" type="text" name="name" placeholder="Name..." th:field="*{name}"/>
-                    <p th:errors="*{name}" class="text-danger"
-                       th:if="${#fields.hasErrors('name')}"></p>
-                    <span class="focus-input100"></span>
-                </div>
-                <div class="wrap-input100 validate-input" data-validate="Valid email is required: ex@abc.xyz">
-                    <span class="label-input100">Email</span>
-                    <input class="input100" type="email" name="email" placeholder="Email addess..." th:field="*{email}">
-                    <p th:errors="*{email}" class="text-danger"
-                       th:if="${#fields.hasErrors('email')}"></p>
-                    <span class="focus-input100"></span>
-                </div>
-                <div class="wrap-input100 validate-input" data-validate="Username is required">
-                    <span class="label-input100">Phone</span>
-                    <input class="input100" type="text" name="phone" placeholder="phone..." th:field="*{phone}">
-                    <p th:errors="*{phone}" class="text-danger"
-                       th:if="${#fields.hasErrors('phone')}"></p>
-                    <span class="focus-input100"></span>
-                </div>
-                <div class="wrap-input100 validate-input" data-validate="Password is required">
-                    <span class="label-input100">Password</span>
-                    <input class="input100" type="text" name="passWord" placeholder="*************"
-                           th:field="*{passWord}">
-                    <p th:errors="*{passWord}" class="text-danger"
-                       th:if="${#fields.hasErrors('passWord')}"></p>
-                    <span class="focus-input100"></span>
-                </div>
-                <div class="flex-m w-full p-b-33">
-                    <div class="contact100-form-checkbox">
-                        <input class="input-checkbox100" id="ckb1" type="checkbox" name="remember-me">
-                        <label class="label-checkbox100" for="ckb1">
-                            <span class="txt1">
-                                I agree to the
-                                <a href="#" class="txt2 hov1">
-                                    Terms of User
-                                </a>
-                            </span>
-                        </label>
+                };
+                for (const g of ["track", "set", "debug"]) a.zaraz[g] = a.zaraz._f(g);
+                a.zaraz.init = () => {
+                    var h = b.getElementsByTagName(d)[0], i = b.createElement(d), j = b.getElementsByTagName("title")[0];
+                    j && (a[c].t = b.getElementsByTagName("title")[0].text);
+                    a[c].x = Math.random();
+                    a[c].w = a.screen.width;
+                    a[c].h = a.screen.height;
+                    a[c].j = a.innerHeight;
+                    a[c].e = a.innerWidth;
+                    a[c].l = a.location.href;
+                    a[c].r = b.referrer;
+                    a[c].k = a.screen.colorDepth;
+                    a[c].n = b.characterSet;
+                    a[c].o = (new Date).getTimezoneOffset();
+                    if (a.dataLayer) for (const n of Object.entries(Object.entries(dataLayer).reduce(((o, p) => ({...o[1], ...p[1]})), {}))) zaraz.set(n[0], n[1], {scope: "page"});
+                    a[c].q = [];
+                    for (; a.zaraz.q.length;) {
+                        const q = a.zaraz.q.shift();
+                        a[c].q.push(q)
+                    }
+                    i.defer = !0;
+                    for (const r of [localStorage, sessionStorage]) Object.keys(r || {}).filter((t => t.startsWith("_zaraz_"))).forEach((s => {
+                        try {
+                            a[c]["z_" + s.slice(7)] = JSON.parse(r.getItem(s))
+                        } catch {
+                            a[c]["z_" + s.slice(7)] = r.getItem(s)
+                        }
+                    }));
+                    i.referrerPolicy = "origin";
+                    i.src = "/cdn-cgi/zaraz/s.js?z=" + btoa(encodeURIComponent(JSON.stringify(a[c])));
+                    h.parentNode.insertBefore(i, h)
+                };
+                ["complete", "interactive"].includes(b.readyState) ? zaraz.init() : a.addEventListener("DOMContentLoaded", zaraz.init)
+            }(w, d, "zarazData", "script");
+        })(window, document);</script>
+    </head>
+    <body style="background-color: #999999;">
+    <div class="limiter">
+        <div class="container-login100">
+            <div class="login100-more" style="background-image: url('/assets/user/img/team-3.jpg');"></div>
+            <div th:if="${param.register}">
+                <div class="alert alert-danger">Đăng ký thành công .</div>
+            </div>
+            <div class="wrap-login100 p-l-50 p-r-50 p-t-72 p-b-50">
+                <form class="login100-form validate-form" id="registerForm" method="post" th:object="${user}">
+    <span class="login100-form-title p-b-59">
+    Sign Up
+    </span>
+                    <div class="wrap-input100 validate-input" data-validate="Name is required">
+                        <span class="label-input100">Full Name</span>
+                        <input class="input100" type="text" name="name" placeholder="Name..." th:field="*{name}"/>
+                        <p th:errors="*{name}" class="text-danger"
+                           th:if="${#fields.hasErrors('name')}"></p>
+                        <span class="focus-input100"></span>
                     </div>
-                </div>
-                <div class="container-login100-form-btn">
-                    <div class="wrap-login100-form-btn">
-                        <div class="login100-form-bgbtn"></div>
-                        <button class="login100-form-btn" type="submit">
-                            Register
-                        </button>
+                    <div class="wrap-input100 validate-input" data-validate="Valid email is required: ex@abc.xyz">
+                        <span class="label-input100">Email</span>
+                        <input class="input100" type="email" name="email" placeholder="Email addess..." th:field="*{email}">
+                        <p th:errors="*{email}" class="text-danger"
+                           th:if="${#fields.hasErrors('email')}"></p>
+                        <span class="focus-input100"></span>
                     </div>
-                    <div>
-                        <a href="/login" class="dis-block txt3 hov1 p-r-30 p-t-10 p-b-10 p-l-30">
-                            login in
-                            <i class="fa fa-long-arrow-right m-l-5"></i>
-                        </a>
+                    <div class="wrap-input100 validate-input" data-validate="Username is required">
+                        <span class="label-input100">Phone</span>
+                        <input class="input100" type="text" name="phone" placeholder="phone..." th:field="*{phone}">
+                        <p th:errors="*{phone}" class="text-danger"
+                           th:if="${#fields.hasErrors('phone')}"></p>
+                        <span class="focus-input100"></span>
                     </div>
-                </div>
-            </form>
+                    <div class="wrap-input100 validate-input" data-validate="Password is required">
+                        <span class="label-input100">Password</span>
+                        <input class="input100" type="text" name="passWord" placeholder="*************"
+                               th:field="*{passWord}">
+                        <p th:errors="*{passWord}" class="text-danger"
+                           th:if="${#fields.hasErrors('passWord')}"></p>
+                        <span class="focus-input100"></span>
+                    </div>
+                    <div class="flex-m w-full p-b-33">
+                        <div class="contact100-form-checkbox">
+                            <input class="input-checkbox100" id="ckb1" type="checkbox" name="remember-me">
+                            <label class="label-checkbox100" for="ckb1">
+                                <span class="txt1">
+                                    I agree to the
+                                    <a href="#" class="txt2 hov1">
+                                        Terms of User
+                                    </a>
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="container-login100-form-btn">
+                        <div class="wrap-login100-form-btn">
+                            <div class="login100-form-bgbtn"></div>
+                            <button class="login100-form-btn" type="submit">
+                                Register
+                            </button>
+                        </div>
+                        <div>
+                            <a href="/login" class="dis-block txt3 hov1 p-r-30 p-t-10 p-b-10 p-l-30">
+                                login in
+                                <i class="fa fa-long-arrow-right m-l-5"></i>
+                            </a>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-</div>
-</body>
-</html>
+    </body>
+    </html>
