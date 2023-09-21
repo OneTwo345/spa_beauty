@@ -2,12 +2,14 @@ package com.example.spa_case.service.auth;
 
 
 import com.example.spa_case.model.User;
+import com.example.spa_case.model.enums.ELock;
 import com.example.spa_case.model.enums.ERole;
 import com.example.spa_case.repository.UserRepository;
 import com.example.spa_case.service.auth.request.RegisterRequest;
 import com.example.spa_case.util.AppUtil;
 import lombok.AllArgsConstructor;
 
+import org.springframework.security.authentication.LockedException;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -55,6 +57,10 @@ public class AuthService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByNameIgnoreCaseOrEmailIgnoreCaseOrPhone(username,username,username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not Exist") );
+        if (user.getELock() == ELock.LOCK) {
+            throw new LockedException("User account is locked");
+        }
+
         var role = new ArrayList<SimpleGrantedAuthority>();
         role.add(new SimpleGrantedAuthority(user.getRole().toString()));
 
