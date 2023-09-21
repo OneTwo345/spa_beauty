@@ -107,6 +107,6 @@ public class HomeController {
     }
     @GetMapping("/bill")
     public ModelAndView bill() {
-        return new ModelAndView("/bill");
+        return new ModelAndView("bill");
     }
 }
