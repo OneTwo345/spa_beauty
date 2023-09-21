@@ -36,7 +36,7 @@ public class AuthService implements UserDetailsService {
     public boolean checkNameOrPhoneOrEmail(RegisterRequest request, BindingResult result){
         boolean check = false;
         if(userRepository.existsByNameIgnoreCase(request.getName())){
-            result.rejectValue("username", "username", "Tên người dùng đã tồn tại");
+            result.rejectValue("name", "name", "Tên người dùng đã tồn tại");
             check = true;
         }
         if(userRepository.existsByEmailIgnoreCase(request.getEmail())){
@@ -44,7 +44,7 @@ public class AuthService implements UserDetailsService {
             check = true;
         }
         if(userRepository.existsByPhone(request.getPhone())){
-            result.rejectValue("phoneNumber", "phoneNumber", "Số điện thoại đã tồn tại");
+            result.rejectValue("phone", "phone", "Số điện thoại đã tồn tại");
             check = true;
         }
         return check;

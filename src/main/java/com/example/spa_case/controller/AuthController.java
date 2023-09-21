@@ -40,6 +40,7 @@ public class AuthController {
                                Model model)
     {
         authService.checkNameOrPhoneOrEmail(request, result);
+        model.addAttribute("user",request);
         if(result.hasErrors()){
             return "/register";
         }
