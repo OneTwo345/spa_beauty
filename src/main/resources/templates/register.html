@@ -60,14 +60,15 @@
     <div class="limiter">
         <div class="container-login100">
             <div class="login100-more" style="background-image: url('/assets/user/img/team-3.jpg');"></div>
-            <div th:if="${param.register}">
-                <div class="alert alert-danger">Đăng ký thành công .</div>
-            </div>
             <div class="wrap-login100 p-l-50 p-r-50 p-t-72 p-b-50">
                 <form class="login100-form validate-form" id="registerForm" method="post" th:object="${user}">
+                    <div th:if="${param.success}">
+                        <div class="alert alert-danger">Đăng ký thành công .</div>
+                    </div>
     <span class="login100-form-title p-b-59">
     Sign Up
     </span>
+
                     <div class="wrap-input100 validate-input" data-validate="Name is required">
                         <span class="label-input100">Full Name</span>
                         <input class="input100" type="text" name="name" placeholder="Name..." th:field="*{name}"/>

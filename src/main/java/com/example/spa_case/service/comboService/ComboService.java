@@ -116,6 +116,17 @@ public class ComboService {
         }
         comboProductRepository.saveAll(comboProducts);
     }
+    public List<ComboListResponse> getComboList() {
+        return comboRepository.findAll()
+                .stream()
+                .map(service -> ComboListResponse.builder()
+                        .id(service.getId())
+                        .name(service.getName())
+                        .price(service.getPrice())
+                        // Chuyển thành chuỗi
+                        .build())
+                .collect(Collectors.toList());
+    }
 
     @Transactional
     public void deleteById(Long id) {
