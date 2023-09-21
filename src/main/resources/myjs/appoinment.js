@@ -100,7 +100,7 @@ async function getProducts() {
 
 async function getCombos() {
     try {
-        const response = await fetch(`/api/combos`);
+        const response = await fetch(`/api/combos/list`);
         return await response.json();
     } catch (error) {
         throw new Error("Failed to fetch products.");

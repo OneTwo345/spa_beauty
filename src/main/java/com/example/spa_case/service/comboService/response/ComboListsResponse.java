@@ -1,4 +1,4 @@
-package com.example.spa_case.service.productService.response;
+package com.example.spa_case.service.comboService.response;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -9,17 +9,16 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 @Builder
-public class ProductListResponse {
+public class ComboListsResponse {
     private Long id;
 
     private String name;
 
-    private String description;
 
     private BigDecimal price;
+    private String products;
 
     private String poster;
-
     private String images;
 
 }

@@ -1,4 +1,4 @@
-package com.example.spa_case.service.comboService;
+package com.example.spa_case.service.comboService.response;
 
 import lombok.Builder;
 import lombok.Getter;

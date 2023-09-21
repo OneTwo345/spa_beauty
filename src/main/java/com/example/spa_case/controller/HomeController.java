@@ -7,6 +7,7 @@ import com.example.spa_case.model.enums.EStatusCustomer;
 import com.example.spa_case.service.userService.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import com.example.spa_case.service.productService.ProductService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,14 +17,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
-
 import java.util.Optional;
 
 @Controller
 @AllArgsConstructor
 @RequestMapping(value="/")
 public class HomeController {
-
+    private final ProductService productService;
     private final UserService userService;
      private final ModelAndView modelAndView = new ModelAndView();
 
@@ -78,6 +78,7 @@ public class HomeController {
         return "403";
     }
 
+
     @GetMapping("/dashboard")
     public ModelAndView home() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -100,7 +101,9 @@ public class HomeController {
 
     @GetMapping("/combo")
     public ModelAndView combo() {
-        return new ModelAndView("/combo");
+        ModelAndView view = new ModelAndView("/combo");
+        view.addObject("products", productService.findAll());
+        return view;
     }
     @GetMapping("/bill")
     public ModelAndView bill() {
