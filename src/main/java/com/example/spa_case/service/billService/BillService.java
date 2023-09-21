@@ -59,28 +59,76 @@ public class BillService {
 
     }
 
+//    public Page<BillListResponse> getBills(Pageable pageable) {
+//        Page<Bill> billPage = billRepository.findAll(pageable);
+//        Page<BillListResponse> billListResponses = billPage.map(bill -> {
+//            BillListResponse billListResponse = AppUtil.mapper.map(bill, BillListResponse.class);
+//
+//            billListResponse.setProducts(bill.getBillProducts()
+//                    .stream()
+//                    .map(billProduct -> {
+//                        String productName = billProduct.getProduct().getName();
+//                        BigDecimal productPrice = billProduct.getProduct().getPrice();
+//                        return productName + " (" + productPrice + ")";
+//
+//                    })
+//                    .collect(Collectors.toList()));
+//
+//            billListResponse.setCombos(bill.getBillCombos()
+//                    .stream()
+//                    .map(billCombo -> {
+//                        String comboName = billCombo.getCombo().getName();
+//                        BigDecimal comboPrice = billCombo.getCombo().getPrice();
+//                        return comboName + " (" + comboPrice + ")";
+//                    })
+//                    .collect(Collectors.toList()));
+//
+//            return billListResponse;
+//        });
+//        return billListResponses;
+//    }
+
     public Page<BillListResponse> getBills(Pageable pageable) {
         Page<Bill> billPage = billRepository.findAll(pageable);
         Page<BillListResponse> billListResponses = billPage.map(bill -> {
             BillListResponse billListResponse = AppUtil.mapper.map(bill, BillListResponse.class);
+
+            BigDecimal totalProductPrice = bill.getBillProducts()
+                    .stream()
+                    .map(billProduct -> billProduct.getProduct().getPrice())
+                    .reduce(BigDecimal.ZERO, BigDecimal::add);
+            billListResponse.setTotalProductPrice(totalProductPrice);
+
+            BigDecimal totalComboPrice = bill.getBillCombos()
+                    .stream()
+                    .map(billCombo -> billCombo.getCombo().getPrice())
+                    .reduce(BigDecimal.ZERO, BigDecimal::add);
+            billListResponse.setTotalComboPrice(totalComboPrice);
+
             billListResponse.setProducts(bill.getBillProducts()
                     .stream()
                     .map(billProduct -> {
                         String productName = billProduct.getProduct().getName();
                         BigDecimal productPrice = billProduct.getProduct().getPrice();
                         return productName + " (" + productPrice + ")";
+
                     })
                     .collect(Collectors.toList()));
 
             billListResponse.setCombos(bill.getBillCombos()
                     .stream()
-                    .map(billCombo -> billCombo.getCombo().getName())
+                    .map(billCombo -> {
+                        String comboName = billCombo.getCombo().getName();
+                        BigDecimal comboPrice = billCombo.getCombo().getPrice();
+                        return comboName + " (" + comboPrice + ")";
+                    })
                     .collect(Collectors.toList()));
 
             return billListResponse;
         });
         return billListResponses;
     }
+
 
 
     // Hàm getAll không cần phân trang (không xóa)

@@ -11,52 +11,52 @@ import org.springframework.web.servlet.ModelAndView;
 @AllArgsConstructor
 @RequestMapping(value="/")
 public class ClientController {
-    private final ModelAndView modelAndView = new ModelAndView();
 
-    @GetMapping("index.html")
+    @GetMapping("index")
     public ModelAndView index() {
         ModelAndView view = new ModelAndView("index");
 
         return view;
     }
-    @GetMapping("about.html")
+    @GetMapping("about")
     public ModelAndView about() {
         ModelAndView view = new ModelAndView("about");
 
         return view;
     }
-    @GetMapping("appointment.html")
+    @GetMapping("appointment")
     public ModelAndView appointment() {
         ModelAndView view = new ModelAndView("appointment");
 
         return view;
     }
-    @GetMapping("contact.html")
+    @GetMapping("contact")
     public ModelAndView contact() {
         ModelAndView view = new ModelAndView("contact");
 
         return view;
     }
 
-    @GetMapping("opening.html")
+    @GetMapping("opening")
     public ModelAndView opening() {
         ModelAndView view = new ModelAndView("opening");
 
         return view;
     }
-    @GetMapping("service.html")
+
+    @GetMapping("service")
     public ModelAndView service() {
         ModelAndView view = new ModelAndView("service");
 
         return view;
     }
-    @GetMapping("team.html")
+    @GetMapping("team")
     public ModelAndView team() {
         ModelAndView view = new ModelAndView("team");
 
         return view;
     }
-    @GetMapping("testimonial.html")
+    @GetMapping("testimonial")
     public ModelAndView testimonial() {
         ModelAndView view = new ModelAndView("testimonial");
 

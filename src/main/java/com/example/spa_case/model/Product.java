@@ -29,7 +29,7 @@ public class Product {
     // new List Image set images;
 
 
-    @OneToOne
+    @ManyToOne
     private File poster;
 
     @OneToMany(mappedBy = "product")
