@@ -29,7 +29,7 @@ public class HomeController {
 
     @GetMapping("/")
     public ModelAndView getHome() {
-        modelAndView.setViewName("index");
+            modelAndView.setViewName("index");
         ModelAndView modelAndView = Login();
         modelAndView.addObject("someKey", "someValue");
         return modelAndView;

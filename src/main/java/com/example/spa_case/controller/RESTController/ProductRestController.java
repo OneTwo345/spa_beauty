@@ -9,6 +9,10 @@ import com.example.spa_case.service.productService.response.ProductEditResponse;
 import com.example.spa_case.service.productService.response.ProductListResponse;
 import com.example.spa_case.service.response.SelectOptionResponse;
 import com.example.spa_case.service.userService.request.UserEditRequest;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -18,6 +22,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -28,6 +33,8 @@ import java.util.stream.Collectors;
 public class ProductRestController {
     private final ProductService productService;
     private final ProductRepository productRepository;
+
+
     @GetMapping
     public ResponseEntity<Page<ProductListResponse>> list(@PageableDefault(size = 5) Pageable pageable,
                                                           @RequestParam(defaultValue = "") String search,
@@ -41,8 +48,6 @@ public class ProductRestController {
         productService.create(request);
 
     }
-
-
     @GetMapping("/list")
     public ResponseEntity<List<ProductListResponse>> getAllProduct() {
         List<ProductListResponse> productListResponses = productService.getAllNoPage();

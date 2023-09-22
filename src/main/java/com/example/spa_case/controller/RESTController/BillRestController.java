@@ -8,6 +8,9 @@ import com.example.spa_case.service.billService.BillService;
 import com.example.spa_case.service.billService.dto.BillDetailResponse;
 import com.example.spa_case.service.billService.dto.BillListResponse;
 import com.example.spa_case.service.billService.dto.BillSaveRequest;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -18,6 +21,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,7 +31,6 @@ import java.util.Optional;
 public class BillRestController {
 
     private final BillService billService;
-
 
     @GetMapping
     public ResponseEntity<Page<BillListResponse>> getBills(Pageable pageable) {
