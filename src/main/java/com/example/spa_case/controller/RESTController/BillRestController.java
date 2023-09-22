@@ -8,6 +8,7 @@ import com.example.spa_case.service.billService.BillService;
 import com.example.spa_case.service.billService.dto.BillDetailResponse;
 import com.example.spa_case.service.billService.dto.BillListResponse;
 import com.example.spa_case.service.billService.dto.BillSaveRequest;
+import com.example.spa_case.service.billService.request.BillAdminSaveRequest;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -22,7 +23,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/bills")
+@RequestMapping("/api/bills")
 @AllArgsConstructor
 public class BillRestController {
 
@@ -30,7 +31,7 @@ public class BillRestController {
 
 
     @GetMapping
-    public ResponseEntity<Page<BillListResponse>> getRooms(Pageable pageable) {
+    public ResponseEntity<Page<BillListResponse>> getBills(Pageable pageable) {
         return new ResponseEntity<>(billService.getBills(pageable), HttpStatus.OK);
     }
 
@@ -39,6 +40,8 @@ public class BillRestController {
     public void create(@RequestBody BillSaveRequest request) {
         billService.create(request);
     }
+
+
 
     @PutMapping("{id}")
     public ResponseEntity<?> updateRoom(@RequestBody @Valid BillSaveRequest request, @PathVariable Long id) {

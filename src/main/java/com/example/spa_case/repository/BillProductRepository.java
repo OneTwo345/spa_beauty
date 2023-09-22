@@ -7,5 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface BillProductRepository extends JpaRepository<BillProduct,Long> {
 
     void deleteByBill(Bill bill);
+    void deleteAllByProductId(Long id);
+    void deleteAllByBillId(Long id);
 
 }

@@ -2,13 +2,16 @@ package com.example.spa_case.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 
 @Entity
 @Table(name = "bill_products")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 public class BillProduct {
     @Id
