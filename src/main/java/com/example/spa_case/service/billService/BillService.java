@@ -44,23 +44,40 @@ public class BillService {
     public void create(BillSaveRequest request) {
         var bill = AppUtil.mapper.map(request, Bill.class);
         BigDecimal totalBillPrice = BigDecimal.valueOf(0.00);
-        bill = billRepository.save(bill);
-        Bill finalBill = bill;
-        List<Long> idProducts = request.getIdProduct().stream().map(Long::valueOf).toList();
-        billProductRepository.saveAll(productRepository.findAllById(idProducts).stream().map(product -> {
-            var result = new BillProduct(finalBill, product);
-            result.setProductName(product.getName());
-            result.setPrice(product.getPrice());
-            return result;
-        }).collect(Collectors.toList()));
+        billRepository.save(bill);
 
+        // Tính tổng giá tiền của sản phẩm (products)
+        List<Long> idProducts = request.getIdProduct().stream().map(Long::valueOf).toList();
+        List<BillProduct> billProducts = new ArrayList<>(); // Danh sách sản phẩm
+        for (Long productId : idProducts) {
+            Product product = productRepository.findById(productId).orElse(null);
+            if (product != null) {
+                BillProduct billProduct = new BillProduct(bill, product);
+                billProduct.setProductName(product.getName());
+                billProduct.setPrice(product.getPrice());
+                billProducts.add(billProduct);
+                totalBillPrice = totalBillPrice.add(product.getPrice());
+            }
+        }
         List<Long> idCombos = request.getIdCombo().stream().map(Long::valueOf).toList();
-        billComboRepository.saveAll(comboRepository.findAllById(idCombos).stream().map(combo -> {
-            var result = new BillCombo(finalBill, combo);
-            result.setComboName(combo.getName());
-            result.setPrice(combo.getPrice());
-            return result;
-        }).collect(Collectors.toList()));
+        List<BillCombo> billCombos = new ArrayList<>(); // Danh sách combo
+        for (Long comboId : idCombos) {
+            Combo combo = comboRepository.findById(comboId).orElse(null);
+            if (combo != null) {
+                BillCombo billCombo = new BillCombo(bill, combo);
+                billCombo.setComboName(combo.getName());
+                billCombo.setPrice(combo.getPrice());
+                billCombos.add(billCombo);
+                totalBillPrice = totalBillPrice.add(combo.getPrice());
+            }
+        }
+
+        billProductRepository.saveAll(billProducts);
+        billComboRepository.saveAll(billCombos);
+        bill.setPrice(totalBillPrice);
+
+        // Lưu đối tượng Bill vào cơ sở dữ liệu
+        billRepository.save(bill);
     }
 
 
