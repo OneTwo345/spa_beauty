@@ -18,6 +18,8 @@ public class BillSaveRequest {
 
     private String timeBook;
 
+    private String appointmentTime;
+
     private String productPrice;
 
     private String comboPrice;
