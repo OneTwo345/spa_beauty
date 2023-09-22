@@ -19,7 +19,7 @@ $("#billForm").validate({
             minlength: "Tên ít nhất cần có 2 ký tự"
         },
         customerQuantity:"Vui lòng nhập thông tin số lượng khách",
-        timeBook: "Vui lòng nhập thời gian cuộc hẹn",
+        appointmentTime: "Vui lòng nhập thời gian cuộc hẹn",
         customerPhone: {
             required: "Vui lòng nhập thông tin chính xác số điện thoại",
             minlength: "Số điện thoại cần có ít nhất 10 số",
