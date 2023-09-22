@@ -3,14 +3,8 @@ const selectProducts = document.getElementById("selectProducts");
 let products = {};
 let combos = {};
 // submit form
-billForm.onsubmit = async (e) => {
-    e.preventDefault()
-    const data = getData();
-    // goi api de tao bill
-    await createBill(data);
-}
 
-function getData(){
+function getData() {
     const idProduct = $("#selectProducts").select2('data').map(e => e.id);
     const idCombo = $('#selectCombos').select2('data').map(e => e.id);
     const price = 100.0;
@@ -23,7 +17,7 @@ function getData(){
         idProduct,
         idCombo,
         price,
-        timeBook: convertDate(data.timeBook + "")
+        appointmentTime: convertDate(data.appointmentTime + "")
     }
     return data;
 }
@@ -77,7 +71,6 @@ async function initElementBillForm() {
         });
 
 
-
         combos.map((item) => {
             let option = document.createElement("option");
             option.value = item.id;
@@ -107,6 +100,10 @@ async function getCombos() {
     }
 }
 
-$(document).ready(function() {
+$(document).ready(function () {
     initElementBillForm();
 });
+
+
+
+

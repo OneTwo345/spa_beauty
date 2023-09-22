@@ -72,6 +72,13 @@
             border: 1px solid #ced4da;
         }
 
+        label.error {
+            font-weight: 700;
+            display: block;
+            color: #ff005a;
+            font-size: 14px;
+        }
+
 
     </style>
 </head>
@@ -131,16 +138,18 @@
                     <div class="right-items login" id="user-info" th:if="${loggedIn == false}">
                         <a href="/login" class="btn btn-primary d-none d-lg-block " id="login-btn">Login</a>
                     </div>
-                    <div  class="right-items login d-flex" th:if="${loggedIn == true}" >
-                        <div style="padding-right: 20px" >
-                            <a class="btn btn-primary d-none d-lg-block " th:href="${user.role.toString() == 'ROLE_ADMIN' ? '/dashboard' : '/user'}" th:text="${user.name}"></a>
+                    <div class="right-items login d-flex" th:if="${loggedIn == true}">
+                        <div style="padding-right: 20px">
+                            <a class="btn btn-primary d-none d-lg-block "
+                               th:href="${user.role.toString() == 'ROLE_ADMIN' ? '/dashboard' : '/user'}"
+                               th:text="${user.name}"></a>
                         </div>
                         <div>
-                            <a href="/logout" class="btn btn-primary d-none d-lg-block " >Logout</a>
+                            <a href="/logout" class="btn btn-primary d-none d-lg-block ">Logout</a>
                         </div>
                     </div>
                     <div>
-                        <a href="" class="btn btn-primary d-none d-lg-block" >Book Now</a>
+                        <a href="" class="btn btn-primary d-none d-lg-block">Book Now</a>
                     </div>
                 </form>
             </div>
@@ -323,12 +332,13 @@
         <div class="col-lg-6 py-5">
             <div class="p-5 my-5" style="background: rgba(33, 30, 28, 0.7);">
                 <h1 class="text-white text-center mb-4">ĐẶT HẸN NGAY</h1>
-                <form id="billForm">
+                <form name="formValidation" id="billForm">
                     <div class="form-row">
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <input type="text" name="customerName" class="form-control bg-transparent p-4"
                                        placeholder="Your Name"
+                                       style="color: white"
                                        required="required"/>
                             </div>
                         </div>
@@ -336,6 +346,7 @@
                             <div class="form-group">
                                 <input type="number" name="customerQuantity" class="form-control bg-transparent p-4"
                                        placeholder="Friend"
+                                       style="color: white"
                                        required="required" min="0"/>
                             </div>
                         </div>
@@ -344,8 +355,10 @@
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <div class="input-group date" id="datetimepicker" data-target-input="nearest">
-                                    <input type="text" name="timeBook" class="form-control datetimepicker-input"
-                                           data-target="#datetimepicker" placeholder="Select Date and Time"/>
+                                    <input type="text" name="appointmentTime" class="form-control datetimepicker-input"
+                                           data-target="#datetimepicker" placeholder="Select Date and Time"
+                                           style="color: white" onchange="validateTime(this.value)"/>
+
                                     <div class="input-group-append" data-target="#datetimepicker"
                                          data-toggle="datetimepicker">
                                         <div class="input-group-text"><i class="fa fa-calendar"></i></div>
@@ -358,6 +371,7 @@
                                 <div class="form-group">
                                     <input type="text" name="customerPhone" class="form-control bg-transparent p-4"
                                            placeholder="Your Phone"
+                                           style="color: white"
                                            required="required"/>
                                 </div>
                             </div>
@@ -369,7 +383,7 @@
                                 <select id="selectProducts"
                                         name="idProduct"
                                         class="custom-select bg-transparent px-4 js-example-basic-multiple"
-                                        multiple="multiple" style="height: 47px;">
+                                        multiple="multiple" style="height: 47px;color: white">
                                 </select>
                             </div>
                         </div>
@@ -377,16 +391,18 @@
 
                     </div>
                     <div class="form-row">
-                        <div class="col-sm-6">
+                        <div class="col-sm-12">
                             <div class="form-group">
                                 <select id="selectCombos"
                                         name="idCombo"
                                         class="custom-select bg-transparent px-4 js-example-basic-multiple"
-                                        multiple="multiple" style="height: 47px;">
+                                        multiple="multiple" style="height: 47px;color: white">
 
                                 </select>
                             </div>
                         </div>
+                    </div>
+                    <div class="form-row">
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <button id="btnCreateBill" class="btn btn-primary btn-block" type="submit"
@@ -450,64 +466,7 @@
             </div>
             <div class="col-lg-7 pt-5 pb-lg-5">
                 <div class="pricing-text bg-light p-4 p-lg-5 my-lg-5">
-                    <div class="owl-carousel pricing-carousel" id="comboShow" >
-<!--                        <div class="bg-white">-->
-<!--                            <div class="d-flex align-items-center justify-content-between border-bottom border-primary p-4">-->
-<!--                                <h1 class="display-4 mb-0">-->
-<!--                                    <small class="align-top text-muted font-weight-medium"-->
-<!--                                           style="font-size: 22px; line-height: 45px;">$</small>49<small-->
-<!--                                        class="align-bottom text-muted font-weight-medium"-->
-<!--                                        style="font-size: 16px; line-height: 40px;">/Mo</small>-->
-<!--                                </h1>-->
-<!--                                <h5 class="text-primary text-uppercase m-0">Basic Plan</h5>-->
-<!--                            </div>-->
-<!--                            <div class="p-4">-->
-<!--                                <p><i class="fa fa-check text-success mr-2"></i>Full Body Massage</p>-->
-<!--                                <p><i class="fa fa-check text-success mr-2"></i>Deep Tissue Massage</p>-->
-<!--                                <p><i class="fa fa-check text-success mr-2"></i>Hot Stone Massage</p>-->
-<!--                                <p><i class="fa fa-check text-success mr-2"></i>Tissue Body Polish</p>-->
-<!--                                <p><i class="fa fa-check text-success mr-2"></i>Foot & Nail Care</p>-->
-<!--                                <a href="" class="btn btn-primary my-2">Order Now</a>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <div class="bg-white">-->
-<!--                            <div class="d-flex align-items-center justify-content-between border-bottom border-primary p-4">-->
-<!--                                <h1 class="display-4 mb-0">-->
-<!--                                    <small class="align-top text-muted font-weight-medium"-->
-<!--                                           style="font-size: 22px; line-height: 45px;">$</small>99<small-->
-<!--                                        class="align-bottom text-muted font-weight-medium"-->
-<!--                                        style="font-size: 16px; line-height: 40px;">/Mo</small>-->
-<!--                                </h1>-->
-<!--                                <h5 class="text-primary text-uppercase m-0">Family Plan</h5>-->
-<!--                            </div>-->
-<!--                            <div class="p-4">-->
-<!--                                <p><i class="fa fa-check text-success mr-2"></i>Full Body Massage</p>-->
-<!--                                <p><i class="fa fa-check text-success mr-2"></i>Deep Tissue Massage</p>-->
-<!--                                <p><i class="fa fa-check text-success mr-2"></i>Hot Stone Massage</p>-->
-<!--                                <p><i class="fa fa-check text-success mr-2"></i>Tissue Body Polish</p>-->
-<!--                                <p><i class="fa fa-check text-success mr-2"></i>Foot & Nail Care</p>-->
-<!--                                <a href="" class="btn btn-primary my-2">Order Now</a>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <div class="bg-white">-->
-<!--                            <div class="d-flex align-items-center justify-content-between border-bottom border-primary p-4">-->
-<!--                                <h1 class="display-4 mb-0">-->
-<!--                                    <small class="align-top text-muted font-weight-medium"-->
-<!--                                           style="font-size: 22px; line-height: 45px;">$</small>149<small-->
-<!--                                        class="align-bottom text-muted font-weight-medium"-->
-<!--                                        style="font-size: 16px; line-height: 40px;">/Mo</small>-->
-<!--                                </h1>-->
-<!--                                <h5 class="text-primary text-uppercase m-0">VIP Plan</h5>-->
-<!--                            </div>-->
-<!--                            <div class="p-4">-->
-<!--                                <p><i class="fa fa-check text-success mr-2"></i>Full Body Massage</p>-->
-<!--                                <p><i class="fa fa-check text-success mr-2"></i>Deep Tissue Massage</p>-->
-<!--                                <p><i class="fa fa-check text-success mr-2"></i>Hot Stone Massage</p>-->
-<!--                                <p><i class="fa fa-check text-success mr-2"></i>Tissue Body Polish</p>-->
-<!--                                <p><i class="fa fa-check text-success mr-2"></i>Foot & Nail Care</p>-->
-<!--                                <a href="" class="btn btn-primary my-2">Order Now</a>-->
-<!--                            </div>-->
-<!--                        </div>-->
+                    <div class="owl-carousel pricing-carousel" id="comboShow">
                     </div>
                 </div>
             </div>
@@ -771,6 +730,8 @@
 <!-- Contact Javascript File -->
 <script src="/assets/user/mail/jqBootstrapValidation.min.js"></script>
 <script src="/assets/user/mail/contact.js"></script>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
 
 <!-- Template Javascript -->
 <script src="/assets/user/js/main.js"></script>
@@ -779,6 +740,7 @@
 <script src="../myjs/base.js"></script>
 <script src="../myjs/appoinment.js"></script>
 <script src="../myjs/comboClient.js"></script>
+<script src="../myjs/formCustom.js"></script>
 
 
 <script>
@@ -809,6 +771,18 @@
             });
         });
     });
+</script>
+<script>
+    function validateTime(inputValue) {
+        var currentTime = new Date();
+        var selectedTime = new Date(inputValue);
+
+        if (selectedTime < currentTime) {
+            alert("Please select a time after the current time.");
+            // Reset the input value
+            document.getElementsByName("timeBook")[0].value = "";
+        }
+    }
 </script>
 </body>
 

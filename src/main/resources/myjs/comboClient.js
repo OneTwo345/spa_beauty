@@ -1,14 +1,14 @@
 const service = document.getElementById("comboShow");
 let comboClients = [];
 
-async function getProducts() {
+async function getProducts2() {
     const res = await fetch('http://localhost:8080/api/combos/list');
     return await res.json();
 }
 
 
 async function renderCarousel() {
-    const list = await getProducts();
+    const list = await getProducts2();
     comboClients = list;
     renderServiceCarousel(list);
 }
