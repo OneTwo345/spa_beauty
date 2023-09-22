@@ -5,6 +5,9 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="/assets/login/css/style.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.css">
+
 
 
         <meta name="robots" content="noindex, follow">
@@ -59,12 +62,22 @@
     <body style="background-color: #999999;">
     <div class="limiter">
         <div class="container-login100">
+            <div th:if="${param.success}">
+                <script>
+                    window.onload = (event) => {
+                        Swal.fire({
+                            position: 'top-start',
+                            icon: 'success',
+                            title: 'Đăng Ký Thành Công',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                    }
+                </script>
+            </div>
             <div class="login100-more" style="background-image: url('/assets/user/img/team-3.jpg');"></div>
             <div class="wrap-login100 p-l-50 p-r-50 p-t-72 p-b-50">
                 <form class="login100-form validate-form" id="registerForm" method="post" th:object="${user}">
-                    <div th:if="${param.success}">
-                        <div class="alert alert-danger">Đăng ký thành công .</div>
-                    </div>
     <span class="login100-form-title p-b-59">
     Sign Up
     </span>
@@ -131,3 +144,4 @@
     </div>
     </body>
     </html>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
