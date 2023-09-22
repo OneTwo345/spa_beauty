@@ -51,6 +51,14 @@ public class HomeController {
         return modelAndView;
     }
 
+    @GetMapping("/cart")
+    public ModelAndView cart() {
+        modelAndView.setViewName("cart");
+        ModelAndView modelAndView = Login();
+        modelAndView.addObject("someKey", "someValue");
+        return modelAndView;
+    }
+
     public ModelAndView Login(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null && authentication.isAuthenticated() && authentication.getPrincipal() instanceof UserDetails) {
