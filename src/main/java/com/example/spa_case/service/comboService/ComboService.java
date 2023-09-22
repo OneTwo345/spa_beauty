@@ -79,7 +79,10 @@ public class ComboService {
                         .id(service.getId())
                         .name(service.getName())
                         .price(service.getPrice())
-                        // Chuyển thành chuỗi
+                        .products(service.getComboProducts()
+                                .stream()
+                                .map(comboProduct -> comboProduct.getProduct().getName())
+                                .collect(Collectors.toList()))
                         .build())
                 .collect(Collectors.toList());
     }
