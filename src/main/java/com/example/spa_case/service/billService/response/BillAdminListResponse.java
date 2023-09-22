@@ -2,6 +2,7 @@ package com.example.spa_case.service.billService.response;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
@@ -29,8 +30,8 @@ public class BillAdminListResponse {
     private LocalDateTime timeBook;
     private LocalDateTime appointmentTime;
     private String user;
-    private String products;
+    private String idProduct;
 
-    private String combos;
+    private String idCombo;
 
 }

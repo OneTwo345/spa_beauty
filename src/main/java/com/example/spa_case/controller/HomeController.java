@@ -45,6 +45,14 @@ public class HomeController {
         return modelAndView;
     }
 
+    @GetMapping("/listproduct")
+    public ModelAndView listproduct() {
+        modelAndView.setViewName("listproduct");
+        ModelAndView modelAndView = Login();
+        modelAndView.addObject("someKey", "someValue");
+        return modelAndView;
+    }
+
     public ModelAndView Login(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null && authentication.isAuthenticated() && authentication.getPrincipal() instanceof UserDetails) {
@@ -112,7 +120,8 @@ public class HomeController {
         ModelAndView view = new ModelAndView("/bill");
         view.addObject("combos",comboService.findAll());
         view.addObject("products", productService.findAll());
-        view.addObject("user", productService.findAll());
+        view.addObject("user", userService.findAll());
         return view;
+
     }
 }

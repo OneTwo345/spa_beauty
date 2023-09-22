@@ -33,4 +33,8 @@ public class Combo {
 
     @OneToMany(mappedBy = "combo")
     private List<File> images;
+
+    public Combo(Long id) {
+        this.id =id;
+    }
 }

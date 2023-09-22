@@ -53,4 +53,10 @@ public class User {
 
     @Enumerated(value = EnumType.STRING)
     private ERole role;
+
+    public User(Long id) {
+        this.id = id;
+    }
+
+
 }

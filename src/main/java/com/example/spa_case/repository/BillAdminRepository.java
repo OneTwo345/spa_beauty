@@ -11,10 +11,10 @@ import org.springframework.data.repository.query.Param;
 import java.math.BigDecimal;
 
 public interface BillAdminRepository extends JpaRepository<Bill,Long> {
-    @Query(value = "SELECT b FROM Bill b" +
-            " WHERE (b.price BETWEEN :min AND :max) " +
-            "AND  ( b.customerName LIKE :search OR b.customerEmail Like :search OR b.user.name like :search Or exists (SELECT 1 FROM BillCombo c WHERE c.combo = b AND c.combo.name LIKE :search)" +
-            " OR EXISTS (SELECT 1 FROM BillProduct p " +
-            "WHERE p.bill = b AND p.product.name LIKE :search))")
-    Page<Bill> searchAllByService(@Param("search") String search, Pageable pageable , @Param("min") BigDecimal min, @Param("max") BigDecimal max);
+//    @Query(value = "SELECT b FROM Bill b" +
+//            " WHERE (b.price BETWEEN :min AND :max) " +
+//            "AND  ( b.user.name LIKE :search ) " )
+//
+//    Page<Bill> searchAllByService(@Param("search") String search, Pageable pageable , @Param("min") BigDecimal min, @Param("max") BigDecimal max);
+    Page<Bill> findByCustomerNameContainingIgnoreCaseAndPriceBetween(String customerName, BigDecimal price, BigDecimal price2, Pageable pageable);
 }

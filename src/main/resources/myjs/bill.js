@@ -8,11 +8,7 @@ const formBody = document.getElementById('formBody');
 const ePrice = document.getElementById('price-check')
 let rooms = [];
 let billSelected = {};
-let idImages = [];
-let idPoster = [];
-const avatarDefaultImage = document.createElement('img');
-const avatarDefaultPoster = document.createElement('img');
-let products;
+let user;
 let pageable = {
     page: 1,
     sort: 'id,desc',
@@ -20,7 +16,6 @@ let pageable = {
     min: 1,
     max: 50000000000000,
 }
-// Lấy tham chiếu đến phần tử <span> và tham chiếu đến lớp "arrow-up"
 const priceSpan = document.querySelector('.arrow');
 const arrowUpClass = 'arrow-up';
 
@@ -69,15 +64,20 @@ $(document).ready(function () {
     })
 });
 billForm.onsubmit = async (e) => {
-    const products = $("#selectProducts").select2('data').map(e => e.id);
-    const combos = $('#selectCombos').select2('data').map(e => e.id);    e.preventDefault();
+    e.preventDefault();
+
+    const idProduct = $("#products").select2('data').map(e => e.id);
+    const idCombo = $('#combos').select2('data').map(e => e.id);
     let data = getDataFromForm(billForm);
     data = {
         ...data,
+        user: {
+            id: data.user
+        },
+        idProduct,
+        idCombo,
+        // timeBook: convertDate(data.timeBook + ""),
         id: billSelected.id,
-        products,
-        combos,
-
     }
     // if(data.idProducts.length === 0){
     //     alertify.error('Please select an author!');
@@ -99,7 +99,7 @@ async function renderTable() {
     addEventEditAndDelete();
 }
 async function getRooms() {
-    const res = await fetch('/api/bills/admin');
+    const res = await fetch('/api/bills/ad');
     return await res.json();
 }
 const addEventEditAndDelete = () => {
@@ -114,10 +114,7 @@ const addEventEditAndDelete = () => {
 }
 
 async function  editRoom (data){
-
-    showImgInForm(billSelected.images);
-
-    const response = await fetch('/api/bills/admin/'+data.id, {
+    const response = await fetch('/api/bills/ad/'+data.id, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
@@ -143,16 +140,16 @@ async function  editRoom (data){
     }
 }
 async function createRoom(data) {
-    console.log(data)
-    const response = await fetch('/api/bills/admin', {
 
+    console.log(typeof data.user)
+    const response = await fetch('/api/bills/ad', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(data)
     });
-    console.log(response)
+    console.log("aaa"+response)
     if (response.ok) {
         Swal.fire({
             title: 'Created',
@@ -172,9 +169,8 @@ async function createRoom(data) {
     }
 }
 const onShowCreate = () => {
-    clearForm1();
-    clearForm2();
-    $('#staticBackdropLabel').text('Create Combo');
+    clearForm();
+    $('#staticBackdropLabel').text('Create Bill');
     renderForm(formBody, getDataInput());
 
 }
@@ -182,59 +178,49 @@ document.getElementById('create').onclick = () => {
     onShowCreate();
 }
 const findById = async (id) => {
-    const response = await fetch('/api/bills/admin/' + id);
+    const response = await fetch('/api/bills/ad/' + id);
     return await response.json();
 }
 const onShowEdit = async (id) => {
-    clearForm1();
-    clearForm2();
+    clearForm();
     billSelected = await findById(id);
-    avatarDefaultPoster.src = billSelected.poster;
-    showImgInForm(billSelected.images);
     $('#staticBackdropLabel').text('Edit Product');
     $('#staticBackdrop').modal('show');
-    $('#name').val(billSelected.title);
+    $('#user').val(billSelected.user);
     $('#price').val(billSelected.price);
+    $('#customerName').val(billSelected.customerName);
+    $('#customerPhone').val(billSelected.customerPhone);
+    $('#customerQuantity').val(billSelected.customerQuantity);
+    $('#appointmentTime').val(billSelected.appointmentTime);
+    checkUserSelect();
     checkProductSelect();
-
-    // $('#poster').val(billSelected.poster);
-    // $('#image').val(billSelected.poster);
+    checkComboSelect();
     renderForm(formBody, getDataInput());
 
 }
+function checkUserSelect() {
+    $('#user').val(billSelected.user);
+    $('#user').trigger('change');
+    console.log($('#select2').trigger('change'))
+}
 function checkProductSelect() {
     console.log(billSelected);
-    console.log("aa"+billSelected.productsID)
-
-    $('#products').val(billSelected.productsID);
-    $('#products').trigger('change');
+    console.log("aa"+billSelected.idProduct)
+    onChangeSelect2('#products',billSelected.idProduct)
+    console.log($('#select2').trigger('change'))
+}
+function checkComboSelect() {
+    $('#combos').val(billSelected.idCombo);
+    $('#combos').trigger('change');
     console.log($('#select2').trigger('change'))
 }
 
-function showImgInForm(images) {
-    const imgEle = document.getElementById("images");
-    const imageOld = imgEle.querySelectorAll('img');
-    for (let i = 0; i < imageOld.length; i++) {
-        imgEle.removeChild(imageOld[i])
-    }
-    const avatarDefault = document.createElement('img');
-    avatarDefault.src='';
-    avatarDefault.style.display = 'none';
-    avatarDefault.classList.add('avatar-previews');
-    imgEle.append(avatarDefault)
-    images.forEach((img) => {
-        let image = document.createElement('img');
-        image.src = img;
-        image.classList.add('avatar-previews');
-        imgEle.append(image)
-    })
 
-}
-function getDataFromForm(form) {
-    // event.preventDefault()
-    const data = new FormData(form);
-    return Object.fromEntries(data.entries())
-}
+// function getDataFromForm(form) {
+//     // event.preventDefault()
+//     const data = new FormData(form);
+//     return Object.fromEntries(data.entries())
+// }
 function formatCurrency(number) {
     return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(number);
 }
@@ -244,19 +230,30 @@ function renderItemStr(item) {
                         ${item.id}
                     </td>
                     <td>
-                        ${item.name}
+                        ${item.customerName}
                     </td>
-                   
-                  
+                    <td>
+                        ${item.customerPhone}
+                    </td>
+                    
+                    <td>
+                        ${item.customerQuantity}
+                    </td>
+                    <td>
+                    ${item.appointmentTime}
+                    </td>
                     <td>
                         ${formatCurrency(item.price)}
                     </td>
                     <td>
-                    ${item.products}
+                    ${item.idProduct}
                     </td>
+                    
                     <td>
-                        <img src="${item.poster}" alt="" class="avatar-away">
+                    ${item.idCombo}
                     </td>
+                    
+        <td>${item.user !== null ? item.user : ''}</td>
                      <td>
             <a class="btn edit" data-id="${item.id}" onclick="onShowEdit(${item.id})">
                <i class="fa-regular fa-pen-to-square text-primary"></i>
@@ -272,26 +269,48 @@ function getDataInput() {
     return [
         {
             label: 'Name',
-            name: 'name',
-            value: billSelected.name,
+            name: 'customerName',
+            value: billSelected.customerName,
             required: true,
             pattern: "^[A-Za-z ]{6,20}",
             message: "Username must have minimum is 6 characters and maximum is 20 characters",
         },
 
         {
-            label: 'Price',
-            name: 'price',
-            value: billSelected.price,
-            pattern: "[1-9][0-9]{1,10}",
-            message: 'Price errors',
-            required: true
+            label: 'Phone',
+            name: 'customerPhone',
+            value: billSelected.customerPhone,
+            required: true,
+            // pattern: "^[A-Za-z ]{6,20}",
+            message: "Username must have minimum is 6 characters and maximum is 20 characters",
         },
+        {
+            label: 'Quantity',
+            name: 'customerQuantity',
+            value: billSelected.customerQuantity,
+            required: true,
+            // pattern: "^[A-Za-z ]{6,20}",
+            message: "Username must have minimum is 6 characters and maximum is 20 characters",
+        },
+        {
+            label: 'Appointment Time',
+            name: 'appointmentTime',
+            type:"datetime-local",
+            value: billSelected.appointmentTime,
+            required: true,
+            // pattern: "^[A-Za-z ]{6,20}",
+            // message: "Username must have minimum is 6 characters and maximum is 20 characters",
+        },
+
     ];
 }
-
+const clearForm = () => {
+    onChangeSelect2('#user', null);
+    onChangeSelect2('#products', null);
+    onChangeSelect2('#combos', null);
+}
 async function getList() {
-    const response = await fetch(`/api/bills/admin?page=${pageable.page - 1 || 0}&sort=${pageable.sortCustom || 'id,desc'}&search=${pageable.search || ''}&min=${pageable.min || ''}&max=${pageable.max || ''}`);
+    const response = await fetch(`/api/bills/ad?page=${pageable.page - 1 || 0}&sort=${pageable.sortCustom || 'id,desc'}&search=${pageable.search || ''}&min=${pageable.min || ''}&max=${pageable.max || ''}`);
     const result = await response.json();
     pageable = {
         ...pageable,
@@ -422,166 +441,8 @@ const onLoadSort = () => {
 
 
 function clearForm1() {
-    idImages = [];
 
-    const imgEle = document.getElementById("images");
-    const imageOld = imgEle.querySelectorAll('img');
-    for (let i = 0; i < imageOld.length; i++) {
-        imgEle.removeChild(imageOld[i])
-    }
-    avatarDefaultImage.src = '../assets/img/avatars/default_avatar.png';
-    avatarDefaultImage.classList.add('avatar-previews');
-    imgEle.append(avatarDefaultImage)
     billForm.reset();
     billSelected = {};
 }
 
-function clearForm2() {
-    idPoster = [];
-
-    const imgEle = document.getElementById("poster");
-    const imageOld = imgEle.querySelectorAll('img');
-    for (let i = 0; i < imageOld.length; i++) {
-        imgEle.removeChild(imageOld[i])
-    }
-    avatarDefaultPoster.src = '../assets/img/avatars/default_avatar.png';
-    avatarDefaultPoster.classList.add('avatar-previews');
-    imgEle.append(avatarDefaultPoster)
-    billForm.reset();
-    billSelected = {};
-}
-
-async function previewImage(evt) {
-    if(evt.target.files.length === 0){
-        return;
-    }
-    document.getElementById("save").disabled = true;
-
-    idImages = [];
-
-    const imgEle = document.getElementById("images");
-    const imageOld = imgEle.querySelectorAll('img');
-    for (let i = 0; i < imageOld.length; i++) {
-        imgEle.removeChild(imageOld[i])
-    }
-
-    // When the image is loaded, update the img element's src
-    const files = evt.target.files
-    for (let i = 0; i < files.length; i++) {
-        const file = files[i];
-        await previewImageFile(file, i);
-
-        if (file) {
-            // Create a new FormData object and append the selected file
-            const formData = new FormData();
-            formData.append("images", file);
-            formData.append("fileType", "image");
-            try {
-                // Make a POST request to upload the image
-                const response = await fetch("/api/files/images", {
-                    method: "POST",
-                    body: formData,
-                });
-                if (response.ok) {
-                    const result = await response.json();
-                    if (result) {
-                        const id = result.id;
-                        idImages.push(id);
-                        // document.getElementById("save").disabled = true;
-                    } else {
-                        console.error('Image ID not found in the response.');
-                    }
-                } else {
-                    // Handle non-OK response (e.g., show an error message)
-                    console.error('Failed to upload image:', response.statusText);
-                }
-            } catch (error) {
-                // Handle network or other errors
-                console.error('An error occurred:', error);
-            }
-        }
-    }
-    document.getElementById("save").disabled = false;
-
-}
-
-async function previewImageFile(file) {
-    const reader = new FileReader();
-    reader.onload = function () {
-        const imgEle = document.getElementById("images");
-        const img = document.createElement('img');
-        img.src =reader.result;
-        img.classList.add('avatar-previews');
-        imgEle.append(img);
-    };
-    reader.readAsDataURL(file);
-
-}
-async function previewPoster(evt) {
-
-    if(evt.target.files.length === 0){
-        return;
-    }
-    idPoster = [];
-    document.getElementById("save").disabled = true;
-
-    const imgPost = document.getElementById("poster");
-    const imageOld1 = imgPost.querySelectorAll('img');
-    for (let i = 0; i < imageOld1.length; i++) {
-        imgPost.removeChild(imageOld1[i])
-    }
-
-    // When the image is loaded, update the img element's src
-    const files = evt.target.files
-    for (let i = 0; i < files.length; i++) {
-        const file = files[i];
-        await previewPosterFile(file, i);
-
-        if (file) {
-            // Create a new FormData object and append the selected file
-            const formData = new FormData();
-            formData.append("poster", file);
-            formData.append("fileType", "image");
-            try {
-                // Make a POST request to upload the image
-                const response = await fetch("/api/files/posters", {
-                    method: "POST",
-                    body: formData,
-                });
-                if (response.ok) {
-                    const result = await response.json();
-                    if (result) {
-                        const id = result.id;
-                        idPoster.push(id);
-
-                    } else {
-                        console.error('Image ID not found in the response.');
-                    }
-                } else {
-                    // Handle non-OK response (e.g., show an error message)
-                    console.error('Failed to upload image:', response.statusText);
-                }
-            } catch (error) {
-                // Handle network or other errors
-                console.error('An error occurred:', error);
-            }
-        }
-
-    }
-
-}
-
-async function previewPosterFile(file) {
-    const reader = new FileReader();
-    reader.onload = function () {
-        const imgPost = document.getElementById("poster");
-        const img = document.createElement('img');
-        img.src =reader.result;
-        img.classList.add('avatar-previews');
-        imgPost.append(img);
-
-
-    };
-    reader.readAsDataURL(file);
-
-}

@@ -10,7 +10,8 @@ import java.util.List;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 @Table (name = "bills")
 public class Bill {
     @Id
@@ -26,7 +27,7 @@ public class Bill {
     private Long customerQuantity;
 
     private LocalDateTime timeBook;
-
+    @Column(name = "appointment_time")
     private LocalDateTime appointmentTime;
 
     private BigDecimal price;

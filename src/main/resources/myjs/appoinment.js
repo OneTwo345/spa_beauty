@@ -13,17 +13,13 @@ billForm.onsubmit = async (e) => {
 function getData(){
     const idProduct = $("#selectProducts").select2('data').map(e => e.id);
     const idCombo = $('#selectCombos').select2('data').map(e => e.id);
-    const price = 100.0;
 
     // lay data tu form
     let data = getDataFromForm(billForm);
-
     data = {
         ...data,
         idProduct,
         idCombo,
-        price,
-        timeBook: convertDate(data.timeBook + "")
     }
     return data;
 }
