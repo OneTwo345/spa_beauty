@@ -8,6 +8,7 @@ import com.example.spa_case.model.enums.EStatusCustomer;
 import com.example.spa_case.repository.FileRepository;
 import com.example.spa_case.repository.UserRepository;
 import com.example.spa_case.service.productService.response.ProductListResponse;
+import com.example.spa_case.service.response.SelectOptionResponse;
 import com.example.spa_case.service.userService.request.UserEditRequest;
 import com.example.spa_case.service.userService.request.UserRegisterRequest;
 import com.example.spa_case.service.userService.request.UserSaveRequest;
@@ -35,6 +36,11 @@ public class UserService {
     private final UserRepository userRepository;
     private final FileRepository fileRepository;
 
+    public List<SelectOptionResponse> findAll() {
+        return userRepository.findAll()
+                .stream().map(user -> new SelectOptionResponse(user.getId()
+                        .toString(), user.getName())).collect(Collectors.toList());
+    }
     public Page<UserListResponse> getAll(String search , Pageable pageable) {
         search = "%"+search+"%";
         return userRepository.searchAllUser(search, pageable)
