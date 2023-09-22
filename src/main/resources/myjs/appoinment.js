@@ -34,7 +34,7 @@ function getDataFromForm(form) {
 }
 
 async function createBill(data) {
-    const response = await fetch('/bills', {
+    const response = await fetch('/api/bills', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

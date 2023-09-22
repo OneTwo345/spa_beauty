@@ -70,6 +70,20 @@ public class ComboService {
                         // Chuyển thành chuỗi
                         .build());
     }
+    public List<ComboListResponse> getComboList() {
+        return comboRepository.findAll()
+                .stream()
+                .map(service -> ComboListResponse.builder()
+                        .id(service.getId())
+                        .name(service.getName())
+                        .price(service.getPrice())
+                        .products(service.getComboProducts()
+                                        .stream()
+                                        .map(comboProduct -> comboProduct.getProduct().getName())
+                                        .collect(Collectors.toList()))
+                        .build())
+                .collect(Collectors.toList());
+    }
 
     public Combo findById(Long id) {
         return comboRepository.findById(id).orElseThrow(
@@ -116,17 +130,7 @@ public class ComboService {
         }
         comboProductRepository.saveAll(comboProducts);
     }
-    public List<ComboListResponse> getComboList() {
-        return comboRepository.findAll()
-                .stream()
-                .map(service -> ComboListResponse.builder()
-                        .id(service.getId())
-                        .name(service.getName())
-                        .price(service.getPrice())
-                        // Chuyển thành chuỗi
-                        .build())
-                .collect(Collectors.toList());
-    }
+
 
     @Transactional
     public void deleteById(Long id) {
