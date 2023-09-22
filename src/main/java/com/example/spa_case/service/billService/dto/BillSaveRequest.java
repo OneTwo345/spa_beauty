@@ -16,6 +16,7 @@ public class BillSaveRequest {
 
     private String customerQuantity;
 
+
     private String appointmentTime;
 
     private String productPrice;
