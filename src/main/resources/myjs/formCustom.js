@@ -1,3 +1,9 @@
+$.validator.addMethod("greaterThanOrEqualCurrentTime", function(value, element) {
+    var selectedTime = new Date(value);
+    var currentTime = new Date();
+    return selectedTime >= currentTime;
+}, "Thời gian không hợp lệ.");
+
 $("#billForm").validate({
     rules:{
         customerName:{
@@ -11,6 +17,9 @@ $("#billForm").validate({
             number: true,
             minlength:10,
             maxlength: 12,
+        },
+        appointmentTime: {
+            greaterThanOrEqualCurrentTime: true
         }
     },
     message: {
@@ -19,7 +28,9 @@ $("#billForm").validate({
             minlength: "Tên ít nhất cần có 2 ký tự"
         },
         customerQuantity:"Vui lòng nhập thông tin số lượng khách",
-        timeBook: "Vui lòng nhập thời gian cuộc hẹn",
+        appointmentTime: {
+            greaterThanOrEqualCurrentTime: "Thời gian không hợp lệ."
+        },
         customerPhone: {
             required: "Vui lòng nhập thông tin chính xác số điện thoại",
             minlength: "Số điện thoại cần có ít nhất 10 số",
