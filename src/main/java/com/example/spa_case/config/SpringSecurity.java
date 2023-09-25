@@ -46,7 +46,7 @@ public class SpringSecurity {
                                 .permitAll()
                 ).exceptionHandling(
                         exception -> exception
-                                .accessDeniedPage("/access-denied") // Custom 403 page
+                                .accessDeniedPage("/access-denied")
                 );
 
         return http.build();

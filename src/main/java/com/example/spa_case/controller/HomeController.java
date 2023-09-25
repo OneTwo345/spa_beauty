@@ -93,7 +93,14 @@ public class HomeController {
     public String error403(){
         return "403";
     }
-
+    @GetMapping("/error-page")
+    public String error404(){
+        return "error_page";
+    }
+//    @GetMapping("/access-denied")
+//    public String error404(){
+//        return "404";
+//    }
 
     @GetMapping("/dashboard")
     public ModelAndView home() {
@@ -124,5 +131,10 @@ public class HomeController {
     @GetMapping("/bill")
     public ModelAndView bill() {
         return new ModelAndView("bill");
+    }
+
+    @GetMapping("/*")
+    public ModelAndView get404(){
+        return new ModelAndView("error_page");
     }
 }
