@@ -255,14 +255,16 @@ function getDataInput() {
             name: 'name',
             value: productSelected.name,
             required: true,
-            pattern: "^[A-Za-z ]{6,20}",
+            pattern: "[a-zA-Z0-9ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\\s]{6,20}",
             message: "Username must have minimum is 6 characters and maximum is 20 characters",
         },
+
+
         {
             label: 'Description',
             name: 'description',
             value: productSelected.description,
-            pattern: "^[A-Za-z ]{6,120}",
+            pattern: "[a-zA-Z0-9ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\\s]{6,120}",
             message: "Description must have minimum is 6 characters and maximum is 20 characters",
             required: true
         },
