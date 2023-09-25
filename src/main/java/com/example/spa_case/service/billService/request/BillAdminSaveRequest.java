@@ -1,21 +1,22 @@
-package com.example.spa_case.service.billService.dto;
+package com.example.spa_case.service.billService.request;
 
-
+import com.example.spa_case.model.User;
+import com.example.spa_case.service.request.SelectOptionRequest;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
 @NoArgsConstructor
-public class BillSaveRequest {
+public class BillAdminSaveRequest {
     private String customerName;
 
     private String customerPhone;
 
     private String customerQuantity;
 
+//    private String timeBook;
 
     private String appointmentTime;
 
@@ -27,6 +28,9 @@ public class BillSaveRequest {
 
     private List<String> idCombo;
 
+    private SelectOptionRequest user;
+
     private String price;
+
 
 }

@@ -3,27 +3,18 @@ const selectProducts = document.getElementById("selectProducts");
 let products = {};
 let combos = {};
 // submit form
-billForm.onsubmit = async (e) => {
-    e.preventDefault()
-    const data = getData();
-    // goi api de tao bill
-    await createBill(data);
-}
 
-function getData(){
+function getData() {
     const idProduct = $("#selectProducts").select2('data').map(e => e.id);
     const idCombo = $('#selectCombos').select2('data').map(e => e.id);
-    const price = 100.0;
 
     // lay data tu form
     let data = getDataFromForm(billForm);
-
     data = {
         ...data,
         idProduct,
         idCombo,
-        price,
-        timeBook: convertDate(data.timeBook + "")
+        appointmentTime: convertDate(data.appointmentTime + "")
     }
     return data;
 }
@@ -77,7 +68,6 @@ async function initElementBillForm() {
         });
 
 
-
         combos.map((item) => {
             let option = document.createElement("option");
             option.value = item.id;
@@ -107,6 +97,63 @@ async function getCombos() {
     }
 }
 
-$(document).ready(function() {
+$(document).ready(function () {
     initElementBillForm();
 });
+async function getList() {
+    const response = await fetch(`/api/bills`);
+    const result = await response.json();
+    pageable = {
+        ...pageable,
+        ...result
+    };
+    genderPagination();
+
+    console.log(result)
+    renderTBody(result.content);
+}
+function renderItemStr(item) {
+    return `<tr>
+                    <td>
+                        ${item.id}
+                    </td>
+                    <td>
+                        ${item.name}
+                    </td>
+                   
+                  <td>
+                        ${item.phone}
+                    </td>
+                    <td>
+                        ${item.customerQuantity}
+                    </td>
+                    <td>
+                        ${item.timeBook}
+                    </td>
+                    
+                    <td>
+                        ${item.products}
+                    </td>
+                    <td>
+                        ${item.combos}
+                    </td>
+                    <td>
+                        ${formatCurrency(item.price)}
+                    </td>
+                    <td>
+                    ${item.products}
+                    </td>
+                    <td>
+                        <img src="${item.poster}" alt="" class="avatar-away">
+                    </td>
+                     <td>
+            <a class="btn edit" data-id="${item.id}" onclick="onShowEdit(${item.id})">
+               <i class="fa-regular fa-pen-to-square text-primary"></i>
+            </a>
+            <a class="btn delete" data-id="${item.id}" onclick="deleteItem(${item.id})">
+                <i class="fa-regular fa-trash-can text-danger"></i>
+            </a> 
+        </td>
+                </tr>`
+}
+
