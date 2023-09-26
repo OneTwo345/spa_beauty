@@ -2,7 +2,7 @@ $.validator.addMethod("greaterThanOrEqualCurrentTime", function(value, element) 
     var selectedTime = new Date(value);
     var currentTime = new Date();
     return selectedTime >= currentTime;
-}, "Thời gian không hợp lệ.");
+},);
 
 $("#billForm").validate({
     rules:{

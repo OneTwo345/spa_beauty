@@ -50,7 +50,7 @@ public class UserService {
                         .email(user.getEmail())
                         .phone(user.getPhone())
                         .dob(user.getDob())
-                        .avatar(String.valueOf(user.getAvatar().getFileUrl()))
+                        .avatar(user.getAvatar() != null ? String.valueOf(user.getAvatar().getFileUrl()) : null)
                         .statusCustomer(String.valueOf(user.getStatusCustomer()))
                         .eLock(String.valueOf(user.getELock()))
                         .build());

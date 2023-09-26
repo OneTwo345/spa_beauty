@@ -1,33 +1,18 @@
 package com.example.spa_case.controller.RESTController;
 
 
-import com.example.spa_case.model.Bill;
-import com.example.spa_case.repository.BillProductRepository;
-import com.example.spa_case.repository.BillRepository;
+
 import com.example.spa_case.service.billService.BillService;
 import com.example.spa_case.service.billService.dto.BillDetailResponse;
 import com.example.spa_case.service.billService.dto.BillListResponse;
 import com.example.spa_case.service.billService.dto.BillSaveRequest;
-<<<<<<< HEAD
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-=======
-import com.example.spa_case.service.billService.request.BillAdminSaveRequest;
->>>>>>> ca5c132adf3b35ad3d4aed93aa36f50c729b0568
-import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.io.IOException;
-import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/bills")

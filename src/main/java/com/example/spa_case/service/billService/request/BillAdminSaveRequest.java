@@ -28,7 +28,7 @@ public class BillAdminSaveRequest {
 
     private List<String> idCombo;
 
-    private SelectOptionRequest user;
+
 
     private String price;
 
