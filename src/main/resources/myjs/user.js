@@ -92,7 +92,7 @@ async function editRoom(data) {
     if (response.ok) {
         Swal.fire({
             title: 'Edited',
-            text: 'Phòng đã được chỉnh sửa thành công.',
+            text: 'Tài khoản đã được chỉnh sửa thành công.',
             icon: 'success',
             confirmButtonText: 'OK'
         }).then(() => {
@@ -101,7 +101,7 @@ async function editRoom(data) {
     } else {
         Swal.fire({
             title: 'Error',
-            text: 'Có lỗi xảy ra khi chỉnh sửa phòng.',
+            text: 'Có lỗi xảy ra khi chỉnh sửa tài khoản.',
             icon: 'error',
             confirmButtonText: 'OK'
         });
@@ -130,7 +130,7 @@ async function createRoom(data) {
     if (response.ok) {
         Swal.fire({
             title: 'Created',
-            text: 'Phòng đã được tạo thành công.',
+            text: 'Tài khoản đã được tạo thành công.',
             icon: 'success',
             confirmButtonText: 'OK'
         }).then(() => {
@@ -139,7 +139,7 @@ async function createRoom(data) {
     } else {
         Swal.fire({
             title: 'Error',
-            text: 'Có lỗi xảy ra khi tạo phòng.',
+            text: 'Có lỗi xảy ra khi tạo tài khoản.',
             icon: 'error',
             confirmButtonText: 'OK'
         });
@@ -179,14 +179,11 @@ const findById = async (id) => {
 const onShowEdit = async (id) => {
     clearForm();
     userSelected = await findById(id);
-    avatarDefault.src = userSelected.avatar;
     $('#staticBackdropLabel').text('Edit User');
     $('#staticBackdrop').modal('show');
     $('#name').val(userSelected.name);
     $('#email').val(userSelected.email);
     $('#phone').val(userSelected.phone);
-    $('#dob').val(userSelected.dob);
-    $('#statusCustomer').val(userSelected.statusCustomer);
     $('#passWord').val(userSelected.passWord);
 
     console.log('isEditing', isEditing)
@@ -230,21 +227,7 @@ function renderItemStr(item) {
         <td>
             ${item.phone}
         </td>
-        <td>
-            ${item.dob}
-        </td>
-        <td >
-           <img class="avatar-away" src="${item.avatar}" alt=""> 
-        </td>
-        <td>
-            ${item.statusCustomer}
-        </td>
-        <td>
-            <select id="lock-${item.id}" class="satus btn btn-danger" onchange="onChangeSelect(${item.id}, this.value)">
-                <option value="LOCK" ${lockSelected} class="LOCK">Lock</option>
-                <option value="UNLOCK" ${unlockSelected} class="UNLOCK">Unlock</option>
-            </select>
-        </td>
+       
         <td>
             <a class="btn edit" data-id="${item.id}" onclick="onShowEdit(${item.id})">
                 <i class="fa-regular fa-pen-to-square text-primary"></i>
@@ -304,22 +287,8 @@ function getDataInput() {
             message: 'Phone errors',
             required: true
         },
-        {
-            label: 'Date of birth',
-            name: 'dob',
-            value: userSelected.dob,
-            type: 'date',
-            required: true
-        },
-        {
-            label: "Type",
-            name: "statusCustomer",
-            value: userSelected.statusCustomer,
-            type: "select",
-            require: true,
-            message: "Type invalid",
-            options: [{value: "SILVER", name:"Silver"},{value: "GOLD", name:"Gold"},{value: "PREMIUM", name:"Premium"}],
-        },
+
+
     ];
 }
 
@@ -357,7 +326,7 @@ function renderTBody(items) {
 async function deleteItem(itemId) {
     const { isConfirmed } = await Swal.fire({
         title: 'Xác nhận xóa',
-        text: 'Bạn có chắc chắn muốn xóa mục này?',
+        text: 'Bạn có chắc chắn muốn xóa tài khoản này?',
         icon: 'warning',
         showCancelButton: true,
         confirmButtonText: 'Xóa',

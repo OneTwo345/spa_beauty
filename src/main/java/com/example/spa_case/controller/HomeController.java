@@ -141,7 +141,7 @@ public class HomeController {
     }
 
     @GetMapping("/*")
-    public ModelAndView get404(){
+    public ModelAndView get4004(){
         return new ModelAndView("error_page");
     }
 }

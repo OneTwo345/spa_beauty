@@ -131,7 +131,7 @@ async function  editRoom (data){
     if (response.ok) {
         Swal.fire({
             title: 'Edited',
-            text: 'Phòng đã được tạo thành công.',
+            text: 'Combo đã được sửa thành công.',
             icon: 'success',
             confirmButtonText: 'OK'
         }).then(() => {
@@ -160,7 +160,7 @@ async function createRoom(data) {
     if (response.ok) {
         Swal.fire({
             title: 'Created',
-            text: 'Phòng đã được tạo thành công.',
+            text: 'Combo đã được tạo thành công.',
             icon: 'success',
             confirmButtonText: 'OK'
         }).then(() => {
@@ -326,7 +326,7 @@ function renderTBody(items) {
 async function deleteItem(id) {
     const { isConfirmed } = await Swal.fire({
         title: 'Xác nhận xóa',
-        text: 'Bạn có chắc chắn muốn xóa mục này?',
+        text: 'Bạn có chắc chắn muốn xóa combo này?',
         icon: 'warning',
         showCancelButton: true,
         confirmButtonText: 'Xóa',

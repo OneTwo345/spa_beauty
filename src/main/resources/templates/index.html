@@ -122,7 +122,7 @@
 <!-- Navbar Start -->
 <div class="container-fluid p-0">
     <nav class="navbar navbar-expand-lg bg-white navbar-light py-3 py-lg-0 px-lg-5">
-        <a href="index" class="navbar-brand ml-lg-3">
+        <a href="/" class="navbar-brand ml-lg-3">
             <h1 class="m-0 text-primary"><span class="text-dark">SPA</span> Center</h1>
         </a>
         <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
@@ -324,7 +324,7 @@
     <div class="row justify-content-center bg-appointment mx-0">
         <div class="col-lg-6 py-5">
             <div class="p-5 my-5" style="background: rgba(33, 30, 28, 0.7);">
-                <h1 class="text-white text-center mb-4">ĐẶT HẸN NGAY</h1>
+                <h1 class="text-white text-center mb-4">BOOK NOW</h1>
                 <form name="formValidation" id="billForm">
                     <div class="form-row">
                         <div class="col-sm-6">
@@ -347,15 +347,17 @@
                     <div class="form-row">
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <div class="input-group date" id="datetimepicker" data-target-input="nearest">
-                                    <input type="text" name="appointmentTime" class="form-control datetimepicker-input"
-                                           data-target="#datetimepicker" placeholder="Select Date and Time"
-                                           style="color: white" onchange="validateTime(this.value)"/>
 
+                                <div class="input-group date" id="datetimepicker" data-target-input="nearest">
                                     <div class="input-group-append" data-target="#datetimepicker"
                                          data-toggle="datetimepicker">
                                         <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                     </div>
+                                    <input type="text" name="appointmentTime" class="form-control datetimepicker-input"
+                                           data-target="#datetimepicker" placeholder="Select Date and Time"
+                                           style="color: white" onchange="validateTime(this.value)"/>
+
+
                                 </div>
                             </div>
                         </div>

@@ -25,7 +25,7 @@ public class BillAdminEditResponse {
     private BigDecimal price;
 
     private LocalDateTime appointmentTime;
-    private Long user;
+
     private List<Long> idProduct;
 
     private List<Long> idCombo;

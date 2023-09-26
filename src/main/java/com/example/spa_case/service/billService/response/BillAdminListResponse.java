@@ -29,7 +29,6 @@ public class BillAdminListResponse {
 
     private LocalDateTime timeBook;
     private LocalDateTime appointmentTime;
-    private String user;
     private String idProduct;
 
     private String idCombo;

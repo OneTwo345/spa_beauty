@@ -167,7 +167,6 @@ public class BillService {
         Page<BillAdminListResponse> result  = billAdminRepository.findByCustomerNameContainingIgnoreCaseAndPriceBetween(search, min, max, pageable)
                 .map(bill -> BillAdminListResponse.builder()
                         .id(bill.getId())
-                        .user(bill.getUser() != null ? bill.getUser().getName() : null)
                         .customerName(bill.getCustomerName())
                         .customerEmail(bill.getCustomerEmail())
                         .customerPhone(bill.getCustomerPhone())
@@ -233,7 +232,7 @@ public class BillService {
         result.setCustomerPhone(bill.getCustomerPhone());
         result.setCustomerQuantity(bill.getCustomerQuantity());
         result.setPrice(bill.getPrice());
-        result.setUser(bill.getUser().getId());
+//        result.setUser(bill.getUser().getId());
         result.setIdProduct(bill.getBillProducts().stream()
                 .map(product -> product.getProduct().getId())
                 .collect(Collectors.toList()));
@@ -245,7 +244,7 @@ public class BillService {
     @Transactional
     public void update(BillAdminSaveRequest request, Long id) {
         var bill = billRepository.findById(id).orElse(new Bill());
-        bill.setUser(new User());
+//        bill.setUser(new User());
         AppUtil.mapper.map(request, bill);
         billRepository.save(bill);
         billComboRepository.deleteAllById(bill.getBillCombos().stream()
