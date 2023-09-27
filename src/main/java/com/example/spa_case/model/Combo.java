@@ -1,6 +1,7 @@
 package com.example.spa_case.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 
 import java.math.BigDecimal;

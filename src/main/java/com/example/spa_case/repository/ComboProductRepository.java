@@ -6,4 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ComboProductRepository extends JpaRepository<ComboProduct,Long> {
     void deleteAllByComboId(Long id);
+
 }
